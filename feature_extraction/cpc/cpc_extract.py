@@ -17,6 +17,7 @@ from capstone.x86 import *
 
 from asm_helper import *
 from context import *
+from callee_context import *
 
 DEV_ONLY_CALLS = True
 
@@ -65,7 +66,8 @@ def process_file(filename):
         CODE = b""
         CODE = f.read(entry_section['sh_size'])
 
-        simple_linear_sweep_extract(CODE, entry, entry_section_end)
+        #simple_linear_sweep_extract(CODE, entry, entry_section_end)
+        caller_cpc_sweep(CODE, entry, entry_section_end, entry_section, f)
 
 #Merits: similar structure between O0 samples stands out
 #Negatives: cardinality often wrong
@@ -117,6 +119,62 @@ def simple_linear_sweep_extract(CODE, entry, entry_end):
             context.dump()
 
     print("%s" % context.cpc_chain)
+
+def caller_cpc_sweep(CODE, entry, entry_end, entry_section, f):
+    cpc_chain = ""
+
+    md = Cs(CS_ARCH_X86, CS_MODE_64)
+    md.detail = True
+    for inst in md.disasm(CODE, entry):
+        #print("0x%x:\t%s\t%s\t" % (inst.address, inst.mnemonic, inst.op_str))
+        if is_call(inst.mnemonic):
+            una_op = inst.operands[0]
+            if una_op.type == X86_OP_IMM:
+                if una_op.value.imm >= entry and una_op.value.imm <= entry_end:
+                    offset = una_op.value.imm - entry
+                    #TODO: get returned cpc
+                    #print("Entering callee...")
+                    callee_arg_sweep(offset, entry, entry_end, entry_section, f)
+
+        if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic):
+            cpc_chain += ","
+
+def callee_arg_sweep(offset, entry, entry_end, entry_section, f):
+    context = CalleeContext()
+
+    f.seek(entry_section['sh_offset'] + offset)
+    FUNC = b""
+    FUNC = f.read(entry_section['sh_size'] - offset)
+    md = Cs(CS_ARCH_X86, CS_MODE_64)
+    md.detail = True
+    for inst in md.disasm(FUNC, entry+offset):
+        #print("0x%x:\t%s\t%s\t" % (inst.address, inst.mnemonic, inst.op_str))
+        if len(inst.operands) == 1:
+            una_op = inst.operand[0]
+            if una_op.type == X86_OP_REG:
+                una_op_name = inst.reg_name(una_op.value.reg)
+                if is_arg_reg(una_op_name):
+                    #unary operands are set before use, try and add as src
+                    context.add_src_arg(una_op_name)
+
+        if (len(inst.operands) == 2):
+            dst_op = inst.operand[0]
+            src_op = inst.operand[1]
+
+            if dst_op == X86_OP_REG:
+                dst_op_name = inst.reg_name(dst_op.value.reg)
+                if is_arg_reg(dst_op_name):
+                    context.add_set_arg(dst_op_name)
+            if src_op == X86_OP_REG:
+                src_op_name = inst.reg_name(src_op.value.reg)
+                if is_arg_reg(src_op_name):
+                    context.add_src_arg(src_op_name)
+
+        if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic):
+            #print("Leaving callee...")
+            return context.callee_calculate_cpc()
+
+    return context.callee_calculate_cpc()
 
 if __name__ == '__main__':
     for filename in sys.argv[1:]:

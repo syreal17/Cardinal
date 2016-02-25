@@ -24,6 +24,7 @@ cmp_prefix = 'cmp'
 lea_inst = ['lea']
 call_inst = ['call']
 ret_inst = ['ret']
+hlt_inst = ['hlt']
 
 #-----------------------------------
 #Registers
@@ -86,6 +87,11 @@ def is_call(mnemonic):
 
 def is_ret(mnemonic):
     if mnemonic in ret_inst:
+        return True
+    return False
+
+def is_hlt(mnemonic):
+    if mnemonic in hlt_inst:
         return True
     return False
 
