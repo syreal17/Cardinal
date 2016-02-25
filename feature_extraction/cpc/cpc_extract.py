@@ -164,11 +164,11 @@ def callee_arg_sweep(offset, entry, entry_end, entry_section, f):
             dst_op = inst.operands[0]
             src_op = inst.operands[1]
 
-            if dst_op == X86_OP_REG:
+            if dst_op.type == X86_OP_REG:
                 dst_op_name = inst.reg_name(dst_op.value.reg)
                 if is_arg_reg(dst_op_name):
                     context.add_set_arg(dst_op_name)
-            if src_op == X86_OP_REG:
+            if src_op.type == X86_OP_REG:
                 src_op_name = inst.reg_name(src_op.value.reg)
                 if is_arg_reg(src_op_name):
                     context.add_src_arg(src_op_name)
