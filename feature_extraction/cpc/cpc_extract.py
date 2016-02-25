@@ -134,10 +134,13 @@ def caller_cpc_sweep(CODE, entry, entry_end, entry_section, f):
                     offset = una_op.value.imm - entry
                     #TODO: get returned cpc
                     #print("Entering callee...")
-                    callee_arg_sweep(offset, entry, entry_end, entry_section, f)
+                    cpc = callee_arg_sweep(offset, entry, entry_end, entry_section, f)
+                    cpc_chain += str(cpc)
 
         if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic):
             cpc_chain += ","
+
+    print(cpc_chain)
 
 def callee_arg_sweep(offset, entry, entry_end, entry_section, f):
     context = CalleeContext()
@@ -150,7 +153,7 @@ def callee_arg_sweep(offset, entry, entry_end, entry_section, f):
     for inst in md.disasm(FUNC, entry+offset):
         #print("0x%x:\t%s\t%s\t" % (inst.address, inst.mnemonic, inst.op_str))
         if len(inst.operands) == 1:
-            una_op = inst.operand[0]
+            una_op = inst.operands[0]
             if una_op.type == X86_OP_REG:
                 una_op_name = inst.reg_name(una_op.value.reg)
                 if is_arg_reg(una_op_name):
@@ -158,8 +161,8 @@ def callee_arg_sweep(offset, entry, entry_end, entry_section, f):
                     context.add_src_arg(una_op_name)
 
         if (len(inst.operands) == 2):
-            dst_op = inst.operand[0]
-            src_op = inst.operand[1]
+            dst_op = inst.operands[0]
+            src_op = inst.operands[1]
 
             if dst_op == X86_OP_REG:
                 dst_op_name = inst.reg_name(dst_op.value.reg)
