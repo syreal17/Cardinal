@@ -20,6 +20,7 @@ from context import *
 from callee_context import *
 
 DEV_ONLY_CALLS = True
+MAX_PROLOG = 20
 
 def find_section_by_addr(elffile, fstream, addr):
     """ Finds a section by its base address and returns the index
@@ -121,6 +122,7 @@ def simple_linear_sweep_extract(CODE, entry, entry_end):
     print("%s" % context.cpc_chain)
 
 def caller_cpc_sweep(CODE, entry, entry_end, entry_section, f):
+    cpc_dict = dict()
     cpc_chain = ""
 
     md = Cs(CS_ARCH_X86, CS_MODE_64)
@@ -131,19 +133,27 @@ def caller_cpc_sweep(CODE, entry, entry_end, entry_section, f):
             una_op = inst.operands[0]
             if una_op.type == X86_OP_IMM:
                 if una_op.value.imm >= entry and una_op.value.imm <= entry_end:
-                    offset = una_op.value.imm - entry
-                    #TODO: get returned cpc
-                    #print("Entering callee...")
-                    cpc = callee_arg_sweep(offset, entry, entry_end, entry_section, f)
-                    cpc_chain += str(cpc)
+                    #cpc = cpc_dict[una_op.value.imm]
+                    cpc = cpc_dict.get(una_op.value.imm, None)
+                    if cpc is None:
+                        offset = una_op.value.imm - entry
+                        #print("Entering callee...")
+                        cpc = callee_arg_sweep(offset, entry, entry_end, entry_section, f)
+                        cpc_dict[una_op.value.imm] = cpc
+                        cpc_chain += str(cpc)
+                    else:
+                        #print("Stored CPC used")
+                        cpc_chain += str(cpc)
 
         if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic):
             cpc_chain += ","
 
+    print("# of CPCs %d" % len(cpc_dict))
     print(cpc_chain)
 
 def callee_arg_sweep(offset, entry, entry_end, entry_section, f):
     context = CalleeContext()
+    count = 0
 
     f.seek(entry_section['sh_offset'] + offset)
     FUNC = b""
@@ -151,6 +161,7 @@ def callee_arg_sweep(offset, entry, entry_end, entry_section, f):
     md = Cs(CS_ARCH_X86, CS_MODE_64)
     md.detail = True
     for inst in md.disasm(FUNC, entry+offset):
+        count += 1
         #print("0x%x:\t%s\t%s\t" % (inst.address, inst.mnemonic, inst.op_str))
         if len(inst.operands) == 1:
             una_op = inst.operands[0]
@@ -174,8 +185,10 @@ def callee_arg_sweep(offset, entry, entry_end, entry_section, f):
                     context.add_src_arg(src_op_name)
 
         if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic):
-            #print("Leaving callee...")
-            return context.callee_calculate_cpc()
+            break
+
+        if count >= MAX_PROLOG:
+            break
 
     return context.callee_calculate_cpc()
 
