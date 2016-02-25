@@ -38,12 +38,12 @@ def find_section_by_addr(elffile, fstream, addr):
         print('find_section_by_addr: Address not found in sections')
 
 def process_file(filename):
-    print('Processing file: ', filename)
+    #print('Processing file: ', filename)
     with open(filename, 'rb') as f:
         elffile = ELFFile(f)
 
         #Find the entry point
-        print('Entry Point: ', elffile.header.e_entry)
+        #print('Entry Point: ', elffile.header.e_entry)
         entry = elffile.header.e_entry
 
         #Find the section associated with the entry point
@@ -52,15 +52,17 @@ def process_file(filename):
             print('Entry section not found. Perhaps the sample is obfuscated?')
             return
         entry_section = elffile.get_section(entry_section_i)
-        print('Entry section found: ', entry_section.name)
+        #print('Entry section found: ', entry_section.name)
         entry_section_end = entry + entry_section['sh_size']
 
         #Find the PLT section
         plt_section = elffile.get_section_by_name('.plt')
         if not plt_section:
-            print('PLT section not found. Jump reasoning degraded')
+            pass
+            #print('PLT section not found. Jump reasoning degraded')
         else:
-            print('PLT section found.')
+            pass
+            #print('PLT section found.')
 
         #copy out the entry section
         f.seek(entry_section['sh_offset'])
@@ -121,9 +123,12 @@ def simple_linear_sweep_extract(CODE, entry, entry_end):
 
     print("%s" % context.cpc_chain)
 
+#TODO: depend less on a file stream. That might be slowing down the algo a lot
 def caller_cpc_sweep(CODE, entry, entry_end, entry_section, f):
     cpc_dict = dict()
     cpc_chain = ""
+    cpc_list = ""
+    cpc_list_nl = False
 
     md = Cs(CS_ARCH_X86, CS_MODE_64)
     md.detail = True
@@ -141,15 +146,23 @@ def caller_cpc_sweep(CODE, entry, entry_end, entry_section, f):
                         cpc = callee_arg_sweep(offset, entry, entry_end, entry_section, f)
                         cpc_dict[una_op.value.imm] = cpc
                         cpc_chain += str(cpc)
+                        cpc_list += str(cpc)
+                        cpc_list_nl = False
                     else:
                         #print("Stored CPC used")
                         cpc_chain += str(cpc)
+                        cpc_list += str(cpc)
+                        cpc_list_nl = False
 
         if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic):
             cpc_chain += ","
+            if not cpc_list_nl:
+                cpc_list += "\n"
+                cpc_list_nl = True
 
-    print("# of CPCs %d" % len(cpc_dict))
-    print(cpc_chain)
+    #print("# of CPCs %d" % len(cpc_dict))
+    #print(cpc_chain)
+    print(cpc_list)
 
 def callee_arg_sweep(offset, entry, entry_end, entry_section, f):
     context = CalleeContext()
