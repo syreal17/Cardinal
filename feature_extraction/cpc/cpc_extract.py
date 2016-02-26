@@ -20,7 +20,7 @@ from context import *
 from callee_context import *
 
 DEV_ONLY_CALLS = True
-MAX_PROLOG = 180
+MAX_PROLOG_BYTES = 300
 
 def find_section_by_addr(elffile, fstream, addr):
     """ Finds a section by its base address and returns the index
@@ -132,7 +132,7 @@ def caller_cpc_sweep(CODE, entry, entry_end):
     md = Cs(CS_ARCH_X86, CS_MODE_64)
     md.detail = True
     for inst in md.disasm(CODE, entry):
-        #print("0x%x:\t%s\t%s\t" % (inst.address, inst.mnemonic, inst.op_str))
+        print("0x%x:\t%s\t%s\t" % (inst.address, inst.mnemonic, inst.op_str))
         if is_call(inst.mnemonic):
             una_op = inst.operands[0]
             if una_op.type == X86_OP_IMM:
@@ -141,9 +141,11 @@ def caller_cpc_sweep(CODE, entry, entry_end):
                     cpc = cpc_dict.get(una_op.value.imm, None)
                     if cpc is None:
                         offset = una_op.value.imm - entry
-                        #print("Entering callee...")
-                        FUNC = CODE[offset:offset+MAX_PROLOG]
+                        print("Entering callee...")
+                        FUNC = CODE[offset:offset+MAX_PROLOG_BYTES]
                         cpc = callee_arg_sweep(FUNC, entry+offset)
+                        if( cpc >= 14 ):
+                            raw_input("Press enter")
                         cpc_dict[una_op.value.imm] = cpc
                         cpc_chain += str(cpc)
                         cpc_list += str(cpc)
@@ -170,7 +172,7 @@ def callee_arg_sweep(FUNC, entry):
     md = Cs(CS_ARCH_X86, CS_MODE_64)
     md.detail = True
     for inst in md.disasm(FUNC, entry):
-        #print("0x%x:\t%s\t%s\t" % (inst.address, inst.mnemonic, inst.op_str))
+        print("0x%x:\t%s\t%s\t" % (inst.address, inst.mnemonic, inst.op_str))
         if len(inst.operands) == 1:
             una_op = inst.operands[0]
             if una_op.type == X86_OP_REG:
@@ -195,6 +197,7 @@ def callee_arg_sweep(FUNC, entry):
         if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic):
             break
 
+    print("leaveing callee")
     return context.callee_calculate_cpc()
 
 if __name__ == '__main__':
