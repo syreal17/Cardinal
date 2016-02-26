@@ -20,7 +20,7 @@ from context import *
 from callee_context import *
 
 DEV_ONLY_CALLS = True
-MAX_PROLOG = 20
+MAX_PROLOG = 180
 
 def find_section_by_addr(elffile, fstream, addr):
     """ Finds a section by its base address and returns the index
@@ -70,7 +70,7 @@ def process_file(filename):
         CODE = f.read(entry_section['sh_size'])
 
         #simple_linear_sweep_extract(CODE, entry, entry_section_end)
-        caller_cpc_sweep(CODE, entry, entry_section_end, entry_section, f)
+        caller_cpc_sweep(CODE, entry, entry_section_end)
 
 #Merits: similar structure between O0 samples stands out
 #Negatives: cardinality often wrong
@@ -123,8 +123,7 @@ def simple_linear_sweep_extract(CODE, entry, entry_end):
 
     print("%s" % context.cpc_chain)
 
-#TODO: depend less on a file stream. That might be slowing down the algo a lot
-def caller_cpc_sweep(CODE, entry, entry_end, entry_section, f):
+def caller_cpc_sweep(CODE, entry, entry_end):
     cpc_dict = dict()
     cpc_chain = ""
     cpc_list = ""
@@ -143,11 +142,8 @@ def caller_cpc_sweep(CODE, entry, entry_end, entry_section, f):
                     if cpc is None:
                         offset = una_op.value.imm - entry
                         #print("Entering callee...")
-                        #cpc = callee_arg_sweep(offset, entry, entry_end,
-                            #entry_section, f)
-                        FUNC = CODE[offset:]
-                        cpc = callee_arg_sweep(FUNC, entry+offset, entry_end,
-                            entry_section, f)
+                        FUNC = CODE[offset:offset+MAX_PROLOG]
+                        cpc = callee_arg_sweep(FUNC, entry+offset)
                         cpc_dict[una_op.value.imm] = cpc
                         cpc_chain += str(cpc)
                         cpc_list += str(cpc)
@@ -165,20 +161,15 @@ def caller_cpc_sweep(CODE, entry, entry_end, entry_section, f):
                 cpc_list_nl = True
 
     #print("# of CPCs %d" % len(cpc_dict))
-    #print(cpc_chain)
-    print(cpc_list)
+    print(cpc_chain)
+    #print(cpc_list)
 
-def callee_arg_sweep(FUNC, entry, entry_end, entry_section, f):
+def callee_arg_sweep(FUNC, entry):
     context = CalleeContext()
-    count = 0
 
-    #f.seek(entry_section['sh_offset'] + offset)
-    #FUNC = b""
-    #FUNC = f.read(entry_section['sh_size'] - offset)
     md = Cs(CS_ARCH_X86, CS_MODE_64)
     md.detail = True
     for inst in md.disasm(FUNC, entry):
-        count += 1
         #print("0x%x:\t%s\t%s\t" % (inst.address, inst.mnemonic, inst.op_str))
         if len(inst.operands) == 1:
             una_op = inst.operands[0]
@@ -202,9 +193,6 @@ def callee_arg_sweep(FUNC, entry, entry_end, entry_section, f):
                     context.add_src_arg(src_op_name)
 
         if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic):
-            break
-
-        if count >= MAX_PROLOG:
             break
 
     return context.callee_calculate_cpc()
