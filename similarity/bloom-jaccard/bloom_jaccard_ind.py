@@ -19,8 +19,11 @@ def jaccard_ind(filename_1, filename_2):
             b_2 = BloomFilter.fromfile(f_2)
             b_inter = b_1.intersection(b_2)
             b_union = b_1.union(b_2)
-            j_i = float(b_inter.bitarray.count(True)/b_union.bitarray.count(True))
-            print("%s ~ %s, %f" % filename_1, filename_2, j_i)
+            bits_inter = b_inter.bitarray.count(True)
+            bits_union = b_union.bitarray.count(True)
+            j_i = float(bits_inter) / float(bits_union)
+            #print("%s ~ %s, %f" % filename_1, filename_2, j_i)
+            print("%s %s %f" % (filename_1, filename_2, j_i))
 
 
 if __name__ == '__main__':
