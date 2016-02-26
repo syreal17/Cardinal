@@ -143,7 +143,11 @@ def caller_cpc_sweep(CODE, entry, entry_end, entry_section, f):
                     if cpc is None:
                         offset = una_op.value.imm - entry
                         #print("Entering callee...")
-                        cpc = callee_arg_sweep(offset, entry, entry_end, entry_section, f)
+                        #cpc = callee_arg_sweep(offset, entry, entry_end,
+                            #entry_section, f)
+                        FUNC = CODE[offset:]
+                        cpc = callee_arg_sweep(FUNC, entry+offset, entry_end,
+                            entry_section, f)
                         cpc_dict[una_op.value.imm] = cpc
                         cpc_chain += str(cpc)
                         cpc_list += str(cpc)
@@ -164,16 +168,16 @@ def caller_cpc_sweep(CODE, entry, entry_end, entry_section, f):
     #print(cpc_chain)
     print(cpc_list)
 
-def callee_arg_sweep(offset, entry, entry_end, entry_section, f):
+def callee_arg_sweep(FUNC, entry, entry_end, entry_section, f):
     context = CalleeContext()
     count = 0
 
-    f.seek(entry_section['sh_offset'] + offset)
-    FUNC = b""
-    FUNC = f.read(entry_section['sh_size'] - offset)
+    #f.seek(entry_section['sh_offset'] + offset)
+    #FUNC = b""
+    #FUNC = f.read(entry_section['sh_size'] - offset)
     md = Cs(CS_ARCH_X86, CS_MODE_64)
     md.detail = True
-    for inst in md.disasm(FUNC, entry+offset):
+    for inst in md.disasm(FUNC, entry):
         count += 1
         #print("0x%x:\t%s\t%s\t" % (inst.address, inst.mnemonic, inst.op_str))
         if len(inst.operands) == 1:
