@@ -21,6 +21,8 @@ from callee_context import *
 
 DEV_ONLY_CALLS = True
 MAX_PROLOG_BYTES = 300
+DISASM_DEBUG = False
+PRINT_CPC_LIST = True       #Alternate is printing cpc_chain
 
 def find_section_by_addr(elffile, fstream, addr):
     """ Finds a section by its base address and returns the index
@@ -124,47 +126,49 @@ def simple_linear_sweep_extract(CODE, entry, entry_end):
     print("%s" % context.cpc_chain)
 
 def caller_cpc_sweep(CODE, entry, entry_end):
-    cpc_dict = dict()
-    cpc_chain = ""
-    cpc_list = ""
-    cpc_list_nl = False
+    cpc_dict = dict()   #keeps track of function cardinalities already found
+    cpc_chain = ""      #this is the more readable form
+    cpc_list = ""       #this is the more consumable form
+    cpc_list_nl = False #Whether we need a newline in the cpc_list
 
     md = Cs(CS_ARCH_X86, CS_MODE_64)
     md.detail = True
     for inst in md.disasm(CODE, entry):
-        print("0x%x:\t%s\t%s\t" % (inst.address, inst.mnemonic, inst.op_str))
+
+        if DISASM_DEBUG:
+            print("0x%x:\t%s\t%s\t" % (inst.address, inst.mnemonic,
+                inst.op_str))
+
         if is_call(inst.mnemonic):
             una_op = inst.operands[0]
             if una_op.type == X86_OP_IMM:
                 if una_op.value.imm >= entry and una_op.value.imm <= entry_end:
-                    #cpc = cpc_dict[una_op.value.imm]
                     cpc = cpc_dict.get(una_op.value.imm, None)
                     if cpc is None:
                         offset = una_op.value.imm - entry
-                        print("Entering callee...")
+                        if DISASM_DEBUG:
+                            print("Entering callee...")
                         FUNC = CODE[offset:offset+MAX_PROLOG_BYTES]
                         cpc = callee_arg_sweep(FUNC, entry+offset)
-                        if( cpc >= 14 ):
-                            raw_input("Press enter")
                         cpc_dict[una_op.value.imm] = cpc
                         cpc_chain += str(cpc)
                         cpc_list += str(cpc)
                         cpc_list_nl = False
                     else:
-                        #print("Stored CPC used")
                         cpc_chain += str(cpc)
                         cpc_list += str(cpc)
                         cpc_list_nl = False
 
         if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic):
-            cpc_chain += ","
-            if not cpc_list_nl:
+            cpc_chain += ","        #helpful to provide structure to eye
+            if not cpc_list_nl:     #only add one newline between cpc's
                 cpc_list += "\n"
                 cpc_list_nl = True
 
-    #print("# of CPCs %d" % len(cpc_dict))
-    print(cpc_chain)
-    #print(cpc_list)
+    if PRINT_CPC_LIST:
+        print(cpc_list)
+    else:
+        print(cpc_chain)
 
 def callee_arg_sweep(FUNC, entry):
     context = CalleeContext()
@@ -172,7 +176,11 @@ def callee_arg_sweep(FUNC, entry):
     md = Cs(CS_ARCH_X86, CS_MODE_64)
     md.detail = True
     for inst in md.disasm(FUNC, entry):
-        print("0x%x:\t%s\t%s\t" % (inst.address, inst.mnemonic, inst.op_str))
+
+        if DISASM_DEBUG:
+            print("0x%x:\t%s\t%s\t" % (inst.address, inst.mnemonic,
+                inst.op_str))
+
         if len(inst.operands) == 1:
             una_op = inst.operands[0]
             if una_op.type == X86_OP_REG:
@@ -184,7 +192,6 @@ def callee_arg_sweep(FUNC, entry):
         if (len(inst.operands) == 2):
             dst_op = inst.operands[0]
             src_op = inst.operands[1]
-
             if dst_op.type == X86_OP_REG:
                 dst_op_name = inst.reg_name(dst_op.value.reg)
                 if is_arg_reg(dst_op_name):
@@ -197,7 +204,9 @@ def callee_arg_sweep(FUNC, entry):
         if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic):
             break
 
-    print("leaveing callee")
+    if DISASM_DEBUG:
+        print("leaveing callee")
+
     return context.callee_calculate_cpc()
 
 if __name__ == '__main__':
