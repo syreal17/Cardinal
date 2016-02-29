@@ -8,7 +8,6 @@
 # Luke Jones (luke.t.jones.814@gmail.com)
 #
 #-----------------------------------------------------------------------------
-
 from __future__ import print_function
 
 from elftools.elf.elffile import ELFFile
