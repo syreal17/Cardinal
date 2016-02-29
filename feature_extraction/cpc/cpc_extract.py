@@ -10,11 +10,10 @@
 from __future__ import print_function
 import sys
 
-from elftools.elf.elffile import ELFFile
-
 from capstone import *
 from capstone.x86 import *
 
+from file_processing import *
 from asm_helper import *
 from context import *
 from callee_context import *
@@ -22,57 +21,8 @@ from callee_context import *
 DEV_ONLY_CALLS = True
 MAX_PROLOG_BYTES = 300
 DISASM_DEBUG = False
-PRINT_CPC_LIST = True       #Alternate is printing cpc_chain
+PRINT_CPC_LIST = False #Alternate is printing cpc_chain
 
-def find_section_by_addr(elffile, fstream, addr):
-    """ Finds a section by its base address and returns the index
-    """
-    # Try to find the entry section
-    for i in range(elffile['e_shnum']):
-        section_offset = elffile['e_shoff'] + i * elffile['e_shentsize']
-        # Parse the section header using structs.Elf_Shdr
-        fstream.seek(section_offset)
-        section_header = elffile.structs.Elf_Shdr.parse_stream(fstream)
-
-        if section_header['sh_addr'] == addr:
-            return i
-    else:
-        print('find_section_by_addr: Address not found in sections')
-
-def process_file(filename):
-    #print('Processing file: ', filename)
-    with open(filename, 'rb') as f:
-        elffile = ELFFile(f)
-
-        #Find the entry point
-        #print('Entry Point: ', elffile.header.e_entry)
-        entry = elffile.header.e_entry
-
-        #Find the section associated with the entry point
-        entry_section_i = find_section_by_addr(elffile, f, entry)
-        if not entry_section_i:
-            print('Entry section not found. Perhaps the sample is obfuscated?')
-            return
-        entry_section = elffile.get_section(entry_section_i)
-        #print('Entry section found: ', entry_section.name)
-        entry_section_end = entry + entry_section['sh_size']
-
-        #Find the PLT section
-        plt_section = elffile.get_section_by_name('.plt')
-        if not plt_section:
-            pass
-            #print('PLT section not found. Jump reasoning degraded')
-        else:
-            pass
-            #print('PLT section found.')
-
-        #copy out the entry section
-        f.seek(entry_section['sh_offset'])
-        CODE = b""
-        CODE = f.read(entry_section['sh_size'])
-
-        #simple_linear_sweep_extract(CODE, entry, entry_section_end)
-        caller_cpc_sweep(CODE, entry, entry_section_end)
 
 #Merits: similar structure between O0 samples stands out
 #Negatives: cardinality often wrong
@@ -211,4 +161,7 @@ def callee_arg_sweep(FUNC, entry):
 
 if __name__ == '__main__':
     for filename in sys.argv[1:]:
-        process_file(filename)
+        einfo = ELFInfo()
+        einfo.process_file(filename)
+        #simple_linear_sweep_extract(CODE, entry, entry_section_end)
+        caller_cpc_sweep(einfo.code, einfo.entry_point, einfo.entry_end)
