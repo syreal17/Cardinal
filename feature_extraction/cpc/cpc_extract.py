@@ -21,7 +21,7 @@ from callee_context import *
 DEV_ONLY_CALLS = True
 MAX_PROLOG_BYTES = 300
 DISASM_DEBUG = False
-PRINT_CPC_LIST = True #Alternate is printing cpc_chain
+PRINT_CPC_LIST = False #Alternate is printing cpc_chain
 
 
 #Merits: similar structure between O0 samples stands out

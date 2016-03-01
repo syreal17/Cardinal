@@ -42,13 +42,17 @@ class ELFInfo(object):
             #print('Entry Point: ', elffile.header.e_entry)
             self.entry_point = elffile.header.e_entry
 
+            #lt:this fails on gcc o2&3. Entry point and text section don't
+            #don't match
             #Find the section associated with the entry point
-            entry_section_i = self.find_section_by_addr(elffile, f,
-                                                        self.entry_point)
-            if not entry_section_i:
-                print('Entry section not found. Perhaps the sample is obfuscated?')
-                return
-            entry_section = elffile.get_section(entry_section_i)
+            #entry_section_i = self.find_section_by_addr(elffile, f,
+            #                                            self.entry_point)
+
+            #if not entry_section_i:
+            #    print('Entry section not found. Perhaps the sample is obfuscated?')
+            #    return
+            #entry_section = elffile.get_section(entry_section_i)
+            entry_section = elffile.get_section_by_name('.text')
             #print('Entry section found: ', entry_section.name)
             self.entry_end = self.entry_point + entry_section['sh_size']
 

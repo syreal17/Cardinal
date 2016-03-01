@@ -25,4 +25,4 @@ if __name__ == '__main__':
     for filename in sys.argv[1:]:
         einfo = ELFInfo()
         einfo.process_file(filename)
-        ngram_extract(einfo.code, 5)
+        ngram_extract(einfo.code, 4)
