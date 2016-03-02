@@ -12,19 +12,42 @@
 #Instructions
 #-----------------------------------
 #All of the mov instructions as given in the AMD64 manual
+add_insts = [ #r_r
+    'adc','add','addpd','addps','addsd','addss','addsubpd','addsubps'
+]
+and_insts = ['and','andnpd','andnps','andpd','andps'] #r_r
+arpl_insts = ['arpl'] #r_r
+bound_insts = ['bound'] #r_r
+bsf_insts = ['bsf'] #w_r
+bsr_insts = ['bsr'] #w_r
+bswap_insts = ['bswap'] #r
+bt_insts = ['bt','btc','btr','bts'] #r_r
+call_insts = ['call'] #r
+c_insts = ['cbw','cwde','cdqe','cwd','cdq','cqo'] #none
+cl_insts = ['clc','cld'] #none
 mov_insts = [
     'mov','movapd','movaps','movd','movddup','movdq2q','movdqa','movdqu',
     'movhlps','movhpd','movhps','movlhps', 'movlpd','movlps','movmskpd',
     'movmskps','movntdq','movntdqa','movnti','movntpd','movntps','movntq',
     'movntsd','movntss',' movq','movq2dq','movs','movsb','movsd','movshdup',
-    'movsldup','movsq','movss','movsw','movsx','movupd','movups','movzx'
+    'movsldup','movsq','movss','movsw','movsx','movsxd','movupd','movups',
+    'movzx'
 ]
 mov_prefix = 'mov'
 cmp_prefix = 'cmp'
-lea_inst = ['lea']
-call_inst = ['call']
-ret_inst = ['ret']
-hlt_inst = ['hlt']
+lea_insts = ['lea']
+ret_insts = ['ret']
+hlt_insts = ['hlt']
+nop_insts = ['nop']
+
+#-----------------------------------
+#Instruction groups
+#-----------------------------------
+r_insts = bswap_insts.append(call_insts)
+w_insts = []
+r_r_insts = add_insts.append(and_insts).append(arpl_insts).append(
+    bound_insts).append(bt_insts)
+w_r_insts = bsf_insts.append(bsr_insts)
 
 #-----------------------------------
 #Registers
@@ -76,22 +99,27 @@ def is_cmp(mnemonic):
     return False
 
 def is_lea(mnemonic):
-    if mnemonic in lea_inst:
+    if mnemonic in lea_insts:
         return True
     return False
 
 def is_call(mnemonic):
-    if mnemonic in call_inst:
+    if mnemonic in call_insts:
         return True
     return False
 
 def is_ret(mnemonic):
-    if mnemonic in ret_inst:
+    if mnemonic in ret_insts:
         return True
     return False
 
 def is_hlt(mnemonic):
-    if mnemonic in hlt_inst:
+    if mnemonic in hlt_insts:
+        return True
+    return False
+
+def is_nop(mnemonic):
+    if mnemonic in nop_insts:
         return True
     return False
 
