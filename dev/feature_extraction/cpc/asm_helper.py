@@ -32,6 +32,11 @@ cmov_insts = [ #w_r
     'cmovns','cmovp','cmovpe','cmovnp','cmovpo','cmovl','cmovnge','cmovnl',
     'cmovge','cmovle','cmovng','cmovnle','cmovg'
 ]
+cmp_insts = [ #r_r
+    'cmp','cmps','cmpsb','cmpsw','cmpsd','cmpsq','cmppd','cmpps','cmpss'
+]
+cmpxchg_insts = ['cmpxchg'] #r_r rw_r
+cmpxchgn_insts = ['cmpxchg8b','cmpxchg8b'] #rw
 mov_insts = [
     'mov','movapd','movaps','movd','movddup','movdq2q','movdqa','movdqu',
     'movhlps','movhpd','movhps','movlhps', 'movlpd','movlps','movmskpd',
@@ -50,11 +55,13 @@ nop_insts = ['nop']
 #-----------------------------------
 #Instruction groups
 #-----------------------------------
+rw_insts = cmpxchgn_insts
 r_insts = bswap_insts.append(call_insts)
 w_insts = clflush_insts
 r_r_insts = add_insts.append(and_insts).append(arpl_insts).append(
-    bound_insts).append(bt_insts)
-rw_r_insts = add_insts.append(and_insts)
+    bound_insts).append(bt_insts).append(cmp_insts).append(
+    cmpxchg_insts)
+rw_r_insts = add_insts.append(and_insts).append(cmpxchg_insts)
 w_r_insts = bsf_insts.append(bsr_insts).append(cmov_insts)
 
 #-----------------------------------
