@@ -13,10 +13,14 @@
 #-----------------------------------
 #All of the mov instructions as given in the AMD64 manual
 add_insts = [ #r_r, rw_r
-    'adc','add','addpd','addps','addsd','addss','addsubpd','addsubps'
+    'adc','add']
+addx_insts = [ #r_r rw_r w_r_r
+    'addpd','addps','addsd','addss','addsubpd','addsubps','haddps','haddpd'
 ]
-and_insts = ['and','andnpd','andnps','andpd','andps'] #r_r rw_r
+and_insts = ['and'] #r_r rw_r
+andx_insts = ['andnpd','andnps','andpd','andps'] #r_r rw_r w_r_r
 arpl_insts = ['arpl'] #r_r
+#blend skipped
 bound_insts = ['bound'] #r_r
 bsf_insts = ['bsf'] #w_r
 bsr_insts = ['bsr'] #w_r
@@ -37,6 +41,26 @@ cmp_insts = [ #r_r
 ]
 cmpxchg_insts = ['cmpxchg'] #r_r rw_r
 cmpxchgn_insts = ['cmpxchg8b','cmpxchg8b'] #rw
+comis_insts = [ #r_r
+    'comiss','vcomiss','comisd','vcomisd','ucomiss','vucomiss','ucomisd',
+    'vucomisd'
+]
+cpuid_insts = ['cpuid'] #none
+#crc32 skipped
+cvt_insts = [ #w_r
+    'cvtdq2pd','cvtdq2ps','cvtpd2dq','cvtpd2pi','cvtpd2ps','cvtpi2pd',
+    'cvtpi2ps','cvtps2dq','cvtps2pd','cvtps2pi','cvtsd2si','cvtsd2ss',
+    'cvtsi2sd','cvtsi2ss','cvtss2sd','cvtss2si','cvttpd2dq','cvttpd2pi',
+    'cvttps2dq','cvttps2pi','cvttsd2si','cvttss2si'
+]
+da_insts = ['daa', 'das'] #none
+dec_insts = ['dec'] #rw?
+div_insts = ['div','idiv'] #r
+divx_insts = ['divpd','divps','divsd','divss'] #r_r rw_r w_r_r
+dp_insts = ['dpps','dppd'] #r_r rw_r w_r_r
+enter_insts = ['enter'] #r_r
+#---------Bookmark F's (many are just prefixes, but I don't have bases yet)
+
 mov_insts = [
     'mov','movapd','movaps','movd','movddup','movdq2q','movdqa','movdqu',
     'movhlps','movhpd','movhps','movlhps', 'movlpd','movlps','movmskpd',
@@ -45,24 +69,30 @@ mov_insts = [
     'movsldup','movsq','movss','movsw','movsx','movsxd','movupd','movups',
     'movzx'
 ]
-mov_prefix = 'mov'
-cmp_prefix = 'cmp'
+mul_insts = ['imul'] #r r_r rw_r w_r_r
 lea_insts = ['lea']
 ret_insts = ['ret']
 hlt_insts = ['hlt']
 nop_insts = ['nop']
+subx_insts = ['hsubps','hsubpd']
 
 #-----------------------------------
 #Instruction groups
 #-----------------------------------
-rw_insts = cmpxchgn_insts
-r_insts = bswap_insts.append(call_insts)
+mov_prefix = 'mov'
+cmp_prefix = 'cmp'
+
+rw_insts = cmpxchgn_insts.append(dec_insts)
+r_insts = bswap_insts.append(call_insts).append(div_insts)
 w_insts = clflush_insts
 r_r_insts = add_insts.append(and_insts).append(arpl_insts).append(
     bound_insts).append(bt_insts).append(cmp_insts).append(
-    cmpxchg_insts)
-rw_r_insts = add_insts.append(and_insts).append(cmpxchg_insts)
-w_r_insts = bsf_insts.append(bsr_insts).append(cmov_insts)
+    cmpxchg_insts).append(comis_insts).append(divx_insts).append(
+    addx_insts).append(enter_insts)
+rw_r_insts = add_insts.append(and_insts).append(cmpxchg_insts).append(
+    divx_insts).append(addx_insts)
+w_r_insts = bsf_insts.append(bsr_insts).append(cmov_insts).append(
+    cvt_insts)
 
 #-----------------------------------
 #Registers
