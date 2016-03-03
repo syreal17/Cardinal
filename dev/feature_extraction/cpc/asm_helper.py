@@ -15,12 +15,18 @@
 add_insts = [ #r_r, rw_r
     'adc','add']
 addx_insts = [ #r_r rw_r w_r_r
-    'addpd','addps','addsd','addss','addsubpd','addsubps','haddps','haddpd'
+    'vaddpd','vaddps','vaddsd','vaddss','addsubpd','addsubps','haddps','haddpd'
+    'vhaddps','vhaddpd','addpd','addps','addsd','addss'
 ]
 and_insts = ['and'] #r_r rw_r
-andx_insts = ['andnpd','andnps','andpd','andps'] #r_r rw_r w_r_r
+andx_insts = [ #r_r rw_r w_r_r
+    'vandnpd','vandnps','vandpd','vandps','andnpd','andnps','andpd','andps'
+]
 arpl_insts = ['arpl'] #r_r
-#blend skipped
+blend_insts = [ #r_r rw_r w_r_r
+    'blendps','vblendps','blendpd','vblendpd','blendvps','vblendvps',
+    'blendvpd','vblendvpd'
+]
 bound_insts = ['bound'] #r_r
 bsf_insts = ['bsf'] #w_r
 bsr_insts = ['bsr'] #w_r
@@ -28,7 +34,7 @@ bswap_insts = ['bswap'] #r
 bt_insts = ['bt','btc','btr','bts'] #r_r
 call_insts = ['call'] #r
 c_insts = ['cbw','cwde','cdqe','cwd','cdq','cqo'] #none
-cl_insts = ['clc','cld'] #none
+flag_insts = ['clc','cld','cli','cmc','stc','std','sti'] #none
 clflush_insts = ['clflush'] #w
 cmov_insts = [ #w_r
     'cmovo','cmovno','cmovb','cmovc','cmovnb','cmovnc','cmovae','cmovz',
@@ -38,6 +44,7 @@ cmov_insts = [ #w_r
 ]
 cmp_insts = [ #r_r
     'cmp','cmps','cmpsb','cmpsw','cmpsd','cmpsq','cmppd','cmpps','cmpss'
+    'vcmpps','vcmppd','vcmpss','vcmpsd'
 ]
 cmpxchg_insts = ['cmpxchg'] #r_r rw_r
 cmpxchgn_insts = ['cmpxchg8b','cmpxchg8b'] #rw
@@ -51,30 +58,78 @@ cvt_insts = [ #w_r
     'cvtdq2pd','cvtdq2ps','cvtpd2dq','cvtpd2pi','cvtpd2ps','cvtpi2pd',
     'cvtpi2ps','cvtps2dq','cvtps2pd','cvtps2pi','cvtsd2si','cvtsd2ss',
     'cvtsi2sd','cvtsi2ss','cvtss2sd','cvtss2si','cvttpd2dq','cvttpd2pi',
-    'cvttps2dq','cvttps2pi','cvttsd2si','cvttss2si'
+    'cvttps2dq','cvttps2pi','cvttsd2si','cvttss2si','vcvtdq2pd','vcvtdq2ps',
+    'vcvtpd2dq','vcvtpd2ps','vcvtps2dq','vcvtps2pd','vcvtsd2si','vcvtsd2ss',
+    'vcvtsi2sd','vcvtsi2ss','vcvtss2sd','vcvtss2si','vcvttpd2dq','vcvttps2dq',
+    'vcvttsd2si','vcvttss2si',
 ]
 da_insts = ['daa', 'das'] #none
 dec_insts = ['dec'] #rw?
 div_insts = ['div','idiv'] #r
-divx_insts = ['divpd','divps','divsd','divss'] #r_r rw_r w_r_r
-dp_insts = ['dpps','dppd'] #r_r rw_r w_r_r
+divx_insts = [ #r_r rw_r w_r_r
+    'divpd','divps','divsd','divss','vdivps','vdispd','vdivss','vdivsd'
+]
+dp_insts = ['dpps','dppd','vdpps','vdppd'] #r_r rw_r w_r_r
 enter_insts = ['enter'] #r_r
+extract_insts = [ #w_r
+    'extractps','extrq','pextrb','pextrw','pextrd','pextrq','vpextrb',
+    'vpextrw','vpextrd','vpextrq','vextractps'
+]
 #---------Bookmark F's (many are just prefixes, but I don't have bases yet)
-
-mov_insts = [
+imul_insts = ['imul'] #r r_r rw_r w_r_r
+in_insts = ['in'] #w_r
+inc_insts = ['inc'] #rw
+ins_insts = ['ins','insb','insw','insd'] #r_r
+insert_insts = [ #w_r
+    'insertps','insertq','pinsrb','pinsrw','pinsrd','pinsrq','vpinsrb',
+    'vpinsrw','vpinsrd','vpinsrq','vinsertps'
+]
+int_insts = ['int'] #r
+into_insts = ['into'] #none
+iret_insts = ['iret','iretd','iretq'] #r
+j_insts = [ #r
+    'jo','jno','jb','jc','jnae','jnb','jnc','jae','jz','je','jnz','jne','jna',
+    'jbe','jnbe','ja','js','jns','jp','jpe','jnp','jpo','jl','jnge','jge',
+    'jnl','jng','jle','jnle','jg','jcxz','jecxz','jrcxz'
+]
+jmp_insts = ['jmp'] #r
+lahf_insts = ['lahf'] #none
+load_insts = [ #w_r
+    'lddqu','vlddqu','lds','les','lfs','lgs','lss'
+]
+#ldmxcsr
+lea_insts = ['lea'] #w_r
+leave_insts = ['leave'] #none
+lfence_insts = ['lfence'] #none
+lod_insts = ['lods','lodsb','lodsw','lodsd','lodsq'] #r
+loop_insts = ['loop','loope','loopne','loopnz','loopz'] #r
+maskmov_insts = ['maskmovdqu','vmaskmovdqu'] #r_r
+max_insts = [ #r_r rw_r w_r_r
+    'vmaxps','vmaxpd','vmaxss','vmaxsd','maxps','maxpd','maxss','maxsd'
+]
+min_insts = [ #r_r rw_r w_r_r
+    'vminps','vminpd','vminss','vminsd','minps','minpd','minss','minsd'
+]
+mfence_insts = ['mfence'] #none
+mov_insts = [ #w_r
     'mov','movapd','movaps','movd','movddup','movdq2q','movdqa','movdqu',
     'movhlps','movhpd','movhps','movlhps', 'movlpd','movlps','movmskpd',
     'movmskps','movntdq','movntdqa','movnti','movntpd','movntps','movntq',
-    'movntsd','movntss',' movq','movq2dq','movs','movsb','movsd','movshdup',
-    'movsldup','movsq','movss','movsw','movsx','movsxd','movupd','movups',
-    'movzx'
+    'movntsd','movntss',' movq','movq2dq','movshdup',
+    'movsldup','movss','movsx','movsxd','movupd','movups',
+    'movzx','vmovapd','vmovaps','vmovd','vmovddup','vmovdqa','vmovdqu',
+    'vmovhlps','vmovhpd','vmovhps','vmovlhps','vmovlpd','vmovlps','vmovmskpd',
+    'vmovmskps','vmovntdq','vmovntdqa','vmovntpd','vmovntps','vmovq','vmovsd',
+    'vmovshdup','vmovsldup','vmovss','vmovupd','vmovups'
 ]
-mul_insts = ['imul'] #r r_r rw_r w_r_r
-lea_insts = ['lea']
+movs_insts = [ #r_r
+    'movs','movsb','movsw','movsd','movsq'
+]
+mul_insts = ['mul'] #r
 ret_insts = ['ret']
 hlt_insts = ['hlt']
 nop_insts = ['nop']
-subx_insts = ['hsubps','hsubpd']
+subx_insts = ['hsubps','hsubpd','vhsubps','vhsubpd']
 
 #-----------------------------------
 #Instruction groups
@@ -82,17 +137,18 @@ subx_insts = ['hsubps','hsubpd']
 mov_prefix = 'mov'
 cmp_prefix = 'cmp'
 
-rw_insts = cmpxchgn_insts.append(dec_insts)
-r_insts = bswap_insts.append(call_insts).append(div_insts)
+rw_insts = cmpxchgn_insts + dec_insts + inc_insts
+r_insts = bswap_insts + call_insts + div_insts + int_insts + iret_insts +\
+    j_insts + jmp_insts + lod_insts+loop_insts + imul_insts + mul_insts
 w_insts = clflush_insts
-r_r_insts = add_insts.append(and_insts).append(arpl_insts).append(
-    bound_insts).append(bt_insts).append(cmp_insts).append(
-    cmpxchg_insts).append(comis_insts).append(divx_insts).append(
-    addx_insts).append(enter_insts)
-rw_r_insts = add_insts.append(and_insts).append(cmpxchg_insts).append(
-    divx_insts).append(addx_insts)
-w_r_insts = bsf_insts.append(bsr_insts).append(cmov_insts).append(
-    cvt_insts)
+r_r_insts = add_insts + and_insts + arpl_insts + bound_insts + bt_insts +\
+    cmp_insts + cmpxchg_insts + comis_insts + divx_insts + addx_insts +\
+    enter_insts + blend_insts + maskmov_insts + min_insts + max_insts +\
+    movs_insts + imul_insts
+rw_r_insts = add_insts + and_insts + cmpxchg_insts + divx_insts + addx_insts +\
+    blend_insts + min_insts + max_insts + imul_insts
+w_r_insts = bsf_insts + bsr_insts + cmov_insts + cvt_insts + in_insts +\
+    extract_insts + insert_insts + load_insts + lea_insts + mov_insts
 
 #-----------------------------------
 #Registers
