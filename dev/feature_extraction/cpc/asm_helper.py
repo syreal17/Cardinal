@@ -12,10 +12,10 @@
 #Instructions
 #-----------------------------------
 #All of the mov instructions as given in the AMD64 manual
-add_insts = [ #r_r
+add_insts = [ #r_r, rw_r
     'adc','add','addpd','addps','addsd','addss','addsubpd','addsubps'
 ]
-and_insts = ['and','andnpd','andnps','andpd','andps'] #r_r
+and_insts = ['and','andnpd','andnps','andpd','andps'] #r_r rw_r
 arpl_insts = ['arpl'] #r_r
 bound_insts = ['bound'] #r_r
 bsf_insts = ['bsf'] #w_r
@@ -25,6 +25,13 @@ bt_insts = ['bt','btc','btr','bts'] #r_r
 call_insts = ['call'] #r
 c_insts = ['cbw','cwde','cdqe','cwd','cdq','cqo'] #none
 cl_insts = ['clc','cld'] #none
+clflush_insts = ['clflush'] #w
+cmov_insts = [ #w_r
+    'cmovo','cmovno','cmovb','cmovc','cmovnb','cmovnc','cmovae','cmovz',
+    'cmove','cmovnz','cmovne','cmovbe','cmovna','cmovnbe','cmova','cmovs',
+    'cmovns','cmovp','cmovpe','cmovnp','cmovpo','cmovl','cmovnge','cmovnl',
+    'cmovge','cmovle','cmovng','cmovnle','cmovg'
+]
 mov_insts = [
     'mov','movapd','movaps','movd','movddup','movdq2q','movdqa','movdqu',
     'movhlps','movhpd','movhps','movlhps', 'movlpd','movlps','movmskpd',
@@ -44,10 +51,11 @@ nop_insts = ['nop']
 #Instruction groups
 #-----------------------------------
 r_insts = bswap_insts.append(call_insts)
-w_insts = []
+w_insts = clflush_insts
 r_r_insts = add_insts.append(and_insts).append(arpl_insts).append(
     bound_insts).append(bt_insts)
-w_r_insts = bsf_insts.append(bsr_insts)
+rw_r_insts = add_insts.append(and_insts)
+w_r_insts = bsf_insts.append(bsr_insts).append(cmov_insts)
 
 #-----------------------------------
 #Registers

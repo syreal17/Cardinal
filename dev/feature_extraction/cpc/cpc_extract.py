@@ -97,7 +97,7 @@ def caller_cpc_sweep(CODE, entry, entry_end):
                     if cpc is None:
                         offset = una_op.value.imm - entry
                         if DISASM_DEBUG:
-                            print("Entering callee...")
+                            print("Entering callee @ %x" % una_op.value.imm)
                         FUNC = CODE[offset:offset+MAX_PROLOG_BYTES]
                         cpc = callee_arg_sweep(FUNC, entry+offset)
                         cpc_dict[una_op.value.imm] = cpc
@@ -109,7 +109,7 @@ def caller_cpc_sweep(CODE, entry, entry_end):
                         cpc_list += str(cpc)
                         cpc_list_nl = False
 
-        if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic):
+        if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic) or is_nop(inst.mnemonic):
             cpc_chain += ","        #helpful to provide structure to eye
             if not cpc_list_nl:     #only add one newline between cpc's
                 cpc_list += "\n"
