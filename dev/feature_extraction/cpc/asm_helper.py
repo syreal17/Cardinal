@@ -179,10 +179,6 @@ popcnt_insts = ['popcnt'] #w_r
 popf_insts = ['popf','popfd','popfq'] #none
 #prefetch
 psadbw_insts = ['psadbw','vpsadbw'] #r_r rw_r w_r_r
-pshuf_insts = [ #r_r rw_r w_r_r
-    'vpshufb','vpshufd','vpshufhw','vpshuflw','pshufb','pshufd','pshufhw',
-    'pshuflw'
-]
 psll_insts = [ #r_r rw_r w_r_r
     'vpsllw','vpslld','vpsllq','vpslldq','psllw','pslld','psllq','pslldq'
 ]
@@ -193,15 +189,58 @@ psrl_insts = [ #r_r rw_r w_r_r
     'vpsrlw','vpsrld','vpsrlq','vpsrldq','psrlw','psrld','psrlq','psrldq'
 ]
 pswap_insts = ['pswapd'] #r_r rw_r
-ret_insts = ['ret']
-test_insts = ['test','ptest','vptest'] #r_r
-hlt_insts = ['hlt']
+punpck_insts = [ #r_r rw_r
+    'vpunpckhbw','vpunpckhwd','vpunpckhdq','vpunpckhqdq','vpunpcklbw',
+    'vpunpcklwd','vpunpckldq','vpunpcklqdq','punpckhbw','punpckhwd',
+    'punpckhdq','punpckhqdq','punpcklbw','punpcklwd','punpckldq','punpcklqdq'
+]
+push_insts = ['push'] #r
+pusha_insts = ['pusha','pushad'] #none
+pushf_insts = ['pushf','pushfd','pushfq'] #none
+r_insts = ['rcl','rcr','rol','ror'] #r_r rw_r
+rcp_insts = ['rcpps','rcpss','vrcpps','vrcpss'] #r_r rw_r w_r_r
+ret_insts = ['ret'] #none r
+round_insts = [ #r_r rw_r w_r_r
+    'vroundps','vroundpd','vroundss','vroundsd','roundps','roundpd','roundss',
+    'roundsd'
+]
+sahf_insts = ['sahf'] #none
+s_insts = ['sal','sar','shl','shr','shld','shrd'] #r_r rw_r
+scas_insts = ['scas','scasb','scasd','scasq','scasw'] #none r
+set_insts = [ #w
+    'seto','setno','setb','setc','setnae','setae','setnb','setnc',
+    'sete','setz','setne','setnz','setbe','setna','seta','setnbe',
+    'sets','setns','setp','setpe','setnp','setpo','setl','setnge','setge',
+    'setnl','setle','setng','setg','setnle'
+]
+sfence_insts = ['sfence'] #none
+shuf_insts = [ #r_r rw_r w_r_r
+    'vpshufb','vpshufd','vpshufhw','vpshuflw','pshufb','pshufd','pshufhw',
+    'pshuflw','shufps','vshufps','shufpd','vshufpd'
+]
+sqrt_insts = [ #r_r rw_r w_r_r
+    'vsqrtps','vsqrtpd','vsqrtss','vsqrtsd','sqrtps','sqrtpd','sqrtss',
+    'sqrtsd','rsqrtps','rsqrtss','vrsqrtps','vrsqrtss'
+]
+#stmxcsr
+stos_insts = ['stos','stosb','stosw','stosd','stosq'] #none r
+sub_insts = ['sub','sbb'] #r_r, rw_r
 subx_insts = [ #r_r rw_r w_r_r
     'hsubps','hsubpd','vhsubps','vhsubpd','pfsub','pfsubr'
     'vpsubb','vpsubw','vpsubd','vpsubq','vpsubsb','vpsubsw','vpsubusb',
     'vpsubusw','psubb','psubw','psubd','psubq','psubsb','psubsw','psubusb',
-    'psubusw'
+    'psubusw','subpd','subps','subsd','subss','vsubpd','vsubps','vsubsd',
+    'vsubss'
 ]
+#syscall,sysret,sysenter,sysexit
+test_insts = ['test','ptest','vptest'] #r_r
+unpck_insts = [ #r_r rw_r w_r_r
+    'vunpckhps','vunpckhpd','vunpcklps','vunpcklpd','unpckhps','unpckhpd',
+    'unpcklps','unpcklpd'
+]
+xorx_insts = ['pxor'] #r_r rw_r w_r_r
+
+hlt_insts = ['hlt'] #lt:not in AMD64, machine instruction?
 
 #-----------------------------------
 #Instruction groups
@@ -211,21 +250,25 @@ cmp_prefix = 'cmp'
 
 rw_insts = cmpxchgn_insts + dec_insts + inc_insts + neg_insts + not_insts
 r_insts = bswap_insts + call_insts + div_insts + int_insts + iret_insts +\
-    j_insts + jmp_insts + lod_insts+loop_insts + imul_insts + mul_insts
-w_insts = clflush_insts + pop_insts
+    j_insts + jmp_insts + lod_insts+loop_insts + imul_insts + mul_insts +\
+    push_insts + ret_insts + scas_insts + stos_insts
+w_insts = clflush_insts + pop_insts + set_insts
 r_r_insts = add_insts + and_insts + arpl_insts + bound_insts + bt_insts +\
     cmp_insts + cmpxchg_insts + comis_insts + divx_insts + addx_insts +\
     enter_insts + blend_insts + maskmov_insts + min_insts + max_insts +\
     movs_insts + imul_insts + mulx_insts + or_insts + orx_insts + out_insts +\
     pack_insts + test_insts + pavg_insts + pcmp_insts + pcmpstr_insts +\
     pfacc_insts + pfrcpit_insts + pfrsqit_insts + subx_insts + pfcmp_insts +\
-    psadbw_insts + pshuf_insts + psll_insts + psrl_insts + psra_insts +\
-    pswap_insts
+    psadbw_insts + shuf_insts + psll_insts + psrl_insts + psra_insts +\
+    pswap_insts + punpck_insts + xorx_insts + r_insts + rcp_insts +\
+    round_insts + sqrt_insts + s_insts + sub_insts + unpck_insts
 rw_r_insts = add_insts + and_insts + cmpxchg_insts + divx_insts + addx_insts +\
     blend_insts + min_insts + max_insts + imul_insts + mulx_insts + or_insts +\
     orx_insts + pack_insts + pavg_insts + pcmp_insts + pfacc_insts +\
-    subx_insts + pfcmp_insts + psadbw_insts + pshuf_insts + psll_insts +\
-    psrl_insts + psra_insts + pswap_insts
+    subx_insts + pfcmp_insts + psadbw_insts + shuf_insts + psll_insts +\
+    psrl_insts + psra_insts + pswap_insts + punpck_insts + xorx_insts +\
+    r_insts + rcp_insts + round_insts + sqrt_insts + s_insts + sub_insts +\
+    unpck_insts
 w_r_insts = bsf_insts + bsr_insts + cmov_insts + cvt_insts + in_insts +\
     extract_insts + insert_insts + load_insts + lea_insts + mov_insts +\
     p_insts + pfrcp_insts + pfrsqrt_insts + phminposuw_insts + popcnt_insts
