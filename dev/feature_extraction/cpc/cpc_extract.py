@@ -21,8 +21,8 @@ from callee_context import *
 DEV_ONLY_CALLS = True
 MAX_PROLOG_BYTES = 300
 DISASM_DEBUG = False
-PRINT_CPC_LIST = True #Alternate is printing cpc_chain
-
+ADDR_DEBUG = False
+PRINT_CPC_LIST = False #Alternate is printing cpc_chain
 
 #Merits: similar structure between O0 samples stands out
 #Negatives: cardinality often wrong
@@ -110,10 +110,12 @@ def caller_cpc_sweep(CODE, entry, entry_end):
                         cpc_list_nl = False
 
         if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic) or is_nop(inst.mnemonic):
-            cpc_chain += ","        #helpful to provide structure to eye
             if not cpc_list_nl:     #only add one newline between cpc's
                 cpc_list += "\n"
                 cpc_list_nl = True
+                if ADDR_DEBUG:
+                    cpc_chain += str(hex(inst.address))
+            cpc_chain += ","        #helpful to provide structure to eye
 
     if PRINT_CPC_LIST:
         print(cpc_list)
@@ -136,22 +138,38 @@ def callee_arg_sweep(FUNC, entry):
             if una_op.type == X86_OP_REG:
                 una_op_name = inst.reg_name(una_op.value.reg)
                 if is_arg_reg(una_op_name):
-                    #unary operands are set before use, try and add as src
-                    context.add_src_arg(una_op_name)
+                    if inst.mnemonic in r_group or inst.mnemonic in rw_group:
+                        context.add_src_arg(una_op_name)
+                    elif inst.mnemonic in w_group:
+                        context.add_set_arg(una_op_name)
+                    else:
+                        print("Unrecognized mnemonic: %s" % inst.mnemonic)
 
         if (len(inst.operands) == 2):
             dst_op = inst.operands[0]
             src_op = inst.operands[1]
+
+            #XOR REG1 REG1 case:
+            if dst_op.value.reg == src_op.value.reg:
+                if inst.mnemonic in xor_insts or inst.mnemonic in xorx_insts:
+                    context.add_set_arg(inst.reg_name(dst_op.value.reg))
+
             if dst_op.type == X86_OP_REG:
                 dst_op_name = inst.reg_name(dst_op.value.reg)
                 if is_arg_reg(dst_op_name):
-                    context.add_set_arg(dst_op_name)
+                    if inst.mnemonic in w_r_group:
+                        context.add_set_arg(dst_op_name)
+                    elif inst.mnemonic in r_r_group or inst.mnemonic in rw_r_group:
+                        context.add_src_arg(dst_op_name)
+                    else:
+                        print("Unrecognized mnemonic: %s" % inst.mnemonic)
             if src_op.type == X86_OP_REG:
                 src_op_name = inst.reg_name(src_op.value.reg)
                 if is_arg_reg(src_op_name):
                     context.add_src_arg(src_op_name)
 
-        if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic):
+        if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic) or \
+                                                is_call(inst.mnemonic):
             break
 
     if DISASM_DEBUG:

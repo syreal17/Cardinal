@@ -80,7 +80,8 @@ extract_insts = [ #w_r
     'extractps','extrq','pextrb','pextrw','pextrd','pextrq','vpextrb',
     'vpextrw','vpextrd','vpextrq','vextractps'
 ]
-#---------Bookmark F's (many are just prefixes, but I don't have bases yet)
+#lt:skipping F's in AMD64 manual, vol 1, because they are all x87 instructions 
+#that don't deal with operands like x86
 imul_insts = ['imul'] #r r_r rw_r w_r_r
 in_insts = ['in'] #w_r
 inc_insts = ['inc'] #rw
@@ -134,7 +135,7 @@ mov_insts = [ #w_r
     'vpmovsxwq','vpmovzxbd','vpmovzxbq','vpmovzxbw','vpmovzxdq','vpmovzxwd',
     'vpmovzxwq','pmovsxbd','pmovsxbq','pmovsxbw','pmovsxdq','pmovsxwd',
     'pmovsxwq','pmovzxbd','pmovzxbq','pmovzxbw','pmovzxdq','pmovzxwd',
-    'pmovzxwq'
+    'pmovzxwq','movabs'
 ]
 movs_insts = [ #r_r
     'movs','movsb','movsw','movsd','movsq'
@@ -252,12 +253,12 @@ hlt_insts = ['hlt'] #lt:not in AMD64, machine instruction?
 mov_prefix = 'mov'
 cmp_prefix = 'cmp'
 
-rw_insts = cmpxchgn_insts + dec_insts + inc_insts + neg_insts + not_insts
-r_insts = bswap_insts + call_insts + div_insts + int_insts + iret_insts +\
+rw_group = cmpxchgn_insts + dec_insts + inc_insts + neg_insts + not_insts
+r_group = bswap_insts + call_insts + div_insts + int_insts + iret_insts +\
     j_insts + jmp_insts + lod_insts+loop_insts + imul_insts + mul_insts +\
     push_insts + ret_insts + scas_insts + stos_insts + xlat_insts
-w_insts = clflush_insts + pop_insts + set_insts
-r_r_insts = add_insts + and_insts + arpl_insts + bound_insts + bt_insts +\
+w_group = clflush_insts + pop_insts + set_insts
+r_r_group = add_insts + and_insts + arpl_insts + bound_insts + bt_insts +\
     cmp_insts + cmpxchg_insts + comis_insts + divx_insts + addx_insts +\
     enter_insts + blend_insts + maskmov_insts + min_insts + max_insts +\
     movs_insts + imul_insts + mulx_insts + or_insts + orx_insts + out_insts +\
@@ -267,17 +268,17 @@ r_r_insts = add_insts + and_insts + arpl_insts + bound_insts + bt_insts +\
     pswap_insts + punpck_insts + xorx_insts + r_insts + rcp_insts +\
     round_insts + sqrt_insts + s_insts + sub_insts + unpck_insts +\
     xadd_insts + xchg_insts + xor_insts
-rw_r_insts = add_insts + and_insts + cmpxchg_insts + divx_insts + addx_insts +\
+rw_r_group = add_insts + and_insts + cmpxchg_insts + divx_insts + addx_insts +\
     blend_insts + min_insts + max_insts + imul_insts + mulx_insts + or_insts +\
     orx_insts + pack_insts + pavg_insts + pcmp_insts + pfacc_insts +\
     subx_insts + pfcmp_insts + psadbw_insts + shuf_insts + psll_insts +\
     psrl_insts + psra_insts + pswap_insts + punpck_insts + xorx_insts +\
     r_insts + rcp_insts + round_insts + sqrt_insts + s_insts + sub_insts +\
     unpck_insts + xadd_insts + xchg_insts + xor_insts
-w_r_insts = bsf_insts + bsr_insts + cmov_insts + cvt_insts + in_insts +\
+w_r_group = bsf_insts + bsr_insts + cmov_insts + cvt_insts + in_insts +\
     extract_insts + insert_insts + load_insts + lea_insts + mov_insts +\
     p_insts + pfrcp_insts + pfrsqrt_insts + phminposuw_insts + popcnt_insts
-rw_rw_insts = xchg_insts
+rw_rw_group = xchg_insts
 
 #-----------------------------------
 #Registers
