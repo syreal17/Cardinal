@@ -13,19 +13,24 @@
 #-----------------------------------
 #All of the mov instructions as given in the AMD64 manual
 add_insts = [ #r_r, rw_r
-    'adc','add']
+    'adc','add'
+]
 addx_insts = [ #r_r rw_r w_r_r
     'vaddpd','vaddps','vaddsd','vaddss','addsubpd','addsubps','haddps','haddpd'
-    'vhaddps','vhaddpd','addpd','addps','addsd','addss'
+    'vhaddps','vhaddpd','addpd','addps','addsd','addss','vpaddb','vpaddw',
+    'vpaddd','vpaddq','vpaddsb','vpaddsw','vpaddusb','vpaddusw','paddb',
+    'paddw','paddd','paddq','paddsb','paddsw','paddusb','paddusw','pfadd',
+    'pmaddwd','vpmaddwd'
 ]
 and_insts = ['and'] #r_r rw_r
 andx_insts = [ #r_r rw_r w_r_r
-    'vandnpd','vandnps','vandpd','vandps','andnpd','andnps','andpd','andps'
+    'vandnpd','vandnps','vandpd','vandps','andnpd','andnps','andpd','andps',
+    'pand','pandn','vpand','vpandn'
 ]
 arpl_insts = ['arpl'] #r_r
 blend_insts = [ #r_r rw_r w_r_r
     'blendps','vblendps','blendpd','vblendpd','blendvps','vblendvps',
-    'blendvpd','vblendvpd'
+    'blendvpd','vblendvpd','pblendvb','vpblendvb','pblendw','vpblendw'
 ]
 bound_insts = ['bound'] #r_r
 bsf_insts = ['bsf'] #w_r
@@ -105,10 +110,14 @@ lod_insts = ['lods','lodsb','lodsw','lodsd','lodsq'] #r
 loop_insts = ['loop','loope','loopne','loopnz','loopz'] #r
 maskmov_insts = ['maskmovdqu','vmaskmovdqu'] #r_r
 max_insts = [ #r_r rw_r w_r_r
-    'vmaxps','vmaxpd','vmaxss','vmaxsd','maxps','maxpd','maxss','maxsd'
+    'vmaxps','vmaxpd','vmaxss','vmaxsd','maxps','maxpd','maxss','maxsd',
+    'pfmax','vpmaxub','vpmaxuw','vpmaxud','vpmaxsb','vpmaxsw','vpmaxsd',
+    'pmaxub','pmaxuw','pmaxud','pmaxsb','pmaxsw','pmaxsd'
 ]
 min_insts = [ #r_r rw_r w_r_r
-    'vminps','vminpd','vminss','vminsd','minps','minpd','minss','minsd'
+    'vminps','vminpd','vminss','vminsd','minps','minpd','minss','minsd',
+    'pfmin','vpminub','vpminuw','vpminud','vpminsb','vpminsw','vpminsd',
+    'pminub','pminuw','pminud','pminsb','pminsw','pminsd'
 ]
 mfence_insts = ['mfence'] #none
 mov_insts = [ #w_r
@@ -120,16 +129,79 @@ mov_insts = [ #w_r
     'movzx','vmovapd','vmovaps','vmovd','vmovddup','vmovdqa','vmovdqu',
     'vmovhlps','vmovhpd','vmovhps','vmovlhps','vmovlpd','vmovlps','vmovmskpd',
     'vmovmskps','vmovntdq','vmovntdqa','vmovntpd','vmovntps','vmovq','vmovsd',
-    'vmovshdup','vmovsldup','vmovss','vmovupd','vmovups'
+    'vmovshdup','vmovsldup','vmovss','vmovupd','vmovups','pmovmskb',
+    'vpmovmskb','vpmovsxbd','vpmovsxbq','vpmovsxbw','vpmovsxdq','vpmovsxwd',
+    'vpmovsxwq','vpmovzxbd','vpmovzxbq','vpmovzxbw','vpmovzxdq','vpmovzxwd',
+    'vpmovzxwq','pmovsxbd','pmovsxbq','pmovsxbw','pmovsxdq','pmovsxwd',
+    'pmovsxwq','pmovzxbd','pmovzxbq','pmovzxbw','pmovzxdq','pmovzxwd',
+    'pmovzxwq'
 ]
 movs_insts = [ #r_r
     'movs','movsb','movsw','movsd','movsq'
 ]
 mul_insts = ['mul'] #r
+mulx_insts = [ #r_r rw_r w_r_r
+    'vmulps','vmulpd','vmulss','vmulsd','mulps','mulpd','mulss','mulsd',
+    'vpmulhw','vpmullw','vpmulhuw','vpmuludq','vmpulld','vmpuldq','pmulhw',
+    'pmullw','pmulhuw','pmuludq','mpulld','mpuldq','pmulhrw'
+]
+neg_insts = ['neg'] #rw
+nop_insts = ['nop'] #none
+not_insts = ['not'] #rw
+or_insts = ['or'] # r_r rw_r
+orx_insts = ['orps','vorps','orpd','vorpd','por','vpor'] # r_r rw_r w_r_r
+out_insts = ['out','outs','outsb','outsw','outsd'] #r_r
+pack_insts = [ #r_r rw_r w_r_r
+    'vpackssdw','vpackusdw','vpacksswb','vpackuswb','packssdw','packusdw',
+    'packsswb','packuswb'
+]
+pavg_insts = ['pavgb','pavgw','vpavgb','vpavgw'] #r_r rw_r w_r_r
+pcmp_insts = [ #r_r rw_r w_r_r
+    'vpcmpeqq','vpcmpgtb','vpcmpgtw','vpcmpgtd','vpcmpgtq','vpcmpeqb',
+    'vpcmpeqw','vpcmpeqd','pcmpeqq','pcmpgtb','pcmpgtw','pcmpgtd','pcmpgtq',
+    'pcmpeqb','pcmpeqw','pcmpeqd'
+]
+pcmpstr_insts = [ #r_r w_r_r
+    'vpcmpestri','vpcmpestrm','vpcmpistri','vpcmpistrm','pcmpestri',
+    'pcmpestrm','pcmpistri','pcmpistrm'
+]
+p_insts = ['pf2iw','pf2id','pi2fw','pi2fd'] #w_r
+pfacc_insts = ['pfacc','pfnacc','pfpnacc'] #r_r rw_r
+pfcmp_insts = ['pfcmpeq','pfcmpgt','pfcmpge'] #r_r rw_r
+pfrcp_insts = ['pfrcp'] #w_r
+pfrcpit_insts = ['pfrcpit1', 'pfrcpit2'] #r_r
+pfrsqrt_insts = ['pfrsqrt'] # w_r
+pfrsqit_insts = ['pfrsqit1'] # r_r
+phminposuw_insts = ['phminposuw','vphminposuw'] #w_r
+pop_insts = ['pop'] #w
+popa_insts = ['popa','popad'] #none
+popcnt_insts = ['popcnt'] #w_r
+popf_insts = ['popf','popfd','popfq'] #none
+#prefetch
+psadbw_insts = ['psadbw','vpsadbw'] #r_r rw_r w_r_r
+pshuf_insts = [ #r_r rw_r w_r_r
+    'vpshufb','vpshufd','vpshufhw','vpshuflw','pshufb','pshufd','pshufhw',
+    'pshuflw'
+]
+psll_insts = [ #r_r rw_r w_r_r
+    'vpsllw','vpslld','vpsllq','vpslldq','psllw','pslld','psllq','pslldq'
+]
+psra_insts = [ #r_r rw_r w_r_r
+    'psraw','psrad','vpsraw','vpsrad'
+]
+psrl_insts = [ #r_r rw_r w_r_r
+    'vpsrlw','vpsrld','vpsrlq','vpsrldq','psrlw','psrld','psrlq','psrldq'
+]
+pswap_insts = ['pswapd'] #r_r rw_r
 ret_insts = ['ret']
+test_insts = ['test','ptest','vptest'] #r_r
 hlt_insts = ['hlt']
-nop_insts = ['nop']
-subx_insts = ['hsubps','hsubpd','vhsubps','vhsubpd']
+subx_insts = [ #r_r rw_r w_r_r
+    'hsubps','hsubpd','vhsubps','vhsubpd','pfsub','pfsubr'
+    'vpsubb','vpsubw','vpsubd','vpsubq','vpsubsb','vpsubsw','vpsubusb',
+    'vpsubusw','psubb','psubw','psubd','psubq','psubsb','psubsw','psubusb',
+    'psubusw'
+]
 
 #-----------------------------------
 #Instruction groups
@@ -137,18 +209,26 @@ subx_insts = ['hsubps','hsubpd','vhsubps','vhsubpd']
 mov_prefix = 'mov'
 cmp_prefix = 'cmp'
 
-rw_insts = cmpxchgn_insts + dec_insts + inc_insts
+rw_insts = cmpxchgn_insts + dec_insts + inc_insts + neg_insts + not_insts
 r_insts = bswap_insts + call_insts + div_insts + int_insts + iret_insts +\
     j_insts + jmp_insts + lod_insts+loop_insts + imul_insts + mul_insts
-w_insts = clflush_insts
+w_insts = clflush_insts + pop_insts
 r_r_insts = add_insts + and_insts + arpl_insts + bound_insts + bt_insts +\
     cmp_insts + cmpxchg_insts + comis_insts + divx_insts + addx_insts +\
     enter_insts + blend_insts + maskmov_insts + min_insts + max_insts +\
-    movs_insts + imul_insts
+    movs_insts + imul_insts + mulx_insts + or_insts + orx_insts + out_insts +\
+    pack_insts + test_insts + pavg_insts + pcmp_insts + pcmpstr_insts +\
+    pfacc_insts + pfrcpit_insts + pfrsqit_insts + subx_insts + pfcmp_insts +\
+    psadbw_insts + pshuf_insts + psll_insts + psrl_insts + psra_insts +\
+    pswap_insts
 rw_r_insts = add_insts + and_insts + cmpxchg_insts + divx_insts + addx_insts +\
-    blend_insts + min_insts + max_insts + imul_insts
+    blend_insts + min_insts + max_insts + imul_insts + mulx_insts + or_insts +\
+    orx_insts + pack_insts + pavg_insts + pcmp_insts + pfacc_insts +\
+    subx_insts + pfcmp_insts + psadbw_insts + pshuf_insts + psll_insts +\
+    psrl_insts + psra_insts + pswap_insts
 w_r_insts = bsf_insts + bsr_insts + cmov_insts + cvt_insts + in_insts +\
-    extract_insts + insert_insts + load_insts + lea_insts + mov_insts
+    extract_insts + insert_insts + load_insts + lea_insts + mov_insts +\
+    p_insts + pfrcp_insts + pfrsqrt_insts + phminposuw_insts + popcnt_insts
 
 #-----------------------------------
 #Registers
