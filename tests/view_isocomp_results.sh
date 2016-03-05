@@ -24,6 +24,8 @@ fi
 
 find ../corpora/ -name *$1*$2*.$3.feature.bloom -exec python ../dev/similarity/bloom-jaccard/bloom_jaccard_ind.py {} + > report.txt
 
+printf "isocomp, $1-$2-$3:\n" 
+
 printf "O0 <-> O1: "
 grep "o0.*o1.*$" report.txt | cut -d " " -f 3
 

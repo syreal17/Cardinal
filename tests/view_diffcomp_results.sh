@@ -18,6 +18,8 @@ fi
 
 find ../corpora/ -name *$1*.$2.feature.bloom -exec python ../dev/similarity/bloom-jaccard/bloom_jaccard_ind.py {} + > report.txt
 
+printf "diff comp, $1-$2:\n"
+
 printf "clang O0 <-> gcc O0: "
 grep "clang\.o0.*gcc\.o0.*$" report.txt | cut -d " " -f 3
 
