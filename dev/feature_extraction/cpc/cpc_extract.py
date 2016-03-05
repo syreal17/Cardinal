@@ -22,7 +22,7 @@ DEV_ONLY_CALLS = True
 MAX_PROLOG_BYTES = 300
 DISASM_DEBUG = False
 ADDR_DEBUG = False
-PRINT_CPC_LIST = False #Alternate is printing cpc_chain
+PRINT_CPC_LIST = False #Alternate is printing cpc_chain #TODO: make this switch
 
 #Merits: similar structure between O0 samples stands out
 #Negatives: cardinality often wrong
@@ -173,7 +173,7 @@ def callee_arg_sweep(FUNC, entry):
             break
 
     if DISASM_DEBUG:
-        print("leaveing callee")
+        print("leaving callee, cpc=%d" % context.callee_calculate_cpc())
 
     return context.callee_calculate_cpc()
 
