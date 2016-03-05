@@ -1,8 +1,11 @@
 #!/bin/bash
-
+printf "Generating burg features"
 ./create_sigs.sh burg
+printf "Generating treecc features"
 ./create_sigs.sh treecc
+printf "Generating lua features"
 ./create_sigs.sh lua
+printf "Generating sqlite3 features"
 ./create_sigs.sh sqlite3
 
 ./view_isocomp_results.sh burg clang cpc > big_four.report
