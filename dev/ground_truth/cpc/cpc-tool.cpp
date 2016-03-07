@@ -5,8 +5,14 @@
 #include <llvm/Support/raw_ostream.h>
 #include <llvm/IR/Instructions.h>
 #include <llvm/IR/Function.h>
+#include <map>
 
 using namespace llvm;
+using namespace std;
+
+const bool PRINT_CPCC = false; //prints cpc chains
+const bool PRINT_CPCD = true; //prints cpc dictionaries
+
 int main(int argc, char* argv[])
 {
 	if(argc < 2 || argc > 2){
@@ -17,8 +23,12 @@ int main(int argc, char* argv[])
 	SMDiagnostic error;
 	std::unique_ptr<Module> m = parseIRFile(argv[1], error, context);
 	
+	map<StringRef,unsigned int> func_name_to_cpc;
 	for(auto fit = m->begin(); fit != m->end(); ++fit)
 	{
+		if(PRINT_CPCC){
+			outs() << ","; //every new function, insert ","
+		}
 		for(auto bit = fit->begin(); bit != fit->end(); ++bit)
 		{
 			for(auto iit = bit->begin(); iit != bit->end(); ++iit)
@@ -27,12 +37,23 @@ int main(int argc, char* argv[])
 					Function *f = call->getCalledFunction();
 					if( !f->isDeclaration())
 					{
-						//outs() << *call << "\n";
-						outs() << call->getNumArgOperands();
+						if(PRINT_CPCC){
+							outs() << call->getNumArgOperands();
+						}
+						if(PRINT_CPCD){
+							StringRef name = f->getName();
+							unsigned int cpc = call->getNumArgOperands();
+							func_name_to_cpc.insert(pair<StringRef,unsigned int>(name, cpc));
+						}
 					}
 				}
 			}	
-			outs() << ",";
+		}
+	}
+	if(PRINT_CPCD){
+		for(auto it = func_name_to_cpc.begin(); it != func_name_to_cpc.end(); it++)
+		{
+			outs() << it->first << ": " << it->second << "\n";	
 		}
 	}
 	outs() << "\n";

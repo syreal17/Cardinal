@@ -1,12 +1,14 @@
 #!/bin/bash
-printf "Generating burg features"
+printf "Generating burg features\n"
 ./create_sigs.sh burg
-printf "Generating treecc features"
+printf "Generating treecc features\n"
 ./create_sigs.sh treecc
-printf "Generating lua features"
+printf "Generating lua features\n"
 ./create_sigs.sh lua
-printf "Generating sqlite3 features"
+printf "Generating sqlite3 features\n"
 ./create_sigs.sh sqlite3
+
+printf "Generating report\n"
 
 ./view_isocomp_results.sh burg clang cpc > big_four.report
 ./view_isocomp_results.sh burg clang mc >> big_four.report
