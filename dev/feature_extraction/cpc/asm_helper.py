@@ -253,7 +253,8 @@ hlt_insts = ['hlt'] #lt:not in AMD64, machine instruction?
 mov_prefix = 'mov'
 cmp_prefix = 'cmp'
 
-rw_group = cmpxchgn_insts + dec_insts + inc_insts + neg_insts + not_insts
+rw_group = cmpxchgn_insts + dec_insts + inc_insts + neg_insts + not_insts +\
+    s_insts
 r_group = bswap_insts + call_insts + div_insts + int_insts + iret_insts +\
     j_insts + jmp_insts + lod_insts+loop_insts + imul_insts + mul_insts +\
     push_insts + ret_insts + scas_insts + stos_insts + xlat_insts

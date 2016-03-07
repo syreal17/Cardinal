@@ -22,7 +22,9 @@ DEV_ONLY_CALLS = True
 MAX_PROLOG_BYTES = 300
 DISASM_DEBUG = False
 ADDR_DEBUG = False
-PRINT_CPC_LIST = False #Alternate is printing cpc_chain #TODO: make this switch
+PRINT_CPC_CHAIN = False
+PRINT_CPC_LIST = False #this is used for bloom and jaccard
+PRINT_CPC_DICT = True
 
 #Merits: similar structure between O0 samples stands out
 #Negatives: cardinality often wrong
@@ -75,7 +77,7 @@ def simple_linear_sweep_extract(CODE, entry, entry_end):
 
     print("%s" % context.cpc_chain)
 
-def caller_cpc_sweep(CODE, entry, entry_end):
+def caller_cpc_sweep(CODE, entry, entry_end, addr_to_sym):
     cpc_dict = dict()   #keeps track of function cardinalities already found
     cpc_chain = ""      #this is the more readable form
     cpc_list = ""       #this is the more consumable form
@@ -119,8 +121,16 @@ def caller_cpc_sweep(CODE, entry, entry_end):
 
     if PRINT_CPC_LIST:
         print(cpc_list)
-    else:
+    if PRINT_CPC_CHAIN:
         print(cpc_chain)
+    if PRINT_CPC_DICT:
+        for addr in cpc_dict:
+            try:
+                func_name = addr_to_sym[addr]
+                cpc = cpc_dict[addr]
+                print("%s: %d" % (func_name, cpc))
+            except KeyError:
+                pass
 
 def callee_arg_sweep(FUNC, entry):
     context = CalleeContext()
@@ -213,4 +223,5 @@ if __name__ == '__main__':
         einfo = ELFInfo()
         einfo.process_file(filename)
         #simple_linear_sweep_extract(CODE, entry, entry_section_end)
-        caller_cpc_sweep(einfo.code, einfo.entry_point, einfo.entry_end)
+        caller_cpc_sweep(einfo.code, einfo.entry_point, einfo.entry_end,
+                         einfo.addr_to_sym)

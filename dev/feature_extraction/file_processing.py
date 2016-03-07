@@ -11,12 +11,14 @@
 from __future__ import print_function
 
 from elftools.elf.elffile import ELFFile
+from elftools.elf.sections import SymbolTableSection
 
 class ELFInfo(object):
     def __init__(self):
         self.code = b""
         self.entry_point = 0
         self.entry_end = 0
+        self.addr_to_sym = dict()
 
     def find_section_by_addr(self, elffile, fstream, addr):
         """ Finds a section by its base address and returns the index
@@ -64,6 +66,17 @@ class ELFInfo(object):
             #else:
             #    pass
             #    #print('PLT section found.')
+
+            #find symtab and create address to symbol dictionary
+            symtab_section = elffile.get_section_by_name('.symtab')
+
+            if not symtab_section:
+                print('No symbol table found. Perhaps binary stripped')
+            if isinstance(symtab_section, SymbolTableSection):
+                num_symbols = symtab_section.num_symbols()
+                for s in range(1,num_symbols):
+                    sym = symtab_section.get_symbol(s)
+                    self.addr_to_sym[sym['st_value']] = sym.name
 
             #copy out the entry section
             f.seek(entry_section['sh_offset'])
