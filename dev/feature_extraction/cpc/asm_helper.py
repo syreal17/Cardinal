@@ -135,10 +135,10 @@ mov_insts = [ #w_r
     'vpmovsxwq','vpmovzxbd','vpmovzxbq','vpmovzxbw','vpmovzxdq','vpmovzxwd',
     'vpmovzxwq','pmovsxbd','pmovsxbq','pmovsxbw','pmovsxdq','pmovsxwd',
     'pmovsxwq','pmovzxbd','pmovzxbq','pmovzxbw','pmovzxdq','pmovzxwd',
-    'pmovzxwq','movabs'
+    'pmovzxwq','movabs','movsd'
 ]
 movs_insts = [ #r_r
-    'movs','movsb','movsw','movsd','movsq'
+    'movs','movsb','movsw','movsq'#movsd aliases with one above
 ]
 mul_insts = ['mul'] #r
 mulx_insts = [ #r_r rw_r w_r_r

@@ -144,6 +144,15 @@ def callee_arg_sweep(FUNC, entry):
                         context.add_set_arg(una_op_name)
                     else:
                         print("Unrecognized mnemonic: %s" % inst.mnemonic)
+            if una_op.type == X86_OP_MEM:
+                if una_op.value.mem.base != 0:
+                    base_op_name = inst.reg_name(una_op.value.mem.base)
+                    if is_arg_reg(base_op_name):
+                        context.add_src_arg(base_op_name)
+                if una_op.value.mem.index != 0:
+                    index_op_name = inst.reg_name(una_op.value.mem.index)
+                    if is_arg_reg(index_op_name):
+                        context.add_src_arg(index_op_name)
 
         if (len(inst.operands) == 2):
             dst_op = inst.operands[0]
@@ -163,10 +172,30 @@ def callee_arg_sweep(FUNC, entry):
                         context.add_src_arg(dst_op_name)
                     else:
                         print("Unrecognized mnemonic: %s" % inst.mnemonic)
+            elif dst_op.type == X86_OP_MEM:
+                if dst_op.value.mem.base != 0:
+                    base_op_name = inst.reg_name(dst_op.value.mem.base)
+                    if is_arg_reg(base_op_name):
+                        context.add_src_arg(base_op_name)
+                if dst_op.value.mem.index != 0:
+                    index_op_name = inst.reg_name(dst_op.value.mem.index)
+                    if is_arg_reg(index_op_name):
+                        context.add_src_arg(index_op_name)
             if src_op.type == X86_OP_REG:
                 src_op_name = inst.reg_name(src_op.value.reg)
                 if is_arg_reg(src_op_name):
                     context.add_src_arg(src_op_name)
+            elif src_op.type == X86_OP_MEM:
+                if src_op.value.mem.base != 0:
+                    base_op_name = inst.reg_name(src_op.value.mem.base)
+                    if is_arg_reg(base_op_name):
+                        context.add_src_arg(base_op_name)
+                if src_op.value.mem.index != 0:
+                    index_op_name = inst.reg_name(src_op.value.mem.index)
+                    if is_arg_reg(index_op_name):
+                        context.add_src_arg(index_op_name)
+
+        #TODO: 3 operand instructions. acquire example code first
 
         if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic) or \
                                                 is_call(inst.mnemonic):
@@ -175,6 +204,8 @@ def callee_arg_sweep(FUNC, entry):
     if DISASM_DEBUG:
         print("leaving callee, cpc=%d" % context.callee_calculate_cpc())
 
+    #print("-----")
+    #context.print_arg_regs()
     return context.callee_calculate_cpc()
 
 if __name__ == '__main__':

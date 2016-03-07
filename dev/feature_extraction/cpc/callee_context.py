@@ -50,21 +50,37 @@ class CalleeContext(object):
         self.xmm6_src = False;
         self.xmm7_src = False;
 
-    def print_int_regs(self):
-        if self.rdi_set is True:
+    def print_arg_regs(self):
+        if self.rdi_src is True:
             print("rdi,")
-        if self.rsi_set is True:
+        if self.rsi_src is True:
             print("rsi,")
-        if self.rdx_set is True:
+        if self.rdx_src is True:
             print("rdx,")
-        if self.rcx_set is True:
+        if self.rcx_src is True:
             print("rcx,")
-        if self.r10_set is True:
+        if self.r10_src is True:
             print("r10,")
-        if self.r8_set is True:
+        if self.r8_src is True:
             print("r8,")
-        if self.r9_set is True:
+        if self.r9_src is True:
             print("r9,")
+        if self.xmm0_src is True:
+            print("xmm0,")
+        if self.xmm1_src is True:
+            print("xmm1,")
+        if self.xmm2_src is True:
+            print("xmm2,")
+        if self.xmm3_src is True:
+            print("xmm3,")
+        if self.xmm4_src is True:
+            print("xmm4,")
+        if self.xmm5_src is True:
+            print("xmm5,")
+        if self.xmm6_src is True:
+            print("xmm6,")
+        if self.xmm7_src is True:
+            print("xmm7,")
 
     def add_set_arg(self,operand):
         """ Adds a possible argument to args
