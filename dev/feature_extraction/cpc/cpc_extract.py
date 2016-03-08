@@ -24,7 +24,7 @@ DISASM_DEBUG = False
 ADDR_DEBUG = False
 PRINT_CPC_CHAIN = False
 PRINT_CPC_LIST = False #this is used for bloom and jaccard
-PRINT_CPC_DICT = True
+PRINT_CPC_DICT = False
 
 #Merits: similar structure between O0 samples stands out
 #Negatives: cardinality often wrong
@@ -111,7 +111,8 @@ def caller_cpc_sweep(CODE, entry, entry_end, addr_to_sym):
                         cpc_list += str(cpc)
                         cpc_list_nl = False
 
-        if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic) or is_nop(inst.mnemonic):
+        if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic) or\
+                                                is_nop(inst.mnemonic):
             if not cpc_list_nl:     #only add one newline between cpc's
                 cpc_list += "\n"
                 cpc_list_nl = True
@@ -219,7 +220,17 @@ def callee_arg_sweep(FUNC, entry):
     return context.callee_calculate_cpc()
 
 if __name__ == '__main__':
-    for filename in sys.argv[1:]:
+    if sys.argv[1] == '-c':
+        PRINT_CPC_CHAIN = True
+    elif sys.argv[1] == '-l':
+        PRINT_CPC_LIST = True
+    elif sys.argv[1] == '-d':
+        PRINT_CPC_DICT = True
+    else:
+        print("Unknown option: %s. c for chain, l for list, d for dictionary"
+              % sys.argv[1])
+
+    for filename in sys.argv[2:]:
         einfo = ELFInfo()
         einfo.process_file(filename)
         #simple_linear_sweep_extract(CODE, entry, entry_section_end)

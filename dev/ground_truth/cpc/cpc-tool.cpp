@@ -35,15 +35,18 @@ int main(int argc, char* argv[])
 			{
 				if( CallInst *call = dyn_cast<CallInst>(iit) ){
 					Function *f = call->getCalledFunction();
-					if( !f->isDeclaration())
+					if( f != NULL )
 					{
-						if(PRINT_CPCC){
-							outs() << call->getNumArgOperands();
-						}
-						if(PRINT_CPCD){
-							StringRef name = f->getName();
-							unsigned int cpc = call->getNumArgOperands();
-							func_name_to_cpc.insert(pair<StringRef,unsigned int>(name, cpc));
+						if( !f->isDeclaration())
+						{
+							if(PRINT_CPCC){
+								outs() << call->getNumArgOperands();
+							}
+							if(PRINT_CPCD){
+								StringRef name = f->getName();
+								unsigned int cpc = call->getNumArgOperands();
+								func_name_to_cpc.insert(pair<StringRef,unsigned int>(name, cpc));
+							}
 						}
 					}
 				}
