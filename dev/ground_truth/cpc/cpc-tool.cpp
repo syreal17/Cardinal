@@ -56,7 +56,11 @@ int main(int argc, char* argv[])
 	if(PRINT_CPCD){
 		for(auto it = func_name_to_cpc.begin(); it != func_name_to_cpc.end(); it++)
 		{
-			outs() << it->first << ": " << it->second << "\n";	
+			if( it == func_name_to_cpc.begin() ){
+				outs() << it->first << ": " << it->second;
+			} else {
+				outs() << "\n" << it->first << ": " << it->second;
+			}
 		}
 	}
 	outs() << "\n";
