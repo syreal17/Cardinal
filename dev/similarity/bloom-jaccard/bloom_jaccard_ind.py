@@ -24,6 +24,8 @@ def jaccard_ind(filename_1, filename_2):
             j_i = float(bits_inter) / float(bits_union)
             #print("%s ~ %s, %f" % filename_1, filename_2, j_i)
             print("%s %s %f" % (filename_1, filename_2, j_i))
+        f_2.close()
+    f_1.close()
 
 
 if __name__ == '__main__':
