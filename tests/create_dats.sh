@@ -5,7 +5,7 @@ sample=$5
 comp=$2
 meth=$3
 iso=$4
-		grep "$sample,$comp,$meth,$iso" big_four.report | cut -d " " -f 2 | awk '{printf("%s",$0);}' >> $1 
+grep "$sample,$comp,$meth,$iso" big_four.report | cut -d " " -f 2 | awk '{printf("%s",$0);}' >> $1 
 printf " " >> $1
 }
 
@@ -33,3 +33,5 @@ done
 }
 
 get_dat iso.clang.cpc.bloom.dat clang cpc-bloom
+get_dat iso.clang.mcn.dat clang mc-bloom
+get_dat iso.clang.cpc.edit.dat clang cpc-edit
