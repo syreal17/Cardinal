@@ -1,12 +1,14 @@
 #!/bin/bash
 
 get_result () {
+	file=$1
 	sample=$5
 	comp=$2
 	meth=$3
 	iso=$4
-	grep "$sample,$comp,$meth,$iso" big_four.report.cfd0454 | cut -d " " -f 2 | awk '{printf("%s",$0);}' >> $1 
-	printf " " >> $1
+	grep "$sample,$comp,$meth,$iso" multi_sample.report | cut -d " " -f 2 | \
+awk '{printf("%s",$0);}' >> $file
+	printf " " >> $file
 }
 
 #copy passed in sample names
@@ -33,6 +35,6 @@ get_dat () {
 	done
 }
 
-get_dat iso.clang.cpc.bloom.dat clang cpc-bloom
-#get_dat iso.clang.mcn.dat clang mc-bloom
-#get_dat iso.clang.cpc.edit.dat clang cpc-edit
+get_dat plots/iso.clang.cpc.bloom.dat clang cpc-bloom
+get_dat plots/iso.clang.mcn.dat clang mc-bloom
+get_dat plots/iso.clang.cpc.edit.dat clang cpc-edit
