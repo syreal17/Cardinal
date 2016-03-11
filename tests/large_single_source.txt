@@ -1,0 +1,12 @@
+X 109k UnitTests/Vector/constpool
+29k  UnitTests/Vectorizer/gcc-loops
+26k  UnitTests/2006-01-23-UnionInit
+35k  Benchmarks/Shootout-C++/hash
+30k  Benchmarks/Shootout-C++/reversefile
+37k  ""   		     hash2
+32k  "" 		     spellcheck
+42k  "" 		     wordfreq
+27k  Benchmarks/CoyoteBench/fftbench
+1.4M Benchmarks/Misc-C++-EH/spirit
+All of Benchmarks/Adobe-C++
+Most of Benchmarks/Misc-C++

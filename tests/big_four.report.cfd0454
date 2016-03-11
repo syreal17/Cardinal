@@ -1,0 +1,165 @@
+isocomp, burg-clang-cpc:
+burg,clang,cpc-bloom,O0-O1: 0.180276
+burg,clang,cpc-bloom,O0-O2: 0.139928
+burg,clang,cpc-bloom,O0-O3: 0.137184
+burg,clang,cpc-bloom,O1-O2: 0.267717
+burg,clang,cpc-bloom,O1-O3: 0.267717
+burg,clang,cpc-bloom,O2-O3: 0.904535
+isocomp, burg-clang-mc:
+burg,clang,mc-bloom,O0-O1: 0.047361
+burg,clang,mc-bloom,O0-O2: 0.047353
+burg,clang,mc-bloom,O0-O3: 0.047233
+burg,clang,mc-bloom,O1-O2: 0.206165
+burg,clang,mc-bloom,O1-O3: 0.201464
+burg,clang,mc-bloom,O2-O3: 0.501065
+isocomp, treecc-clang-cpc:
+treecc,clang,cpc-bloom,O0-O1: 0.115022
+treecc,clang,cpc-bloom,O0-O2: 0.114393
+treecc,clang,cpc-bloom,O0-O3: 0.098667
+treecc,clang,cpc-bloom,O1-O2: 0.252835
+treecc,clang,cpc-bloom,O1-O3: 0.249497
+treecc,clang,cpc-bloom,O2-O3: 0.752075
+isocomp, treecc-clang-mc:
+treecc,clang,mc-bloom,O0-O1: 0.043199
+treecc,clang,mc-bloom,O0-O2: 0.044335
+treecc,clang,mc-bloom,O0-O3: 0.043126
+treecc,clang,mc-bloom,O1-O2: 0.246051
+treecc,clang,mc-bloom,O1-O3: 0.233794
+treecc,clang,mc-bloom,O2-O3: 0.448007
+isocomp, lua-clang-cpc:
+lua,clang,cpc-bloom,O0-O1: 0.127173
+lua,clang,cpc-bloom,O0-O2: 0.107744
+lua,clang,cpc-bloom,O0-O3: 0.106711
+lua,clang,cpc-bloom,O1-O2: 0.180358
+lua,clang,cpc-bloom,O1-O3: 0.181168
+lua,clang,cpc-bloom,O2-O3: 0.616544
+isocomp, lua-clang-mc:
+lua,clang,mc-bloom,O0-O1: 0.062245
+lua,clang,mc-bloom,O0-O2: 0.062260
+lua,clang,mc-bloom,O0-O3: 0.062376
+lua,clang,mc-bloom,O1-O2: 0.209990
+lua,clang,mc-bloom,O1-O3: 0.192502
+lua,clang,mc-bloom,O2-O3: 0.463280
+isocomp, sqlite3-clang-cpc:
+sqlite3,clang,cpc-bloom,O0-O1: 0.133991
+sqlite3,clang,cpc-bloom,O0-O2: 0.109824
+sqlite3,clang,cpc-bloom,O0-O3: 0.107358
+sqlite3,clang,cpc-bloom,O1-O2: 0.109160
+sqlite3,clang,cpc-bloom,O1-O3: 0.102806
+sqlite3,clang,cpc-bloom,O2-O3: 0.279494
+isocomp, sqlite3-clang-mc:
+sqlite3,clang,mc-bloom,O0-O1: 0.086923
+sqlite3,clang,mc-bloom,O0-O2: 0.083945
+sqlite3,clang,mc-bloom,O0-O3: 0.082071
+sqlite3,clang,mc-bloom,O1-O2: 0.188572
+sqlite3,clang,mc-bloom,O1-O3: 0.170425
+sqlite3,clang,mc-bloom,O2-O3: 0.351118
+isocomp, burg-gcc-cpc:
+burg,gcc,cpc-bloom,O0-O1: 0.218203
+burg,gcc,cpc-bloom,O0-O2: 0.155530
+burg,gcc,cpc-bloom,O0-O3: 0.123699
+burg,gcc,cpc-bloom,O1-O2: 0.183544
+burg,gcc,cpc-bloom,O1-O3: 0.160462
+burg,gcc,cpc-bloom,O2-O3: 0.477740
+isocomp, burg-gcc-mc:
+burg,gcc,mc-bloom,O0-O1: 0.068900
+burg,gcc,mc-bloom,O0-O2: 0.056840
+burg,gcc,mc-bloom,O0-O3: 0.058025
+burg,gcc,mc-bloom,O1-O2: 0.123119
+burg,gcc,mc-bloom,O1-O3: 0.108008
+burg,gcc,mc-bloom,O2-O3: 0.286307
+isocomp, treecc-gcc-cpc:
+treecc,gcc,cpc-bloom,O0-O1: 0.227647
+treecc,gcc,cpc-bloom,O0-O2: 0.083595
+treecc,gcc,cpc-bloom,O0-O3: 0.069258
+treecc,gcc,cpc-bloom,O1-O2: 0.114166
+treecc,gcc,cpc-bloom,O1-O3: 0.093168
+treecc,gcc,cpc-bloom,O2-O3: 0.139550
+isocomp, treecc-gcc-mc:
+treecc,gcc,mc-bloom,O0-O1: 0.062973
+treecc,gcc,mc-bloom,O0-O2: 0.050417
+treecc,gcc,mc-bloom,O0-O3: 0.056027
+treecc,gcc,mc-bloom,O1-O2: 0.128252
+treecc,gcc,mc-bloom,O1-O3: 0.103739
+treecc,gcc,mc-bloom,O2-O3: 0.281231
+isocomp, lua-gcc-cpc:
+lua,gcc,cpc-bloom,O0-O1: 0.116002
+lua,gcc,cpc-bloom,O0-O2: 0.114170
+lua,gcc,cpc-bloom,O0-O3: 0.105984
+lua,gcc,cpc-bloom,O1-O2: 0.215888
+lua,gcc,cpc-bloom,O1-O3: 0.152572
+lua,gcc,cpc-bloom,O2-O3: 0.196433
+isocomp, lua-gcc-mc:
+lua,gcc,mc-bloom,O0-O1: 0.082006
+lua,gcc,mc-bloom,O0-O2: 0.067509
+lua,gcc,mc-bloom,O0-O3: 0.065981
+lua,gcc,mc-bloom,O1-O2: 0.159629
+lua,gcc,mc-bloom,O1-O3: 0.128127
+lua,gcc,mc-bloom,O2-O3: 0.252428
+isocomp, sqlite3-gcc-cpc:
+sqlite3,gcc,cpc-bloom,O0-O1: 0.112597
+sqlite3,gcc,cpc-bloom,O0-O2: 0.100089
+sqlite3,gcc,cpc-bloom,O0-O3: 0.106068
+sqlite3,gcc,cpc-bloom,O1-O2: 0.144205
+sqlite3,gcc,cpc-bloom,O1-O3: 0.138355
+sqlite3,gcc,cpc-bloom,O2-O3: 0.156302
+isocomp, sqlite3-gcc-mc:
+sqlite3,gcc,mc-bloom,O0-O1: 0.099771
+sqlite3,gcc,mc-bloom,O0-O2: 0.083127
+sqlite3,gcc,mc-bloom,O0-O3: 0.080157
+sqlite3,gcc,mc-bloom,O1-O2: 0.169811
+sqlite3,gcc,mc-bloom,O1-O3: 0.153666
+sqlite3,gcc,mc-bloom,O2-O3: 0.286512
+diff comp, burg-cpc:
+burg,cpc-bloom,O0-O0: 0.950442
+burg,cpc-bloom,O1-O1: 0.215438
+burg,cpc-bloom,O2-O2: 0.173370
+burg,cpc-bloom,O3-O3: 0.164286
+diff comp, burg-mc:
+burg,mc-bloom,O0-O0: 0.071061
+burg,mc-bloom,O1-O1: 0.084704
+burg,mc-bloom,O2-O2: 0.080876
+burg,mc-bloom,O3-O3: 0.079857
+diff comp, treecc-cpc:
+treecc,cpc-bloom,O0-O0: 0.968624
+treecc,cpc-bloom,O1-O1: 0.139028
+treecc,cpc-bloom,O2-O2: 0.114604
+treecc,cpc-bloom,O3-O3: 0.082462
+diff comp, treecc-mc:
+treecc,mc-bloom,O0-O0: 0.081539
+treecc,mc-bloom,O1-O1: 0.093226
+treecc,mc-bloom,O2-O2: 0.087380
+treecc,mc-bloom,O3-O3: 0.083880
+diff comp, lua-cpc:
+lua,cpc-bloom,O0-O0: 0.875986
+lua,cpc-bloom,O1-O1: 0.231760
+lua,cpc-bloom,O2-O2: 0.148607
+lua,cpc-bloom,O3-O3: 0.146347
+diff comp, lua-mc:
+lua,mc-bloom,O0-O0: 0.099349
+lua,mc-bloom,O1-O1: 0.110742
+lua,mc-bloom,O2-O2: 0.099386
+lua,mc-bloom,O3-O3: 0.102234
+diff comp, sqlite3-cpc:
+sqlite3,cpc-bloom,O0-O0: 0.809098
+sqlite3,cpc-bloom,O1-O1: 0.147479
+sqlite3,cpc-bloom,O2-O2: 0.102978
+sqlite3,cpc-bloom,O3-O3: 0.090002
+diff comp, sqlite3-mc:
+sqlite3,mc-bloom,O0-O0: 0.113326
+sqlite3,mc-bloom,O1-O1: 0.135095
+sqlite3,mc-bloom,O2-O2: 0.129800
+sqlite3,mc-bloom,O3-O3: 0.137688
+isocomp, burg-clang:
+burg,clang,cpc-edit,O0-O1: burg,clang,cpc-edit,O0-O2: burg,clang,cpc-edit,O0-O3: burg,clang,cpc-edit,O1-O2: burg,clang,cpc-edit,O1-O3: burg,clang,cpc-edit,O2-O3: isocomp, treecc-clang:
+treecc,clang,cpc-edit,O0-O1: treecc,clang,cpc-edit,O0-O2: treecc,clang,cpc-edit,O0-O3: treecc,clang,cpc-edit,O1-O2: treecc,clang,cpc-edit,O1-O3: treecc,clang,cpc-edit,O2-O3: isocomp, lua-clang:
+lua,clang,cpc-edit,O0-O1: lua,clang,cpc-edit,O0-O2: lua,clang,cpc-edit,O0-O3: lua,clang,cpc-edit,O1-O2: lua,clang,cpc-edit,O1-O3: lua,clang,cpc-edit,O2-O3: isocomp, sqlite3-clang:
+sqlite3,clang,cpc-edit,O0-O1: sqlite3,clang,cpc-edit,O0-O2: sqlite3,clang,cpc-edit,O0-O3: sqlite3,clang,cpc-edit,O1-O2: sqlite3,clang,cpc-edit,O1-O3: sqlite3,clang,cpc-edit,O2-O3: isocomp, burg-gcc:
+burg,gcc,cpc-edit,O0-O1: burg,gcc,cpc-edit,O0-O2: burg,gcc,cpc-edit,O0-O3: burg,gcc,cpc-edit,O1-O2: burg,gcc,cpc-edit,O1-O3: burg,gcc,cpc-edit,O2-O3: isocomp, treecc-gcc:
+treecc,gcc,cpc-edit,O0-O1: treecc,gcc,cpc-edit,O0-O2: treecc,gcc,cpc-edit,O0-O3: treecc,gcc,cpc-edit,O1-O2: treecc,gcc,cpc-edit,O1-O3: treecc,gcc,cpc-edit,O2-O3: isocomp, lua-gcc:
+lua,gcc,cpc-edit,O0-O1: lua,gcc,cpc-edit,O0-O2: lua,gcc,cpc-edit,O0-O3: lua,gcc,cpc-edit,O1-O2: lua,gcc,cpc-edit,O1-O3: lua,gcc,cpc-edit,O2-O3: isocomp, sqlite3-gcc:
+sqlite3,gcc,cpc-edit,O0-O1: sqlite3,gcc,cpc-edit,O0-O2: sqlite3,gcc,cpc-edit,O0-O3: sqlite3,gcc,cpc-edit,O1-O2: sqlite3,gcc,cpc-edit,O1-O3: sqlite3,gcc,cpc-edit,O2-O3: diff comp, burg:
+burg,cpc-edit,O0-O0: burg,cpc-edit,O1-O1: burg,cpc-edit,O2-O2: burg,cpc-edit,O3-O3: diff comp, treecc:
+treecc,cpc-edit,O0-O0: treecc,cpc-edit,O1-O1: treecc,cpc-edit,O2-O2: treecc,cpc-edit,O3-O3: diff comp, lua:
+lua,cpc-edit,O0-O0: lua,cpc-edit,O1-O1: lua,cpc-edit,O2-O2: lua,cpc-edit,O3-O3: diff comp, sqlite3:
+sqlite3,cpc-edit,O0-O0: sqlite3,cpc-edit,O1-O1: sqlite3,cpc-edit,O2-O2: sqlite3,cpc-edit,O3-O3: 
