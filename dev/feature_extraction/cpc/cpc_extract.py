@@ -81,7 +81,8 @@ def caller_cpc_sweep(CODE, entry, entry_end, addr_to_sym):
     cpc_dict = dict()   #keeps track of function cardinalities already found
     cpc_chain = ""      #this is the more readable form
     cpc_list = ""       #this is the more consumable form
-    cpc_list_nl = False #Whether we need a newline in the cpc_list
+    cpc_list_nl = False  #Whether we need a newline in the cpc_list
+    cpc_first = True
 
     md = Cs(CS_ARCH_X86, CS_MODE_64)
     md.detail = True
@@ -103,18 +104,24 @@ def caller_cpc_sweep(CODE, entry, entry_end, addr_to_sym):
                         FUNC = CODE[offset:offset+MAX_PROLOG_BYTES]
                         cpc = callee_arg_sweep(FUNC, entry+offset)
                         cpc_dict[una_op.value.imm] = cpc
-                        cpc_chain += str(cpc)
+                        if cpc_list_nl and not cpc_first:
+                            cpc_list += "\n"
                         cpc_list += str(cpc)
                         cpc_list_nl = False
+                        cpc_chain += str(cpc)
+                        cpc_first = False
                     else:
-                        cpc_chain += str(cpc)
+                        if cpc_list_nl and not cpc_first:
+                            cpc_list += "\n"
                         cpc_list += str(cpc)
                         cpc_list_nl = False
+                        cpc_chain += str(cpc)
+                        cpc_first = False
 
         if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic) or\
                                                 is_nop(inst.mnemonic):
             if not cpc_list_nl:     #only add one newline between cpc's
-                cpc_list += "\n"
+                #cpc_list += "\n"
                 cpc_list_nl = True
                 if ADDR_DEBUG:
                     cpc_chain += str(hex(inst.address))

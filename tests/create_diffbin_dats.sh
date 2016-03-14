@@ -35,7 +35,7 @@ gcc,O0-O0 gcc,O1-O1 gcc,O2-O2 gcc,O3-O3"
 			do
 				if [ $sample != $sample2 ]
 				then
-					printf "$sample,$sample2\n" >> $legend
+					printf "$sample,$sample2,$meth\n" >> $legend
 					get_result $file $meth $opt $sample $sample2
 				fi
 			done
@@ -44,6 +44,6 @@ gcc,O0-O0 gcc,O1-O1 gcc,O2-O2 gcc,O3-O3"
 	done
 }
 
-get_dat plots/diff.bin.cpc.bloom.dat cpc-bloom diff.bin.legend.txt
-get_dat plots/diff.bin.mcn.dat mc-bloom diff.bin.legend.txt
-get_dat plots/diff.bin.cpc.edit.dat cpc-edit diff.bin.legend.txt
+get_dat plots/diff.bin.cpc.bloom.dat cpc-bloom plots/diff.bin.cpc.bloom.legend.txt
+get_dat plots/diff.bin.mcn.dat mc-bloom plots/diff.bin.mc.bloom.legend.txt
+get_dat plots/diff.bin.cpc.edit.dat cpc-edit plots/diff.bin.cpc.edit.legend.txt
