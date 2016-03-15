@@ -17,6 +17,7 @@ if __name__ == '__main__':
         print("Need at least 2 file arguments. Ground truth first.")
         sys.exit()
 
+    wrong = list()
     truth = dict()
     test = dict()
     with open(sys.argv[1], 'r') as g:
@@ -35,11 +36,17 @@ if __name__ == '__main__':
                     right_count += 1
                 else:
                     wrong_count += 1
+                    entry = ""
+                    entry = tokens[0] + "=" + truth[tokens[0]].strip() + " !="\
+                            + tokens[1].strip()
+                    wrong.append(entry)
             except KeyError:
                 pass
 
     percent = float(right_count)/float(right_count+wrong_count)
 
-    print("%f accuracy for %d functions" % (percent,right_count+wrong_count))
-    #for entry in truth:
-        #print("%s, %s" % (entry, truth[entry]))
+    print("%s %f accuracy for %d functions" %
+          (sys.argv[2],percent,right_count+wrong_count))
+
+    for entry in wrong:
+        print(entry)

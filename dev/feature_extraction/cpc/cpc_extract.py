@@ -21,7 +21,7 @@ from callee_context import *
 DEV_ONLY_CALLS = True
 MAX_PROLOG_BYTES = 300
 DISASM_DEBUG = False
-ADDR_DEBUG = False
+ADDR_DEBUG = True
 PRINT_CPC_CHAIN = False
 PRINT_CPC_LIST = False #this is used for bloom and jaccard
 PRINT_CPC_DICT = False
@@ -83,6 +83,7 @@ def caller_cpc_sweep(CODE, entry, entry_end, addr_to_sym):
     cpc_list = ""       #this is the more consumable form
     cpc_list_nl = False  #Whether we need a newline in the cpc_list
     cpc_first = True
+    found_lib_call = False
 
     md = Cs(CS_ARCH_X86, CS_MODE_64)
     md.detail = True
@@ -106,6 +107,7 @@ def caller_cpc_sweep(CODE, entry, entry_end, addr_to_sym):
                         cpc_dict[una_op.value.imm] = cpc
                         if cpc_list_nl and not cpc_first:
                             cpc_list += "\n"
+                            #cpc_chain += ","
                         cpc_list += str(cpc)
                         cpc_list_nl = False
                         cpc_chain += str(cpc)
@@ -113,10 +115,13 @@ def caller_cpc_sweep(CODE, entry, entry_end, addr_to_sym):
                     else:
                         if cpc_list_nl and not cpc_first:
                             cpc_list += "\n"
+                            #cpc_chain += ","
                         cpc_list += str(cpc)
                         cpc_list_nl = False
                         cpc_chain += str(cpc)
                         cpc_first = False
+                else:
+                    found_lib_call = True
 
         if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic) or\
                                                 is_nop(inst.mnemonic):
@@ -125,7 +130,22 @@ def caller_cpc_sweep(CODE, entry, entry_end, addr_to_sym):
                 cpc_list_nl = True
                 if ADDR_DEBUG:
                     cpc_chain += str(hex(inst.address))
-            cpc_chain += ","        #helpful to provide structure to eye
+            #cpc_chain += ","
+            if is_ret(inst.mnemonic):
+                if found_lib_call:
+                    cpc_chain += ":"
+                else:
+                    cpc_chain += "."
+            elif is_nop(inst.mnemonic):
+                if found_lib_call:
+                    cpc_chain += ";"
+                else:
+                    cpc_chain += ","
+            else:
+                cpc_chain += "_"
+
+            found_lib_call = False
+
 
     if PRINT_CPC_LIST:
         print(cpc_list)
