@@ -22,6 +22,7 @@ DEV_ONLY_CALLS = True
 MAX_PROLOG_BYTES = 300
 DISASM_DEBUG = False
 ADDR_DEBUG = True
+DICT_DEBUG = False
 PRINT_CPC_CHAIN = False
 PRINT_CPC_LIST = False #this is used for bloom and jaccard
 PRINT_CPC_DICT = False
@@ -102,6 +103,7 @@ def caller_cpc_sweep(CODE, entry, entry_end, addr_to_sym):
                         offset = una_op.value.imm - entry
                         if DISASM_DEBUG:
                             print("Entering callee @ %x" % una_op.value.imm)
+                        #raw_input("Press key to continue")
                         FUNC = CODE[offset:offset+MAX_PROLOG_BYTES]
                         cpc = callee_arg_sweep(FUNC, entry+offset)
                         cpc_dict[una_op.value.imm] = cpc
@@ -152,12 +154,16 @@ def caller_cpc_sweep(CODE, entry, entry_end, addr_to_sym):
     if PRINT_CPC_CHAIN:
         print(cpc_chain)
     if PRINT_CPC_DICT:
+        if DICT_DEBUG:
+            print("cpc_dict = %d long" % len(cpc_dict))
         for addr in cpc_dict:
             try:
                 func_name = addr_to_sym[addr]
                 cpc = cpc_dict[addr]
                 print("%s: %d" % (func_name, cpc))
             except KeyError:
+                if DICT_DEBUG:
+                    print("Addr %x not in dictionary" % addr)
                 pass
 
 def callee_arg_sweep(FUNC, entry):

@@ -42,7 +42,7 @@ class ELFInfo(object):
 
             #Find the entry point
             #print('Entry Point: ', elffile.header.e_entry)
-            self.entry_point = elffile.header.e_entry
+            #self.entry_point = elffile.header.e_entry
 
             #lt:this fails on gcc o2&3. Entry point and text section don't
             #don't match
@@ -56,6 +56,7 @@ class ELFInfo(object):
             #entry_section = elffile.get_section(entry_section_i)
             entry_section = elffile.get_section_by_name('.text')
             #print('Entry section found: ', entry_section.name)
+            self.entry_point = entry_section['sh_addr']
             self.entry_end = self.entry_point + entry_section['sh_size']
 
             #Find the PLT section
