@@ -340,6 +340,16 @@ def is_call(mnemonic):
         return True
     return False
 
+def is_jcc(mnemonic):
+    if mnemonic in j_insts:
+        return True
+    return False
+
+def is_jmp(mnemonic):
+    if mnemonic in jmp_insts:
+        return True
+    return False
+
 def is_ret(mnemonic):
     if mnemonic in ret_insts:
         return True

@@ -17,6 +17,7 @@ from file_processing import *
 from asm_helper import *
 from context import *
 from callee_context import *
+from bb import *
 
 DEV_ONLY_CALLS = True
 MAX_PROLOG_BYTES = 300
@@ -77,6 +78,60 @@ def simple_linear_sweep_extract(CODE, entry, entry_end):
             context.dump()
 
     print("%s" % context.cpc_chain)
+
+def boundary_sweep(CODE, entry, entry_end):
+    bb_list = list()
+    bb_dict = dict()
+    in_bb = False
+    end_bb = False
+    need_fall_bb = False
+
+    md = Cs(CS_ARCH_X86, CS_MODE_64)
+    md.detail = True
+    for inst in md.disasm(CODE, entry):
+        bb = None
+        if not in_bb:
+            in_bb = True
+            try:
+                bb = bb_dict[inst.address]
+                bb.index = len(bb_list)
+            except KeyError:
+                bb = BasicBlock(len(bb_list),inst.address, None, None, None, None)
+                bb_dict[inst.address] = bb
+            bb_list.append(bb)
+
+            if end_bb:
+                end_bb = False
+                pbb = bb_list[len(bb_list)-2]
+                pbb.next_addr = inst.address
+
+            if need_fall_bb:
+                need_fall_bb = False
+                pbb = bb_list[len(bb_list)-2]
+                pbb.fall_block = bb
+
+
+        else:
+            bb = bb_list[len(bb_list)-1]
+
+
+        if is_jcc(inst.mnemonic):
+            una_op = inst.operands[0]
+            if una_op.type == X86_OP_IMM:
+                if una_op.value.imm >= entry and una_op.value.imm <= entry_end:
+                    try:
+                        bb.jump_block = bb_dict[una_op.value.imm]
+                    except KeyError:
+                        jbb = BasicBlock(None, una_op.value.imm, None, None, None, None)
+                        bb_dict[una_op.value.imm] = jbb
+                        bb.jump_block = jbb
+            bb.end_addr = inst.address
+            in_bb = False
+            end_bb = True
+            need_fall_bb = True
+    for bb in bb_list:
+        bb.debug_print()
+    raw_input()
 
 def caller_cpc_sweep(CODE, entry, entry_end, addr_to_sym):
     cpc_dict = dict()   #keeps track of function cardinalities already found
@@ -267,5 +322,6 @@ if __name__ == '__main__':
         einfo = ELFInfo()
         einfo.process_file(filename)
         #simple_linear_sweep_extract(CODE, entry, entry_section_end)
+        boundary_sweep(einfo.code, einfo.entry_point, einfo.entry_end)
         caller_cpc_sweep(einfo.code, einfo.entry_point, einfo.entry_end,
                          einfo.addr_to_sym)
