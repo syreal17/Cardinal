@@ -85,11 +85,13 @@ def boundary_sweep(CODE, entry, entry_end):
     in_bb = False
     end_bb = False
     need_fall_bb = False
+    call_targets = list()
 
     md = Cs(CS_ARCH_X86, CS_MODE_64)
     md.detail = True
     for inst in md.disasm(CODE, entry):
         bb = None
+        #If we're not already in basic block, find existing or create new one
         if not in_bb:
             in_bb = True
             try:
@@ -100,38 +102,104 @@ def boundary_sweep(CODE, entry, entry_end):
                 bb_dict[inst.address] = bb
             bb_list.append(bb)
 
+            #If previously we needed to end a basic block, supply next_addr
+            pbb = bb_list[len(bb_list)-2]
             if end_bb:
                 end_bb = False
-                pbb = bb_list[len(bb_list)-2]
                 pbb.next_addr = inst.address
 
+            #If previously we needed a fall through block, supply it
             if need_fall_bb:
                 need_fall_bb = False
-                pbb = bb_list[len(bb_list)-2]
                 pbb.fall_block = bb
 
-
+        #If we're still in a basic block from before...
         else:
-            bb = bb_list[len(bb_list)-1]
+            #If this ins already has a basic block, close out the previous one
+            try:
+                bb = bb_dict[inst.address]
+                bb.index = len(bb_list)
+                bb_list.append(bb)
+                pbb = bb_list[len(bb_list)-2]
+                pbb.next_addr = inst.address
+                pbb.fall_block = bb
+            #Other wise, just get the current bb from the list
+            except KeyError:
+                bb = bb_list[len(bb_list)-1]
 
+        #Always update bb with new ending and new addr
+        bb.end_addr = inst.address
+        bb.addrs.append(inst.address)
+        bb_dict[inst.address] = bb
 
         if is_jcc(inst.mnemonic):
             una_op = inst.operands[0]
+            #If the address is an immediate, make a provisional
+            #bb for it
             if una_op.type == X86_OP_IMM:
+                in_bb = False
+                end_bb = True
+                need_fall_bb = True
                 if una_op.value.imm >= entry and una_op.value.imm <= entry_end:
                     try:
-                        bb.jump_block = bb_dict[una_op.value.imm]
+                        jbb = bb_dict[una_op.value.imm]
+                        if jbb.start_addr == una_op.value.imm:
+                            bb.jump_block = jbb
+                        else:
+                            bb.jump_block = jbb.split(una_op.value.imm)
+                            for addr in bb.jump_block.addrs:
+                                bb_dict[addr] = bb.jump_block
+                            i = bb_list.index(jbb)
+                            bb_list.insert(i+1, bb.jump_block)
                     except KeyError:
                         jbb = BasicBlock(None, una_op.value.imm, None, None, None, None)
                         bb_dict[una_op.value.imm] = jbb
                         bb.jump_block = jbb
-            bb.end_addr = inst.address
+
+        if is_jmp(inst.mnemonic):
+            una_op = inst.operands[0]
+            #If the address is an immediate, make a provisional
+            #bb for it
+            if una_op.type == X86_OP_IMM:
+                in_bb = False
+                end_bb = True
+                need_fall_bb = False
+                if una_op.value.imm >= entry and una_op.value.imm <= entry_end:
+                    try:
+                        jbb = bb_dict[una_op.value.imm]
+                        if jbb.start_addr == una_op.value.imm:
+                            bb.jump_block = jbb
+                        else:
+                            bb.jump_block = jbb.split(una_op.value.imm)
+                            for addr in bb.jump_block.addrs:
+                                bb_dict[addr] = bb.jump_block
+                            i = bb_list.index(jbb)
+                            bb_list.insert(i+1, bb.jump_block)
+                    except KeyError:
+                        jbb = BasicBlock(None, una_op.value.imm, None, None, None, None)
+                        bb_dict[una_op.value.imm] = jbb
+                        bb.jump_block = jbb
+
+        #remember calls for later (starting points)
+        if is_call(inst.mnemonic):
+            una_op = inst.operands[0]
+            if una_op.type == X86_OP_IMM:
+                if una_op.value.imm >= entry and una_op.value.imm <= entry_end:
+                    call_targets.append(una_op.value.imm)
+
+        if is_ret(inst.mnemonic) or is_hlt(inst.mnemonic):
+            in_bb = False
+            end_bb = True
+            need_fall_bb = False
+
+        if is_nop(inst.mnemonic):
             in_bb = False
             end_bb = True
             need_fall_bb = True
+
     for bb in bb_list:
         bb.debug_print()
-    raw_input()
+    #raw_input()
 
 def caller_cpc_sweep(CODE, entry, entry_end, addr_to_sym):
     cpc_dict = dict()   #keeps track of function cardinalities already found
