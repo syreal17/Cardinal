@@ -8,6 +8,8 @@
 #
 #-----------------------------------------------------------------------------
 
+import re
+
 #-----------------------------------
 #Instructions
 #-----------------------------------
@@ -319,6 +321,10 @@ arg_reg_xmm7 = ['xmm7']
 #    if mnemonic in mov_insts:
 #        return True
 #    return False
+def remove_prefixes(mnemonic):
+    new = re.sub('rep[a-z]?[a-z]?', '', mnemonic)
+    new = re.sub('lock', '', new)
+    return new.strip()
 
 def is_mov(mnemonic):
     if mov_prefix in mnemonic:
@@ -331,49 +337,48 @@ def is_cmp(mnemonic):
     return False
 
 def is_lea(mnemonic):
+    mnemonic = remove_prefixes(mnemonic)
     if mnemonic in lea_insts:
         return True
     return False
 
 def is_call(mnemonic):
+    mnemonic = remove_prefixes(mnemonic)
     if mnemonic in call_insts:
         return True
     return False
 
 def is_jcc(mnemonic):
+    mnemonic = remove_prefixes(mnemonic)
     if mnemonic in j_insts:
         return True
     return False
 
 def is_jmp(mnemonic):
+    mnemonic = remove_prefixes(mnemonic)
     if mnemonic in jmp_insts:
         return True
     return False
 
 def is_ret(mnemonic):
+    mnemonic = remove_prefixes(mnemonic)
     if mnemonic in ret_insts:
         return True
     return False
 
 def is_hlt(mnemonic):
+    mnemonic = remove_prefixes(mnemonic)
     if mnemonic in hlt_insts:
         return True
     return False
 
 def is_nop(mnemonic):
+    mnemonic = remove_prefixes(mnemonic)
     if mnemonic in nop_insts:
         return True
     return False
 
-#TODO: actually use in cpc_extract
 def is_arg_reg(operand):
     if operand in arg_regs_all:
         return True
     return False
-
-
-#-------------------------------------
-#Advanced arg finding
-#-------------------------------------
-
-#push, mov to stack, pop as assignment

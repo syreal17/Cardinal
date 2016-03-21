@@ -18,6 +18,7 @@ from asm_helper import *
 from context import *
 from callee_context import *
 from bb import *
+from func import *
 
 DEV_ONLY_CALLS = True
 MAX_PROLOG_BYTES = 300
@@ -79,12 +80,15 @@ def simple_linear_sweep_extract(CODE, entry, entry_end):
 
     print("%s" % context.cpc_chain)
 
+
+bb_list = list()
+bb_dict = dict()
+
 def boundary_sweep(CODE, entry, entry_end):
-    bb_list = list()
-    bb_dict = dict()
     in_bb = False
     end_bb = False
     need_fall_bb = False
+    nop_block = False
     call_targets = list()
 
     md = Cs(CS_ARCH_X86, CS_MODE_64)
@@ -108,6 +112,11 @@ def boundary_sweep(CODE, entry, entry_end):
                 end_bb = False
                 pbb.next_addr = inst.address
 
+            if nop_block:
+                nop_block = False
+                ppbb = bb_list[len(bb_list)-3]
+                ppbb.next_addr = inst.address
+
             #If previously we needed a fall through block, supply it
             if need_fall_bb:
                 need_fall_bb = False
@@ -115,7 +124,7 @@ def boundary_sweep(CODE, entry, entry_end):
 
         #If we're still in a basic block from before...
         else:
-            #If this ins already has a basic block, close out the previous one
+            #If this ins has already been jumped to, make a bb, a close the prv
             try:
                 bb = bb_dict[inst.address]
                 bb.index = len(bb_list)
@@ -196,10 +205,52 @@ def boundary_sweep(CODE, entry, entry_end):
             in_bb = False
             end_bb = True
             need_fall_bb = True
+            nop_block = True
 
     for bb in bb_list:
         bb.debug_print()
+    find_funcs()
+    for func in func_list:
+        func.debug_print()
     #raw_input()
+
+bb_func = list()
+func_list = list()
+def add_bb(bb):
+    #print("%x" % bb.start_addr)
+    #raw_input()
+    bb_func.append(bb)
+    if bb.fall_block != None and bb_func.count(bb.fall_block) == 0:
+        add_bb(bb.fall_block)
+    if bb.jump_block != None and bb_func.count(bb.jump_block) == 0:
+        add_bb(bb.jump_block)
+
+def find_funcs():
+    while len(bb_list) != 0:
+        head_bb = bb_list[0]
+        func = Func(head_bb.start_addr, None)
+        #print("%x------------" % head_bb.start_addr)
+        #raw_input()
+        add_bb(head_bb)
+        #sort bb_func on starting address
+        bb_func.sort(cmp=lambda x,y: int(x.start_addr - y.start_addr))
+        #walk start and end addr to check adjacency
+        #remove bb_func bbs from bb_list
+        i = bb_func.index(head_bb)
+        next_addr = head_bb.start_addr
+        for x in range(i,len(bb_func)):
+            bb = bb_func[x]
+            #print("%x %x" % (bb.start_addr, bb.next_addr))
+            if bb.start_addr == next_addr:
+                #print("%x" % bb.start_addr)
+                if bb_list.count(bb) != 0:
+                    bb_list.remove(bb)
+                func.end_addr = bb.end_addr
+                next_addr = bb.next_addr
+            else:
+                break
+
+        func_list.append(func)
 
 def caller_cpc_sweep(CODE, entry, entry_end, addr_to_sym):
     cpc_dict = dict()   #keeps track of function cardinalities already found
