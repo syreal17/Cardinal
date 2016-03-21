@@ -112,10 +112,10 @@ def boundary_sweep(CODE, entry, entry_end):
                 end_bb = False
                 pbb.next_addr = inst.address
 
-            if nop_block:
-                nop_block = False
-                ppbb = bb_list[len(bb_list)-3]
-                ppbb.next_addr = inst.address
+            #if nop_block:
+            #    nop_block = False
+            #    ppbb = bb_list[len(bb_list)-3]
+            #    ppbb.next_addr = inst.address
 
             #If previously we needed a fall through block, supply it
             if need_fall_bb:
@@ -230,7 +230,6 @@ def find_funcs():
         head_bb = bb_list[0]
         func = Func(head_bb.start_addr, None)
         #print("%x------------" % head_bb.start_addr)
-        #raw_input()
         add_bb(head_bb)
         #sort bb_func on starting address
         bb_func.sort(cmp=lambda x,y: int(x.start_addr - y.start_addr))
@@ -249,6 +248,7 @@ def find_funcs():
                 next_addr = bb.next_addr
             else:
                 break
+        #raw_input()
 
         func_list.append(func)
 
