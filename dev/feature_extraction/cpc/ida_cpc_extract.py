@@ -11,14 +11,85 @@ from idaapi import *
 from idautils import *
 from idc import *
 from asm_helper import *
+from callee_context import *
 
 ea = get_screen_ea()
+func_list = list()
+
+MAX_CALLEE_SWEEP = 200
+def callee_arg_sweep(ea):
+    context = CalleeContext()
+    for head in Heads(ea, ea+MAX_CALLEE_SWEEP):
+        mnem = GetMnem(head)
+        num_opnds = 0
+        opnd_1 = GetOpnd(head, 0)
+        opnd_2 = GetOpnd(head, 1)
+
+        if opnd_1 != "":
+            num_opnds = 1
+        if opnd_2 != "":
+            num_opnds = 2
+
+        if num_opnds == 1:
+            opnd_1_type = GetOpType(head, 0)
+            if opnd_1_type == o_reg:
+                if is_arg_reg(opnd_1):
+                    if mnem in r_group or mnem in rw_group:
+                        context.add_src_arg(opnd_1)
+                    elif mnem in w_group:
+                        context.add_set_arg(opnd_1)
+                    else:
+                        print("Unrecognized mnemonic: %s" % mnem)
+            if opnd_1_type == o_phrase or opnd_1_type == o_displ:
+                for arg in arg_extract(opnd_1):
+                    context.add_src_arg(arg)
+
+        if num_opnds == 2:
+            opnd_1_type = GetOpType(head, 0)
+            opnd_2_type = GetOpType(head, 1)
+
+            #XOR REG1 REG1 case:
+            if opnd_1 == opnd_2:
+                if mnem in xor_insts or mnem in xorx_insts:
+                    context.add_set_arg(opnd_1)
+
+            if opnd_1_type == o_reg:
+                if is_arg_reg(opnd_1):
+                    if mnem in w_r_group:
+                        context.add_set_arg(opnd_1)
+                    elif mnem in r_r_group or mnem in rw_r_group:
+                        context.add_src_arg(opnd_1)
+                    else:
+                        print("Unrecognized mnemonic: %s" % mnem)
+            elif opnd_1_type == o_phrase or opnd_1_type == o_displ:
+                for arg in arg_extract(opnd_1):
+                    context.add_src_arg(arg)
+
+            if opnd_2_type == o_reg:
+                if is_arg_reg(opnd_2):
+                    context.add_src_arg(opnd_2)
+            elif opnd_2_type == o_phrase or opnd_2_type = o_displ:
+                for arg in arg_extract(opnd_2):
+                    context.add_src_arg(arg)
+
+        if is_ret(mnem) or is_hlt(mnem) or is_call(mnem):
+            break
+
+    return context.callee_calculate_cpc()
+
+
 
 #TODO: these will be our boundaries for commas
 for function_ea in Functions(SegStart(ea), SegEnd(ea)):
-    print hex(function_ea), GetFunctionName(function_ea)
+    #print hex(function_ea), GetFunctionName(function_ea)
+    func_list.append(function_ea)
+
+cpc_dict = dict()
+cpc_chain = ""
 
 for head in Heads(SegStart(ea), SegEnd(ea)):
+    #TODO: make sure head is an ea
+    #TODO: if head > func_list[0], add comma, delete func_list[0]
     if isCode(GetFlags(head)):
         mnem = GetMnem(head)
         if is_call(mnem):
@@ -26,4 +97,69 @@ for head in Heads(SegStart(ea), SegEnd(ea)):
             if op_type == o_near or op_type == o_far:
                 op_val = GetOperandValue(head, 0)
                 if op_val < SegEnd(head) and op_val > SegStart(head):
-                    print("@%x, %d" % (op_val, op_type))
+                    #print("@%x, %d" % (op_val, op_type))
+                    cpc = cpc_dict.get(op_val, None)
+                    if cpc is None:
+                        cpc = callee_arg_sweep(op_val)
+                        cpc_dict[op_val] = cpc
+
+                    cpc_chain += str(cpc)
+
+
+def arg_extract(opnd):
+    arg_list = list()
+
+    arg_rdi = check_arg(arg_reg_rdi, opnd)
+    arg_rsi = check_arg(arg_reg_rsi, opnd)
+    arg_rdx = check_arg(arg_reg_rdx, opnd)
+    arg_rcx = check_arg(arg_reg_rcx, opnd)
+    arg_r10 = check_arg(arg_reg_r10, opnd)
+    arg_r8 = check_arg(arg_reg_r8, opnd)
+    arg_r9 = check_arg(arg_reg_r9, opnd)
+    arg_xmm0 = check_arg(arg_reg_xmm0, opnd)
+    arg_xmm1 = check_arg(arg_reg_xmm1, opnd)
+    arg_xmm2 = check_arg(arg_reg_xmm2, opnd)
+    arg_xmm3 = check_arg(arg_reg_xmm3, opnd)
+    arg_xmm4 = check_arg(arg_reg_xmm4, opnd)
+    arg_xmm5 = check_arg(arg_reg_xmm5, opnd)
+    arg_xmm6 = check_arg(arg_reg_xmm6, opnd)
+    arg_xmm7 = check_arg(arg_reg_xmm7, opnd)
+
+    if arg_rdi != "":
+        arg_list.append(arg_rdi)
+    if arg_rsi != "":
+        arg_list.append(arg_rsi)
+    if arg_rdx != "":
+        arg_list.append(arg_rdx)
+    if arg_rcx != "":
+        arg_list.append(arg_rcx)
+    if arg_r10 != "":
+        arg_list.append(arg_r10)
+    if arg_r8 != "":
+        arg_list.append(arg_r8)
+    if arg_r9 != "":
+        arg_list.append(arg_r9)
+    if arg_xmm0 != "":
+        arg_list.append(arg_xmm0)
+    if arg_xmm1 != "":
+        arg_list.append(arg_xmm1)
+    if arg_xmm2 != "":
+        arg_list.append(arg_xmm2)
+    if arg_xmm3 != "":
+        arg_list.append(arg_xmm3)
+    if arg_xmm4 != "":
+        arg_list.append(arg_xmm4)
+    if arg_xmm5 != "":
+        arg_list.append(arg_xmm5)
+    if arg_xmm6 != "":
+        arg_list.append(arg_xmm6)
+    if arg_xmm7 != "":
+        arg_list.append(arg_xmm7)
+
+    return arg_list
+
+def check_arg(arg_regs, opnd):
+    for reg in arg_regs:
+        if reg in opnd:
+            return reg
+    return ""
