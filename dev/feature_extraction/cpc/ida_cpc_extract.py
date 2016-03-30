@@ -13,8 +13,8 @@ from idc import *
 from asm_helper import *
 from callee_context import *
 
-ea = get_screen_ea()
-func_list = list()
+ADDR_DEBUG = False
+NAME_DEBUG = True
 
 MAX_CALLEE_SWEEP = 200
 def callee_arg_sweep(ea):
@@ -68,7 +68,7 @@ def callee_arg_sweep(ea):
             if opnd_2_type == o_reg:
                 if is_arg_reg(opnd_2):
                     context.add_src_arg(opnd_2)
-            elif opnd_2_type == o_phrase or opnd_2_type = o_displ:
+            elif opnd_2_type == o_phrase or opnd_2_type == o_displ:
                 for arg in arg_extract(opnd_2):
                     context.add_src_arg(arg)
 
@@ -76,35 +76,6 @@ def callee_arg_sweep(ea):
             break
 
     return context.callee_calculate_cpc()
-
-
-
-#TODO: these will be our boundaries for commas
-for function_ea in Functions(SegStart(ea), SegEnd(ea)):
-    #print hex(function_ea), GetFunctionName(function_ea)
-    func_list.append(function_ea)
-
-cpc_dict = dict()
-cpc_chain = ""
-
-for head in Heads(SegStart(ea), SegEnd(ea)):
-    #TODO: make sure head is an ea
-    #TODO: if head > func_list[0], add comma, delete func_list[0]
-    if isCode(GetFlags(head)):
-        mnem = GetMnem(head)
-        if is_call(mnem):
-            op_type = GetOpType(head, 0)
-            if op_type == o_near or op_type == o_far:
-                op_val = GetOperandValue(head, 0)
-                if op_val < SegEnd(head) and op_val > SegStart(head):
-                    #print("@%x, %d" % (op_val, op_type))
-                    cpc = cpc_dict.get(op_val, None)
-                    if cpc is None:
-                        cpc = callee_arg_sweep(op_val)
-                        cpc_dict[op_val] = cpc
-
-                    cpc_chain += str(cpc)
-
 
 def arg_extract(opnd):
     arg_list = list()
@@ -163,3 +134,57 @@ def check_arg(arg_regs, opnd):
         if reg in opnd:
             return reg
     return ""
+
+ea = get_screen_ea()
+func_ea_list = list()
+func_name_list = list()
+sep = "\n"
+
+for function_ea in Functions(SegStart(ea), SegEnd(ea)):
+    #print hex(function_ea), GetFunctionName(function_ea)
+    func_ea_list.append(function_ea)
+    func_name_list.append(GetFunctionName(function_ea))
+
+cpc_dict = dict()
+cpc_chain = ""
+
+f = 0
+for head in Heads(SegStart(ea), SegEnd(ea)):
+    if head > func_ea_list[f]:
+        cpc_chain += sep
+        if NAME_DEBUG:
+            cpc_chain = cpc_chain + func_name_list[f] + " "
+        if ADDR_DEBUG:
+            cpc_chain += hex(head)
+        f += 1
+        #func_ea_list.remove(func_ea_list[f])
+        #func_name_list.remove(func_name_list[f])
+
+    if isCode(GetFlags(head)):
+        mnem = GetMnem(head)
+        if is_call(mnem):
+            op_type = GetOpType(head, 0)
+            if op_type == o_near or op_type == o_far:
+                op_val = GetOperandValue(head, 0)
+                if op_val < SegEnd(head) and op_val > SegStart(head):
+                    #print("@%x, %d" % (op_val, op_type))
+                    cpc = cpc_dict.get(op_val, None)
+                    if cpc is None:
+                        cpc = callee_arg_sweep(op_val)
+                        cpc_dict[op_val] = cpc
+
+                    cpc_chain += str(cpc)
+        if is_jmp(mnem):
+            op_type = GetOpType(head, 0)
+            if op_type == o_near or op_type == o_far:
+                op_val = GetOperandValue(head, 0)
+                if op_val in func_ea_list:
+                    cpc = cpc_dict.get(op_val, None)
+                    if cpc is None:
+                        cpc = callee_arg_sweep(op_val)
+                        cpc_dict[op_val] = cpc
+
+                    cpc_chain += str(cpc)
+
+
+print cpc_chain
