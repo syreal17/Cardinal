@@ -18,37 +18,37 @@ class CalleeContext(object):
         self.init_regs()
 
     def init_regs(self):
-        self.rdi_set = False;
-        self.rsi_set = False;
-        self.rdx_set = False;
-        self.rcx_set = False;
-        self.r10_set = False;
-        self.r8_set = False;
-        self.r9_set = False;
-        self.xmm0_set = False;
-        self.xmm1_set = False;
-        self.xmm2_set = False;
-        self.xmm3_set = False;
-        self.xmm4_set = False;
-        self.xmm5_set = False;
-        self.xmm6_set = False;
-        self.xmm7_set = False;
+        self.rdi_set = False
+        self.rsi_set = False
+        self.rdx_set = False
+        self.rcx_set = False
+        self.r10_set = False
+        self.r8_set = False
+        self.r9_set = False
+        self.xmm0_set = False
+        self.xmm1_set = False
+        self.xmm2_set = False
+        self.xmm3_set = False
+        self.xmm4_set = False
+        self.xmm5_set = False
+        self.xmm6_set = False
+        self.xmm7_set = False
 
-        self.rdi_src = False;
-        self.rsi_src = False;
-        self.rdx_src = False;
-        self.rcx_src = False;
-        self.r10_src = False;
-        self.r8_src = False;
-        self.r9_src = False;
-        self.xmm0_src = False;
-        self.xmm1_src = False;
-        self.xmm2_src = False;
-        self.xmm3_src = False;
-        self.xmm4_src = False;
-        self.xmm5_src = False;
-        self.xmm6_src = False;
-        self.xmm7_src = False;
+        self.rdi_src = False
+        self.rsi_src = False
+        self.rdx_src = False
+        self.rcx_src = False
+        self.r10_src = False
+        self.r8_src = False
+        self.r9_src = False
+        self.xmm0_src = False
+        self.xmm1_src = False
+        self.xmm2_src = False
+        self.xmm3_src = False
+        self.xmm4_src = False
+        self.xmm5_src = False
+        self.xmm6_src = False
+        self.xmm7_src = False
 
     def print_arg_regs(self):
         if self.rdi_src is True:

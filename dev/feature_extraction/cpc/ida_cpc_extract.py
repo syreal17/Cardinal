@@ -17,7 +17,7 @@ ADDR_DEBUG = False
 NAME_DEBUG = True
 
 MAX_CALLEE_SWEEP = 200
-def callee_arg_sweep(ea):
+def callee_arg_sweep(ea, debug):
     context = CalleeContext()
     for head in Heads(ea, ea+MAX_CALLEE_SWEEP):
         mnem = GetMnem(head)
@@ -36,11 +36,15 @@ def callee_arg_sweep(ea):
                 if is_arg_reg(opnd_1):
                     if mnem in r_group or mnem in rw_group:
                         context.add_src_arg(opnd_1)
+                        if debug:
+                            print("%x: %s %s" % (head,mnem,opnd_1))
                     elif mnem in w_group:
                         context.add_set_arg(opnd_1)
                     else:
                         print("Unrecognized mnemonic: %s" % mnem)
             if opnd_1_type == o_phrase or opnd_1_type == o_displ:
+                if debug:
+                    print("%x: %s %s" % (head,mnem,opnd_1))
                 for arg in arg_extract(opnd_1):
                     context.add_src_arg(arg)
 
@@ -59,22 +63,33 @@ def callee_arg_sweep(ea):
                         context.add_set_arg(opnd_1)
                     elif mnem in r_r_group or mnem in rw_r_group:
                         context.add_src_arg(opnd_1)
+                        if debug:
+                            print("%x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
                     else:
                         print("Unrecognized mnemonic: %s" % mnem)
             elif opnd_1_type == o_phrase or opnd_1_type == o_displ:
+                if debug:
+                    print("%x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
                 for arg in arg_extract(opnd_1):
                     context.add_src_arg(arg)
 
             if opnd_2_type == o_reg:
                 if is_arg_reg(opnd_2):
                     context.add_src_arg(opnd_2)
+                    if debug:
+                        print("%x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
             elif opnd_2_type == o_phrase or opnd_2_type == o_displ:
+                if debug:
+                    print("%x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
                 for arg in arg_extract(opnd_2):
                     context.add_src_arg(arg)
 
-        if is_ret(mnem) or is_hlt(mnem) or is_call(mnem):
+        if is_ret(mnem) or is_hlt(mnem) or is_call(mnem) or (is_jmp(mnem) and
+                        GetOperandValue(head,0) in func_ea_list):
             break
 
+    if debug:
+        context.print_arg_regs()
     return context.callee_calculate_cpc()
 
 def arg_extract(opnd):
@@ -170,10 +185,15 @@ for head in Heads(SegStart(ea), SegEnd(ea)):
                     #print("@%x, %d" % (op_val, op_type))
                     cpc = cpc_dict.get(op_val, None)
                     if cpc is None:
-                        cpc = callee_arg_sweep(op_val)
+                        i = func_ea_list.index(op_val)
+                        if func_name_list[i] == 'TreeCCNodeHasAbstracts':
+                            cpc = callee_arg_sweep(op_val, True)
+                        else:
+                            cpc = callee_arg_sweep(op_val, False)
                         cpc_dict[op_val] = cpc
 
                     cpc_chain += str(cpc)
+
         if is_jmp(mnem):
             op_type = GetOpType(head, 0)
             if op_type == o_near or op_type == o_far:
@@ -181,7 +201,7 @@ for head in Heads(SegStart(ea), SegEnd(ea)):
                 if op_val in func_ea_list:
                     cpc = cpc_dict.get(op_val, None)
                     if cpc is None:
-                        cpc = callee_arg_sweep(op_val)
+                        cpc = callee_arg_sweep(op_val, False)
                         cpc_dict[op_val] = cpc
 
                     cpc_chain += str(cpc)
