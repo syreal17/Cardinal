@@ -17,7 +17,7 @@ ADDR_DEBUG = False
 NAME_DEBUG = True
 
 MAX_CALLEE_SWEEP = 200
-def callee_arg_sweep(ea, debug):
+def callee_arg_sweep(ea, debug, next_func_ea):
     context = CalleeContext()
     for head in Heads(ea, ea+MAX_CALLEE_SWEEP):
         mnem = GetMnem(head)
@@ -85,7 +85,7 @@ def callee_arg_sweep(ea, debug):
                     context.add_src_arg(arg)
 
         if is_ret(mnem) or is_hlt(mnem) or is_call(mnem) or (is_jmp(mnem) and
-                        GetOperandValue(head,0) in func_ea_list):
+        GetOperandValue(head,0) in func_ea_list) or head > next_func_ea:
             break
 
     if debug:
@@ -187,9 +187,9 @@ for head in Heads(SegStart(ea), SegEnd(ea)):
                     if cpc is None:
                         i = func_ea_list.index(op_val)
                         if func_name_list[i] == 'TreeCCNodeHasAbstracts':
-                            cpc = callee_arg_sweep(op_val, True)
+                            cpc = callee_arg_sweep(op_val, True, func_ea_list[i+1])
                         else:
-                            cpc = callee_arg_sweep(op_val, False)
+                            cpc = callee_arg_sweep(op_val, False, func_ea_list[i+1])
                         cpc_dict[op_val] = cpc
 
                     cpc_chain += str(cpc)
@@ -201,7 +201,7 @@ for head in Heads(SegStart(ea), SegEnd(ea)):
                 if op_val in func_ea_list:
                     cpc = cpc_dict.get(op_val, None)
                     if cpc is None:
-                        cpc = callee_arg_sweep(op_val, False)
+                        cpc = callee_arg_sweep(op_val, False, func_ea_list[i+1])
                         cpc_dict[op_val] = cpc
 
                     cpc_chain += str(cpc)
