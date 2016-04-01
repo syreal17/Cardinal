@@ -42,6 +42,7 @@ if __name__ == '__main__':
                     wrong.append(entry)
             except KeyError:
                 pass
+    f.close()
 
     percent = float(right_count)/float(right_count+wrong_count)
 

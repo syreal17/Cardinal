@@ -10,43 +10,56 @@
 #-----------------------------------------------------------------------------
 from __future__ import print_function
 import sys
+import editdistance
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 3:
-        print("Need at least 2 file arguments. Ground truth first.")
+    if len(sys.argv) != 3:
+        print("Needs 2 file arguments.")
         sys.exit()
 
     wrong = list()
-    truth = dict()
-    test = dict()
+    test1 = dict()
+    test2 = dict()
     with open(sys.argv[1], 'r') as g:
         for line in g:
             tokens = line.split(" ")
-            truth[tokens[0]] = tokens[1]
+            if len(tokens) > 1:
+                test1[tokens[0]] = tokens[1]
     g.close()
 
-    right_count = 0
-    wrong_count = 0
+    test1_count = 0
+    test2_count = 0
+    dist_count = 0
+    shared = ""
+    in_2 = ""
+    in_1 = ""
     with open(sys.argv[2], 'r') as f:
         for line in f:
             tokens = line.split(" ")
-            try:
-                if int(truth[tokens[0]]) == int(tokens[1]):
-                    right_count += 1
-                else:
-                    wrong_count += 1
-                    entry = ""
-                    entry = tokens[0] + "=" + truth[tokens[0]].strip() + " !="\
-                            + tokens[1].strip()
-                    wrong.append(entry)
-            except KeyError:
-                pass
+            if len(tokens) > 1:
+                test2entry = tokens[1]
+                try:
+                    test1entry = test1[tokens[0]]
+                    del test1[tokens[0]]
+                    test1_count += len(test1entry)
+                    test2_count += len(test2entry)
+                    dist = editdistance.eval(test1entry, test2entry)
+                    dist_count += dist
+                    shared = shared + tokens[0] + " " + str(dist) + "\n"
 
-    percent = float(right_count)/float(right_count+wrong_count)
+                except KeyError:
+                    test2_count += len(test2entry)
+                    dist_count += len(test2entry)
+    f.close()
 
-    print("%s %f accuracy for %d functions" %
-          (sys.argv[2],percent,right_count+wrong_count))
+    for k in test1:
+        test1_count += len(test1[k])
+        dist_count += len(test1[k])
 
-    for entry in wrong:
-        print(entry)
+    print(shared)
+    print("test1 cpc length: %d" % test1_count)
+    print("test2 cpc length: %d" % test2_count)
+    print("total distance: %d" % dist_count)
+    denom = (float(test1_count) + float(test2_count)) / 2
+    print("similarity: %f" % (1-(float(dist_count)/denom)))
