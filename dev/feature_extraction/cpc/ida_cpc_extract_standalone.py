@@ -11,6 +11,7 @@ from idaapi import *
 from idautils import *
 from idc import *
 import re
+import time
 
 
 #ASM-HELPER.PY-----------------------------------------------------------------
@@ -713,9 +714,9 @@ def check_arg(arg_regs, opnd):
     return ""
 
 autoWait()
-print("Starting")
-ea = get_screen_ea()
-print("%x" % ea)
+#print("Starting")
+ea = GetEntryPoint(GetEntryOrdinal(0))
+#print("%x" % ea)
 func_ea_list = list()
 func_name_list = list()
 sep = "\n"
@@ -773,3 +774,7 @@ for head in Heads(SegStart(ea), SegEnd(ea)):
 
 
 print cpc_chain
+filename = GetInputFilePath() + ".cpc.ida"
+f = open(filename, 'w')
+f.write(cpc_chain)
+f.close()
