@@ -10,8 +10,8 @@
 from idaapi import *
 from idautils import *
 from idc import *
-from asm_helper import *
 from callee_context import *
+from asm_helper import *
 
 ADDR_DEBUG = False
 NAME_DEBUG = True
@@ -150,7 +150,10 @@ def check_arg(arg_regs, opnd):
             return reg
     return ""
 
+autoWait()
+print("Starting")
 ea = get_screen_ea()
+print("%x" % ea)
 func_ea_list = list()
 func_name_list = list()
 sep = "\n"
@@ -186,7 +189,7 @@ for head in Heads(SegStart(ea), SegEnd(ea)):
                     cpc = cpc_dict.get(op_val, None)
                     if cpc is None:
                         i = func_ea_list.index(op_val)
-                        if func_name_list[i] == 'TreeCCNodeHasAbstracts':
+                        if func_name_list[i] == '//':
                             cpc = callee_arg_sweep(op_val, True, func_ea_list[i+1])
                         else:
                             cpc = callee_arg_sweep(op_val, False, func_ea_list[i+1])
