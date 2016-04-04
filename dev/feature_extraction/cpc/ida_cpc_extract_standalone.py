@@ -720,15 +720,19 @@ if __name__ == '__main__':
     if ARGV[1] == '-c':
         sep = ","
         CPC_OUTPUT = True
+        ext = "chain"
     elif ARGV[1] == '-f':
         sep = "\n"
         NAME_DEBUG = True
         CPC_OUTPUT = True
+        ext = "func"
     elif ARGV[1] == '-l':
         sep = "\n"
         CPC_OUTPUT = True
+        ext = "feature"
     elif ARGV[1] == '-d':
         DICT_OUTPUT = True
+        ext = "dict"
     else:
         print("Must pass -c (chain), -f (per function), or -l (list)")
 
@@ -796,7 +800,7 @@ if __name__ == '__main__':
 
     if CPC_OUTPUT:
         print cpc_chain
-        filename = GetInputFilePath() + ".cpc.ida"
+        filename = GetInputFilePath() + ".cpc." + ext
         f = open(filename, 'w')
         f.write(cpc_chain)
         f.close()
@@ -809,7 +813,9 @@ if __name__ == '__main__':
                 pass
                 #dict_out += str(ea) + " not found as start of function"
         print dict_out
-        filename = GetInputFilePath() + ".cpc.ida"
+        filename = GetInputFilePath() + ".cpc." + ext
         f = open(filename, 'w')
         f.write(dict_out)
         f.close()
+
+    Exit(0)
