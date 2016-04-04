@@ -11,7 +11,7 @@ from idaapi import *
 from idautils import *
 from idc import *
 import re
-import time
+import sys
 
 
 #ASM-HELPER.PY-----------------------------------------------------------------
@@ -576,9 +576,6 @@ class CalleeContext(object):
         return int_regs + fp_regs + self.extra_args
 #END CALLEE_CONTEXT.PY---------------------------------------------------------
 
-ADDR_DEBUG = False
-NAME_DEBUG = True
-
 MAX_CALLEE_SWEEP = 200
 def callee_arg_sweep(ea, debug, next_func_ea):
     context = CalleeContext()
@@ -713,68 +710,106 @@ def check_arg(arg_regs, opnd):
             return reg
     return ""
 
-autoWait()
-#print("Starting")
-ea = GetEntryPoint(GetEntryOrdinal(0))
-#print("%x" % ea)
-func_ea_list = list()
-func_name_list = list()
-sep = "\n"
+DICT_OUTPUT = False
+CPC_OUTPUT = False
+ADDR_DEBUG = False
+NAME_DEBUG = False
+sep = ","
 
-for function_ea in Functions(SegStart(ea), SegEnd(ea)):
-    #print hex(function_ea), GetFunctionName(function_ea)
-    func_ea_list.append(function_ea)
-    func_name_list.append(GetFunctionName(function_ea))
+if __name__ == '__main__':
+    if ARGV[1] == '-c':
+        sep = ","
+        CPC_OUTPUT = True
+    elif ARGV[1] == '-f':
+        sep = "\n"
+        NAME_DEBUG = True
+        CPC_OUTPUT = True
+    elif ARGV[1] == '-l':
+        sep = "\n"
+        CPC_OUTPUT = True
+    elif ARGV[1] == '-d':
+        DICT_OUTPUT = True
+    else:
+        print("Must pass -c (chain), -f (per function), or -l (list)")
 
-cpc_dict = dict()
-cpc_chain = ""
+    autoWait()
+    #print("Starting")
+    #ea = ScreenEA()    #ltj:screen ea not set in -A mode
+    #ea = GetEntryPoint(GetEntryOrdinal(0)) #ltj: not always 0...
+    sel = SegByName(".text")
+    ea = SegByBase(sel)
+    #print("%x" % ea)
+    func_ea_list = list()
+    func_name_list = list()
+    func_dict = dict()
 
-f = 0
-for head in Heads(SegStart(ea), SegEnd(ea)):
-    if head > func_ea_list[f]:
-        cpc_chain += sep
-        if NAME_DEBUG:
-            cpc_chain = cpc_chain + func_name_list[f] + " "
-        if ADDR_DEBUG:
-            cpc_chain += hex(head)
-        f += 1
-        #func_ea_list.remove(func_ea_list[f])
-        #func_name_list.remove(func_name_list[f])
+    for function_ea in Functions(SegStart(ea), SegEnd(ea)):
+        #print hex(function_ea), GetFunctionName(function_ea)
+        func_ea_list.append(function_ea)
+        func_name_list.append(GetFunctionName(function_ea))
+        func_dict[function_ea] = GetFunctionName(function_ea)
+    func_ea_list.append(sys.maxint)
 
-    if isCode(GetFlags(head)):
-        mnem = GetMnem(head)
-        if is_call(mnem):
-            op_type = GetOpType(head, 0)
-            if op_type == o_near or op_type == o_far:
-                op_val = GetOperandValue(head, 0)
-                if op_val < SegEnd(head) and op_val > SegStart(head):
-                    #print("@%x, %d" % (op_val, op_type))
-                    cpc = cpc_dict.get(op_val, None)
-                    if cpc is None:
-                        i = func_ea_list.index(op_val)
-                        if func_name_list[i] == '//':
-                            cpc = callee_arg_sweep(op_val, True, func_ea_list[i+1])
-                        else:
+    cpc_dict = dict()
+    cpc_chain = ""
+
+    f = 0
+    for head in Heads(SegStart(ea), SegEnd(ea)):
+        if head > func_ea_list[f]:
+            cpc_chain += sep
+            if NAME_DEBUG:
+                cpc_chain = cpc_chain + func_name_list[f] + " "
+            if ADDR_DEBUG:
+                cpc_chain += hex(head)
+            f += 1
+
+        if isCode(GetFlags(head)):
+            mnem = GetMnem(head)
+            if is_call(mnem):
+                op_type = GetOpType(head, 0)
+                if op_type == o_near or op_type == o_far:
+                    op_val = GetOperandValue(head, 0)
+                    if op_val < SegEnd(head) and op_val > SegStart(head):
+                        #print("@%x, %d" % (op_val, op_type))
+                        cpc = cpc_dict.get(op_val, None)
+                        if cpc is None:
+                            i = func_ea_list.index(op_val)
+                            if func_name_list[i] == '//':
+                                cpc = callee_arg_sweep(op_val, True, func_ea_list[i+1])
+                            else:
+                                cpc = callee_arg_sweep(op_val, False, func_ea_list[i+1])
+                            cpc_dict[op_val] = cpc
+
+                        cpc_chain += str(cpc)
+
+            if is_jmp(mnem):
+                op_type = GetOpType(head, 0)
+                if op_type == o_near or op_type == o_far:
+                    op_val = GetOperandValue(head, 0)
+                    if op_val in func_ea_list:
+                        cpc = cpc_dict.get(op_val, None)
+                        if cpc is None:
                             cpc = callee_arg_sweep(op_val, False, func_ea_list[i+1])
-                        cpc_dict[op_val] = cpc
+                            cpc_dict[op_val] = cpc
 
-                    cpc_chain += str(cpc)
+                        cpc_chain += str(cpc)
 
-        if is_jmp(mnem):
-            op_type = GetOpType(head, 0)
-            if op_type == o_near or op_type == o_far:
-                op_val = GetOperandValue(head, 0)
-                if op_val in func_ea_list:
-                    cpc = cpc_dict.get(op_val, None)
-                    if cpc is None:
-                        cpc = callee_arg_sweep(op_val, False, func_ea_list[i+1])
-                        cpc_dict[op_val] = cpc
-
-                    cpc_chain += str(cpc)
-
-
-print cpc_chain
-filename = GetInputFilePath() + ".cpc.ida"
-f = open(filename, 'w')
-f.write(cpc_chain)
-f.close()
+    if CPC_OUTPUT:
+        print cpc_chain
+        filename = GetInputFilePath() + ".cpc.ida"
+        f = open(filename, 'w')
+        f.write(cpc_chain)
+        f.close()
+    elif DICT_OUTPUT:
+        dict_out = ""
+        for ea in cpc_dict:
+            try:
+                dict_out += func_dict[ea] + ": " + str(cpc_dict[ea]) + "\n"
+            except KeyError:
+                pass
+                #dict_out += str(ea) + " not found as start of function"
+        print dict_out
+        filename = GetInputFilePath() + ".cpc.ida"
+        f = open(filename, 'w')
+        f.write(dict_out)
+        f.close()
