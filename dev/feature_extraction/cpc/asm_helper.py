@@ -202,7 +202,7 @@ pusha_insts = ['pusha','pushad'] #none
 pushf_insts = ['pushf','pushfd','pushfq'] #none
 r_insts = ['rcl','rcr','rol','ror'] #r_r rw_r
 rcp_insts = ['rcpps','rcpss','vrcpps','vrcpss'] #r_r rw_r w_r_r
-ret_insts = ['ret'] #none r
+ret_insts = ['ret', 'retn'] #none r
 round_insts = [ #r_r rw_r w_r_r
     'vroundps','vroundpd','vroundss','vroundsd','roundps','roundpd','roundss',
     'roundsd'

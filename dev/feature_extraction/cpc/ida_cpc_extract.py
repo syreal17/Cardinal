@@ -189,7 +189,7 @@ for head in Heads(SegStart(ea), SegEnd(ea)):
                     cpc = cpc_dict.get(op_val, None)
                     if cpc is None:
                         i = func_ea_list.index(op_val)
-                        if func_name_list[i] == '//':
+                        if func_name_list[i] == 'lua_pushnil':
                             cpc = callee_arg_sweep(op_val, True, func_ea_list[i+1])
                         else:
                             cpc = callee_arg_sweep(op_val, False, func_ea_list[i+1])

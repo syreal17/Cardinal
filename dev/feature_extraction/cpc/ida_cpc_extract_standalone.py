@@ -207,7 +207,7 @@ pusha_insts = ['pusha','pushad'] #none
 pushf_insts = ['pushf','pushfd','pushfq'] #none
 r_insts = ['rcl','rcr','rol','ror'] #r_r rw_r
 rcp_insts = ['rcpps','rcpss','vrcpps','vrcpss'] #r_r rw_r w_r_r
-ret_insts = ['ret'] #none r
+ret_insts = ['ret', 'retn'] #none r
 round_insts = [ #r_r rw_r w_r_r
     'vroundps','vroundpd','vroundss','vroundsd','roundps','roundpd','roundss',
     'roundsd'
@@ -578,6 +578,8 @@ class CalleeContext(object):
 
 MAX_CALLEE_SWEEP = 200
 def callee_arg_sweep(ea, debug, next_func_ea):
+    if debug:
+        print("next_func_ea:%x" % next_func_ea)
     context = CalleeContext()
     for head in Heads(ea, ea+MAX_CALLEE_SWEEP):
         mnem = GetMnem(head)
@@ -590,27 +592,38 @@ def callee_arg_sweep(ea, debug, next_func_ea):
         if opnd_2 != "":
             num_opnds = 2
 
+        if is_ret(mnem) or is_hlt(mnem) or is_call(mnem) or (is_jmp(mnem) and
+        GetOperandValue(head,0) in func_ea_list) or head >= next_func_ea:
+            break
+
+        if num_opnds == 0:
+            if debug:
+                print("%x: %s" % (head,mnem))
+
         if num_opnds == 1:
+
+            if debug:
+                print("%x: %s %s" % (head,mnem,opnd_1))
+
             opnd_1_type = GetOpType(head, 0)
             if opnd_1_type == o_reg:
                 if is_arg_reg(opnd_1):
                     if mnem in r_group or mnem in rw_group:
                         context.add_src_arg(opnd_1)
-                        if debug:
-                            print("%x: %s %s" % (head,mnem,opnd_1))
                     elif mnem in w_group:
                         context.add_set_arg(opnd_1)
                     else:
                         print("Unrecognized mnemonic: %s" % mnem)
             if opnd_1_type == o_phrase or opnd_1_type == o_displ:
-                if debug:
-                    print("%x: %s %s" % (head,mnem,opnd_1))
                 for arg in arg_extract(opnd_1):
                     context.add_src_arg(arg)
 
         if num_opnds == 2:
             opnd_1_type = GetOpType(head, 0)
             opnd_2_type = GetOpType(head, 1)
+
+            if debug:
+                print("%x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
 
             #XOR REG1 REG1 case:
             if opnd_1 == opnd_2:
@@ -623,30 +636,18 @@ def callee_arg_sweep(ea, debug, next_func_ea):
                         context.add_set_arg(opnd_1)
                     elif mnem in r_r_group or mnem in rw_r_group:
                         context.add_src_arg(opnd_1)
-                        if debug:
-                            print("%x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
                     else:
                         print("Unrecognized mnemonic: %s" % mnem)
             elif opnd_1_type == o_phrase or opnd_1_type == o_displ:
-                if debug:
-                    print("%x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
                 for arg in arg_extract(opnd_1):
                     context.add_src_arg(arg)
 
             if opnd_2_type == o_reg:
                 if is_arg_reg(opnd_2):
                     context.add_src_arg(opnd_2)
-                    if debug:
-                        print("%x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
             elif opnd_2_type == o_phrase or opnd_2_type == o_displ:
-                if debug:
-                    print("%x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
                 for arg in arg_extract(opnd_2):
                     context.add_src_arg(arg)
-
-        if is_ret(mnem) or is_hlt(mnem) or is_call(mnem) or (is_jmp(mnem) and
-        GetOperandValue(head,0) in func_ea_list) or head > next_func_ea:
-            break
 
     if debug:
         context.print_arg_regs()
