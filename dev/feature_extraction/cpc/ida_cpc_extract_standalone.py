@@ -287,6 +287,12 @@ w_r_group = bsf_insts + bsr_insts + cmov_insts + cvt_insts + in_insts +\
     extract_insts + insert_insts + load_insts + lea_insts + mov_insts +\
     p_insts + pfrcp_insts + pfrsqrt_insts + phminposuw_insts + popcnt_insts
 rw_rw_group = xchg_insts
+w_r_r_group = addx_insts + andx_insts + blend_insts + divx_insts +\
+    dp_insts + imul_insts + max_insts + min_insts + mulx_insts +\
+    orx_insts + pack_insts + pavg_insts + pcmp_insts + pcmpstr_insts +\
+    psadbw_insts + psll_insts + psra_insts + psrl_insts + rcp_insts +\
+    round_insts + shuf_insts + sqrt_insts + subx_insts + unpck_insts +\
+    xorx_insts
 
 #-----------------------------------
 #Registers
@@ -576,7 +582,7 @@ class CalleeContext(object):
         return int_regs + fp_regs + self.extra_args
 #END CALLEE_CONTEXT.PY---------------------------------------------------------
 
-MAX_CALLEE_SWEEP = 200
+MAX_CALLEE_SWEEP = 1000
 def callee_arg_sweep(ea, debug, next_func_ea):
     if debug:
         print("next_func_ea:%x" % next_func_ea)
@@ -586,11 +592,14 @@ def callee_arg_sweep(ea, debug, next_func_ea):
         num_opnds = 0
         opnd_1 = GetOpnd(head, 0)
         opnd_2 = GetOpnd(head, 1)
+        opnd_3 = GetOpnd(head, 2)
 
         if opnd_1 != "":
             num_opnds = 1
         if opnd_2 != "":
             num_opnds = 2
+        if opnd_3 != "":
+           num_opnds = 3
 
         if is_ret(mnem) or is_hlt(mnem) or is_call(mnem) or (is_jmp(mnem) and
         GetOperandValue(head,0) in func_ea_list) or head >= next_func_ea:
@@ -647,6 +656,35 @@ def callee_arg_sweep(ea, debug, next_func_ea):
                     context.add_src_arg(opnd_2)
             elif opnd_2_type == o_phrase or opnd_2_type == o_displ:
                 for arg in arg_extract(opnd_2):
+                    context.add_src_arg(arg)
+
+        if num_opnds == 3:
+            opnd_1_type = GetOpType(head, 0)
+            opnd_2_type = GetOpType(head, 1)
+            opnd_3_type = GetOpType(head, 2)
+
+            if debug:
+                print("%x: %s %s %s %s" % (head,mnem,opnd_1,opnd_2,opnd_3))
+
+            if opnd_1_type == o_reg:
+                if is_arg_reg(opnd_1):
+                    context.add_set_arg(opnd_1)
+            elif opnd_1_type == o_phrase or opnd_1_type == o_displ:
+                for arg in arg_extract(opnd_1):
+                    context.add_src_arg(arg)
+
+            if opnd_2_type == o_reg:
+                if is_arg_reg(opnd_2):
+                    context.add_src_arg(opnd_2)
+            elif opnd_2_type == o_phrase or opnd_2_type == o_displ:
+                for arg in arg_extract(opnd_2):
+                    context.add_src_arg(arg)
+
+            if opnd_3_type == o_reg:
+                if is_arg_reg(opnd_3):
+                    context.add_src_arg(opnd_3)
+            elif opnd_3_type == o_phrase or opnd_3_type == o_displ:
+                for arg in arg_extract(opnd_3):
                     context.add_src_arg(arg)
 
     if debug:
@@ -738,7 +776,7 @@ if __name__ == '__main__':
         print("Must pass -c (chain), -f (per function), or -l (list)")
 
     autoWait()
-    #print("Starting")
+    print("Starting")
     #ea = ScreenEA()    #ltj:screen ea not set in -A mode
     #ea = GetEntryPoint(GetEntryOrdinal(0)) #ltj: not always 0...
     sel = SegByName(".text")
@@ -760,6 +798,7 @@ if __name__ == '__main__':
 
     f = 0
     for head in Heads(SegStart(ea), SegEnd(ea)):
+        #print("%x" % head)
         if head > func_ea_list[f]:
             cpc_chain += sep
             if NAME_DEBUG:
@@ -781,6 +820,7 @@ if __name__ == '__main__':
                             i = func_ea_list.index(op_val)
                             if func_name_list[i] == '//':
                                 cpc = callee_arg_sweep(op_val, True, func_ea_list[i+1])
+                                print("%s: %d" % (func_name_list[i], cpc))
                             else:
                                 cpc = callee_arg_sweep(op_val, False, func_ea_list[i+1])
                             cpc_dict[op_val] = cpc
@@ -794,7 +834,12 @@ if __name__ == '__main__':
                     if op_val in func_ea_list:
                         cpc = cpc_dict.get(op_val, None)
                         if cpc is None:
-                            cpc = callee_arg_sweep(op_val, False, func_ea_list[i+1])
+                            i = func_ea_list.index(op_val)
+                            if func_name_list[i] == '//':
+                                cpc = callee_arg_sweep(op_val, True, func_ea_list[i+1])
+                                print("%s: %d" % (func_name_list[i], cpc))
+                            else:
+                                cpc = callee_arg_sweep(op_val, False, func_ea_list[i+1])
                             cpc_dict[op_val] = cpc
 
                         cpc_chain += str(cpc)

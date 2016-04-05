@@ -282,6 +282,12 @@ w_r_group = bsf_insts + bsr_insts + cmov_insts + cvt_insts + in_insts +\
     extract_insts + insert_insts + load_insts + lea_insts + mov_insts +\
     p_insts + pfrcp_insts + pfrsqrt_insts + phminposuw_insts + popcnt_insts
 rw_rw_group = xchg_insts
+w_r_r_group = addx_insts + andx_insts + blend_insts + divx_insts +\
+    dp_insts + imul_insts + max_insts + min_insts + mulx_insts +\
+    orx_insts + pack_insts + pavg_insts + pcmp_insts + pcmpstr_insts +\
+    psadbw_insts + psll_insts + psra_insts + psrl_insts + rcp_insts +\
+    round_insts + shuf_insts + sqrt_insts + subx_insts + unpck_insts +\
+    xorx_insts
 
 #-----------------------------------
 #Registers
