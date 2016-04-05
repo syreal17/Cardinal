@@ -605,6 +605,9 @@ def callee_arg_sweep(ea, debug, next_func_ea):
         GetOperandValue(head,0) in func_ea_list) or head >= next_func_ea:
             break
 
+        #if is_call(mnem):
+
+
         if num_opnds == 0:
             if debug:
                 print("%x: %s" % (head,mnem))
@@ -689,7 +692,7 @@ def callee_arg_sweep(ea, debug, next_func_ea):
 
     if debug:
         context.print_arg_regs()
-    return context.callee_calculate_cpc()
+    return context
 
 def arg_extract(opnd):
     arg_list = list()
@@ -773,7 +776,7 @@ if __name__ == '__main__':
         DICT_OUTPUT = True
         ext = "dict"
     else:
-        print("Must pass -c (chain), -f (per function), or -l (list)")
+        print("Must pass -c (chain), -f (per function), -l (list), or -d (dictionary)")
 
     autoWait()
     print("Starting")
@@ -809,25 +812,8 @@ if __name__ == '__main__':
 
         if isCode(GetFlags(head)):
             mnem = GetMnem(head)
-            if is_call(mnem):
-                op_type = GetOpType(head, 0)
-                if op_type == o_near or op_type == o_far:
-                    op_val = GetOperandValue(head, 0)
-                    if op_val < SegEnd(head) and op_val > SegStart(head):
-                        #print("@%x, %d" % (op_val, op_type))
-                        cpc = cpc_dict.get(op_val, None)
-                        if cpc is None:
-                            i = func_ea_list.index(op_val)
-                            if func_name_list[i] == '//':
-                                cpc = callee_arg_sweep(op_val, True, func_ea_list[i+1])
-                                print("%s: %d" % (func_name_list[i], cpc))
-                            else:
-                                cpc = callee_arg_sweep(op_val, False, func_ea_list[i+1])
-                            cpc_dict[op_val] = cpc
 
-                        cpc_chain += str(cpc)
-
-            if is_jmp(mnem):
+            if is_jmp(mnem) or is_call(mnem):
                 op_type = GetOpType(head, 0)
                 if op_type == o_near or op_type == o_far:
                     op_val = GetOperandValue(head, 0)
@@ -836,10 +822,12 @@ if __name__ == '__main__':
                         if cpc is None:
                             i = func_ea_list.index(op_val)
                             if func_name_list[i] == '//':
-                                cpc = callee_arg_sweep(op_val, True, func_ea_list[i+1])
+                                context = callee_arg_sweep(op_val, True, func_ea_list[i+1])
+                                cpc = context.callee_calculate_cpc()
                                 print("%s: %d" % (func_name_list[i], cpc))
                             else:
-                                cpc = callee_arg_sweep(op_val, False, func_ea_list[i+1])
+                                context = callee_arg_sweep(op_val, False, func_ea_list[i+1])
+                                cpc = context.callee_calculate_cpc()
                             cpc_dict[op_val] = cpc
 
                         cpc_chain += str(cpc)
