@@ -535,6 +535,38 @@ class CalleeContext(object):
         elif operand in arg_reg_xmm7 and not self.xmm7_set:
             self.xmm7_src = True
 
+    def add_child_context(self, child):
+        if child.rdi_src and not self.rdi_set:
+            self.rdi_src = True
+        if child.rsi_src and not self.rsi_set:
+            self.rsi_src = True
+        if child.rdx_src and not self.rdx_set:
+            self.rdx_src = True
+        if child.rcx_src and not self.rcx_set:
+            self.rcx_src = True
+        if child.r10_src and not self.r10_set:
+            self.r10_src = True
+        if child.r8_src and not self.r8_set:
+            self.r8_src = True
+        if child.r9_src and not self.r9_set:
+            self.r9_src = True
+        if child.xmm0_src and not self.xmm0_set:
+            self.xmm0_src = True
+        if child.xmm1_src and not self.xmm1_set:
+            self.xmm1_src = True
+        if child.xmm2_src and not self.xmm2_set:
+            self.xmm2_src = True
+        if child.xmm3_src and not self.xmm3_set:
+            self.xmm3_src = True
+        if child.xmm4_src and not self.xmm4_set:
+            self.xmm4_src = True
+        if child.xmm5_src and not self.xmm5_set:
+            self.xmm5_src = True
+        if child.xmm6_src and not self.xmm6_set:
+            self.xmm6_src = True
+        if child.xmm7_src and not self.xmm7_set:
+            self.xmm7_src = True
+
     def callee_calculate_cpc(self):
         """ Determine callsite parameter cardinality based on argument
             registers seen in assignment commands and their order
@@ -582,8 +614,9 @@ class CalleeContext(object):
         return int_regs + fp_regs + self.extra_args
 #END CALLEE_CONTEXT.PY---------------------------------------------------------
 
+MAX_DEPTH = 4
 MAX_CALLEE_SWEEP = 1000
-def callee_arg_sweep(ea, debug, next_func_ea):
+def callee_arg_sweep(ea, debug, next_func_ea, n):
     if debug:
         print("next_func_ea:%x" % next_func_ea)
     context = CalleeContext()
@@ -601,12 +634,29 @@ def callee_arg_sweep(ea, debug, next_func_ea):
         if opnd_3 != "":
            num_opnds = 3
 
-        if is_ret(mnem) or is_hlt(mnem) or is_call(mnem) or (is_jmp(mnem) and
-        GetOperandValue(head,0) in func_ea_list) or head >= next_func_ea:
+        #TODO: ltj: should this even be here? Rets can come before true end of function
+        if is_ret(mnem) or is_hlt(mnem) or head >= next_func_ea:
             break
 
-        #if is_call(mnem):
+        if is_jmp(mnem) or is_call(mnem):
+            op_type = GetOpType(head, 0)
+            if op_type == o_near or op_type == o_far:
+                op_val = GetOperandValue(head, 0)
+                if op_val in func_ea_list:
+                    if n < MAX_DEPTH:
+                        child_context = context_dict.get(op_val, None)
+                        if child_context is None:
+                            i = func_ea_list.index(op_val)
+                            if func_name_list[i] == '//':
+                                child_context = callee_arg_sweep(op_val, True, func_ea_list[i+1], n+1)
+                            else:
+                                child_context = callee_arg_sweep(op_val, False, func_ea_list[i+1], n+1)
+                            context_dict[op_val] = child_context
 
+                        cpc = child_context.callee_calculate_cpc()
+                        if cpc != 14: #ltj: clumsy checking for varargs function
+                            context.add_child_context(child_context)
+                    break
 
         if num_opnds == 0:
             if debug:
@@ -752,6 +802,7 @@ def check_arg(arg_regs, opnd):
             return reg
     return ""
 
+context_dict = dict()
 DICT_OUTPUT = False
 CPC_OUTPUT = False
 ADDR_DEBUG = False
@@ -796,7 +847,6 @@ if __name__ == '__main__':
         func_dict[function_ea] = GetFunctionName(function_ea)
     func_ea_list.append(sys.maxint)
 
-    cpc_dict = dict()
     cpc_chain = ""
 
     f = 0
@@ -818,19 +868,16 @@ if __name__ == '__main__':
                 if op_type == o_near or op_type == o_far:
                     op_val = GetOperandValue(head, 0)
                     if op_val in func_ea_list:
-                        cpc = cpc_dict.get(op_val, None)
-                        if cpc is None:
+                        context_entry = context_dict.get(op_val, None)
+                        if context_entry is None:
                             i = func_ea_list.index(op_val)
                             if func_name_list[i] == '//':
-                                context = callee_arg_sweep(op_val, True, func_ea_list[i+1])
-                                cpc = context.callee_calculate_cpc()
-                                print("%s: %d" % (func_name_list[i], cpc))
+                                context_entry = callee_arg_sweep(op_val, True, func_ea_list[i+1], 0)
                             else:
-                                context = callee_arg_sweep(op_val, False, func_ea_list[i+1])
-                                cpc = context.callee_calculate_cpc()
-                            cpc_dict[op_val] = cpc
+                                context_entry = callee_arg_sweep(op_val, False, func_ea_list[i+1], 0)
+                            context_dict[op_val] = context_entry
 
-                        cpc_chain += str(cpc)
+                        cpc_chain += str(context_entry.callee_calculate_cpc())
 
     if CPC_OUTPUT:
         print cpc_chain
@@ -840,9 +887,9 @@ if __name__ == '__main__':
         f.close()
     elif DICT_OUTPUT:
         dict_out = ""
-        for ea in cpc_dict:
+        for ea in context_dict:
             try:
-                dict_out += func_dict[ea] + ": " + str(cpc_dict[ea]) + "\n"
+                dict_out += func_dict[ea] + ": " + str(context_dict[ea].callee_calculate_cpc()) + "\n"
             except KeyError:
                 pass
                 #dict_out += str(ea) + " not found as start of function"

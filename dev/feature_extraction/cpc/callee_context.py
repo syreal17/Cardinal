@@ -150,6 +150,38 @@ class CalleeContext(object):
         elif operand in arg_reg_xmm7 and not self.xmm7_set:
             self.xmm7_src = True
 
+    def add_child_context(self, child):
+        if child.rdi_src and not self.rdi_set:
+            self.rdi_src = True
+        if child.rsi_src and not self.rsi_set:
+            self.rsi_src = True
+        if child.rdx_src and not self.rdx_set:
+            self.rdx_src = True
+        if child.rcx_src and not self.rcx_set:
+            self.rcx_src = True
+        if child.r10_src and not self.r10_set:
+            self.r10_src = True
+        if child.r8_src and not self.r8_set:
+            self.r8_src = True
+        if child.r9_src and not self.r9_set:
+            self.r9_src = True
+        if child.xmm0_src and not self.xmm0_set:
+            self.xmm0_src = True
+        if child.xmm1_src and not self.xmm1_set:
+            self.xmm1_src = True
+        if child.xmm2_src and not self.xmm2_set:
+            self.xmm2_src = True
+        if child.xmm3_src and not self.xmm3_set:
+            self.xmm3_src = True
+        if child.xmm4_src and not self.xmm4_set:
+            self.xmm4_src = True
+        if child.xmm5_src and not self.xmm5_set:
+            self.xmm5_src = True
+        if child.xmm6_src and not self.xmm6_set:
+            self.xmm6_src = True
+        if child.xmm7_src and not self.xmm7_set:
+            self.xmm7_src = True
+
     def callee_calculate_cpc(self):
         """ Determine callsite parameter cardinality based on argument
             registers seen in assignment commands and their order
