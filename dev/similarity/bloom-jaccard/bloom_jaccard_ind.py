@@ -15,6 +15,7 @@ from pybloom import BloomFilter
 def jaccard_ind(filename_1, filename_2):
     with open(filename_1, 'rb') as f_1:
         with open(filename_2, 'rb') as f_2:
+            print(filename_1)
             b_1 = BloomFilter.fromfile(f_1)
             b_2 = BloomFilter.fromfile(f_2)
             b_inter = b_1.intersection(b_2)

@@ -18,7 +18,8 @@ def to_bloom(filename):
         b = BloomFilter(capacity=1000000, error_rate=0.001)
 
         for line in f:
-            b.add(line)
+            if line != "":
+                b.add(line)
 
         new_filename = filename + ".bloom"
         out_f = open(new_filename, 'w')
