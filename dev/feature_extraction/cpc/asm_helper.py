@@ -127,7 +127,7 @@ mov_insts = [ #w_r
     'mov','movapd','movaps','movd','movddup','movdq2q','movdqa','movdqu',
     'movhlps','movhpd','movhps','movlhps', 'movlpd','movlps','movmskpd',
     'movmskps','movntdq','movntdqa','movnti','movntpd','movntps','movntq',
-    'movntsd','movntss',' movq','movq2dq','movshdup',
+    'movntsd','movntss','movq','movq2dq','movshdup',
     'movsldup','movss','movsx','movsxd','movupd','movups',
     'movzx','vmovapd','vmovaps','vmovd','vmovddup','vmovdqa','vmovdqu',
     'vmovhlps','vmovhpd','vmovhps','vmovlhps','vmovlpd','vmovlps','vmovmskpd',

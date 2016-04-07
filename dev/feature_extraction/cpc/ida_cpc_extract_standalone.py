@@ -132,7 +132,7 @@ mov_insts = [ #w_r
     'mov','movapd','movaps','movd','movddup','movdq2q','movdqa','movdqu',
     'movhlps','movhpd','movhps','movlhps', 'movlpd','movlps','movmskpd',
     'movmskps','movntdq','movntdqa','movnti','movntpd','movntps','movntq',
-    'movntsd','movntss',' movq','movq2dq','movshdup',
+    'movntsd','movntss','movq','movq2dq','movshdup',
     'movsldup','movss','movsx','movsxd','movupd','movups',
     'movzx','vmovapd','vmovaps','vmovd','vmovddup','vmovdqa','vmovdqu',
     'vmovhlps','vmovhpd','vmovhps','vmovlhps','vmovlpd','vmovlps','vmovmskpd',
@@ -663,7 +663,6 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                 print("%x: %s" % (head,mnem))
 
         if num_opnds == 1:
-
             if debug:
                 print("%x: %s %s" % (head,mnem,opnd_1))
 
@@ -675,7 +674,7 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                     elif mnem in w_group:
                         context.add_set_arg(opnd_1)
                     else:
-                        print("Unrecognized mnemonic: %s" % mnem)
+                        print("Unrecognized mnemonic: %x: %s %s" % (head,mnem,opnd_1))
             if opnd_1_type == o_phrase or opnd_1_type == o_displ:
                 for arg in arg_extract(opnd_1):
                     context.add_src_arg(arg)
@@ -699,7 +698,7 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                     elif mnem in r_r_group or mnem in rw_r_group:
                         context.add_src_arg(opnd_1)
                     else:
-                        print("Unrecognized mnemonic: %s" % mnem)
+                        print("Unrecognized mnemonic: %x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
             elif opnd_1_type == o_phrase or opnd_1_type == o_displ:
                 for arg in arg_extract(opnd_1):
                     context.add_src_arg(arg)
@@ -901,4 +900,4 @@ if __name__ == '__main__':
         f.write(dict_out)
         f.close()
 
-    #Exit(0)
+    Exit(0)
