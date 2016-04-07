@@ -851,6 +851,7 @@ if __name__ == '__main__':
 
     f = 0
     for head in Heads(SegStart(ea), SegEnd(ea)):
+    #for head in Heads(0x41BC50, SegEnd(ea)):
         #print("%x" % head)
         if head > func_ea_list[f]:
             cpc_chain += sep
@@ -880,7 +881,8 @@ if __name__ == '__main__':
                         cpc_chain += str(context_entry.callee_calculate_cpc())
 
     if CPC_OUTPUT:
-        print cpc_chain
+        # ltj: this hangs on very long strings
+        # print cpc_chain
         filename = GetInputFilePath() + ".cpc." + ext
         f = open(filename, 'w')
         f.write(cpc_chain)
@@ -899,4 +901,4 @@ if __name__ == '__main__':
         f.write(dict_out)
         f.close()
 
-    Exit(0)
+    #Exit(0)
