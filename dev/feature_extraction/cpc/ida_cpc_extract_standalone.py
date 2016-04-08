@@ -275,14 +275,14 @@ r_r_group = add_insts + and_insts + arpl_insts + bound_insts + bt_insts +\
     psadbw_insts + shuf_insts + psll_insts + psrl_insts + psra_insts +\
     pswap_insts + punpck_insts + xorx_insts + r_insts + rcp_insts +\
     round_insts + sqrt_insts + s_insts + sub_insts + unpck_insts +\
-    xadd_insts + xchg_insts + xor_insts
+    xadd_insts + xchg_insts + xor_insts + andx_insts
 rw_r_group = add_insts + and_insts + cmpxchg_insts + divx_insts + addx_insts +\
     blend_insts + min_insts + max_insts + imul_insts + mulx_insts + or_insts +\
     orx_insts + pack_insts + pavg_insts + pcmp_insts + pfacc_insts +\
     subx_insts + pfcmp_insts + psadbw_insts + shuf_insts + psll_insts +\
     psrl_insts + psra_insts + pswap_insts + punpck_insts + xorx_insts +\
     r_insts + rcp_insts + round_insts + sqrt_insts + s_insts + sub_insts +\
-    unpck_insts + xadd_insts + xchg_insts + xor_insts
+    unpck_insts + xadd_insts + xchg_insts + xor_insts + andx_insts
 w_r_group = bsf_insts + bsr_insts + cmov_insts + cvt_insts + in_insts +\
     extract_insts + insert_insts + load_insts + lea_insts + mov_insts +\
     p_insts + pfrcp_insts + pfrsqrt_insts + phminposuw_insts + popcnt_insts
@@ -400,9 +400,9 @@ class CalleeContext(object):
     def __init__(self):
         self.extra_args = 0
         self.def_chain = list() #for debugging purpose, functions for ea cpc
-        self.init_regs()
+        self.callee_init_regs()
 
-    def init_regs(self):
+    def callee_init_regs(self):
         self.rdi_set = False
         self.rsi_set = False
         self.rdx_set = False
@@ -435,7 +435,7 @@ class CalleeContext(object):
         self.xmm6_src = False
         self.xmm7_src = False
 
-    def print_arg_regs(self):
+    def callee_print_arg_regs(self):
         if self.rdi_src is True:
             print("rdi,")
         if self.rsi_src is True:
@@ -467,7 +467,7 @@ class CalleeContext(object):
         if self.xmm7_src is True:
             print("xmm7,")
 
-    def add_set_arg(self,operand):
+    def callee_add_set_arg(self,operand):
         """ Adds a possible argument to args
         """
         if operand in arg_reg_rdi and not self.rdi_src:
@@ -501,7 +501,7 @@ class CalleeContext(object):
         elif operand in arg_reg_xmm7 and not self.xmm7_src:
             self.xmm7_set = True
 
-    def add_src_arg(self,operand):
+    def callee_add_src_arg(self,operand):
         """ Adds a possible argument to args
         """
         if operand in arg_reg_rdi and not self.rdi_set:
@@ -535,7 +535,7 @@ class CalleeContext(object):
         elif operand in arg_reg_xmm7 and not self.xmm7_set:
             self.xmm7_src = True
 
-    def add_child_context(self, child):
+    def callee_add_child_context(self, child):
         if child.rdi_src and not self.rdi_set:
             self.rdi_src = True
         if child.rsi_src and not self.rsi_set:
@@ -614,6 +614,177 @@ class CalleeContext(object):
         return int_regs + fp_regs + self.extra_args
 #END CALLEE_CONTEXT.PY---------------------------------------------------------
 
+#BEGIN CALLER_CONTEXT.PY-------------------------------------------------------
+class CallerContext(object):
+    def __init__(self):
+        self.extra_args = 0
+        self.def_chain = list() #for debugging purpose, functions for ea cpc
+        self.caller_init_regs()
+
+    def caller_init_regs(self):
+        self.rdi_set = False
+        self.rsi_set = False
+        self.rdx_set = False
+        self.rcx_set = False
+        self.r10_set = False
+        self.r8_set = False
+        self.r9_set = False
+        self.xmm0_set = False
+        self.xmm1_set = False
+        self.xmm2_set = False
+        self.xmm3_set = False
+        self.xmm4_set = False
+        self.xmm5_set = False
+        self.xmm6_set = False
+        self.xmm7_set = False
+
+    def caller_print_arg_regs(self):
+        if self.rdi_src is True:
+            print("rdi,")
+        if self.rsi_src is True:
+            print("rsi,")
+        if self.rdx_src is True:
+            print("rdx,")
+        if self.rcx_src is True:
+            print("rcx,")
+        if self.r10_src is True:
+            print("r10,")
+        if self.r8_src is True:
+            print("r8,")
+        if self.r9_src is True:
+            print("r9,")
+        if self.xmm0_src is True:
+            print("xmm0,")
+        if self.xmm1_src is True:
+            print("xmm1,")
+        if self.xmm2_src is True:
+            print("xmm2,")
+        if self.xmm3_src is True:
+            print("xmm3,")
+        if self.xmm4_src is True:
+            print("xmm4,")
+        if self.xmm5_src is True:
+            print("xmm5,")
+        if self.xmm6_src is True:
+            print("xmm6,")
+        if self.xmm7_src is True:
+            print("xmm7,")
+
+    def caller_add_set_arg(self,operand):
+        """ Adds a possible argument to args
+        """
+        if operand in arg_reg_rdi:
+            self.rdi_set = True
+        elif operand in arg_reg_rsi:
+            self.rsi_set = True
+        elif operand in arg_reg_rdx:
+            self.rdx_set = True
+        elif operand in arg_reg_rcx:
+            self.rcx_set = True
+        elif operand in arg_reg_r10:
+            self.r10_set = True
+        elif operand in arg_reg_r8:
+            self.r8_set = True
+        elif operand in arg_reg_r9:
+            self.r9_set = True
+        elif operand in arg_reg_xmm0:
+            self.xmm0_set = True
+        elif operand in arg_reg_xmm1:
+            self.xmm1_set = True
+        elif operand in arg_reg_xmm2:
+            self.xmm2_set = True
+        elif operand in arg_reg_xmm3:
+            self.xmm3_set = True
+        elif operand in arg_reg_xmm4:
+            self.xmm4_set = True
+        elif operand in arg_reg_xmm5:
+            self.xmm5_set = True
+        elif operand in arg_reg_xmm6:
+            self.xmm6_set = True
+        elif operand in arg_reg_xmm7:
+            self.xmm7_set = True
+
+    def caller_add_src_arg(self,operand):
+        """ Adds a possible argument to args
+        """
+        if operand in arg_reg_rdi:
+            self.rdi_set = False
+        elif operand in arg_reg_rsi:
+            self.rsi_set = False
+        elif operand in arg_reg_rdx:
+            self.rdx_set = False
+        elif operand in arg_reg_rcx:
+            self.rcx_set = False
+        elif operand in arg_reg_r10:
+            self.r10_set = False
+        elif operand in arg_reg_r8:
+            self.r8_set = False
+        elif operand in arg_reg_r9:
+            self.r9_set = False
+        elif operand in arg_reg_xmm0:
+            self.xmm0_set = False
+        elif operand in arg_reg_xmm1:
+            self.xmm1_set = False
+        elif operand in arg_reg_xmm2:
+            self.xmm2_set = False
+        elif operand in arg_reg_xmm3:
+            self.xmm3_set = False
+        elif operand in arg_reg_xmm4:
+            self.xmm4_set = False
+        elif operand in arg_reg_xmm5:
+            self.xmm5_set = False
+        elif operand in arg_reg_xmm6:
+            self.xmm6_set = False
+        elif operand in arg_reg_xmm7:
+            self.xmm7_set = False
+
+    def caller_calculate_cpc(self):
+        """ Determine callsite parameter cardinality based on argument
+            registers seen in assignment commands and their order
+        """
+        int_regs = 0
+        fp_regs = 0
+
+        #Calculate number of int-ptr arguments used in context
+        if self.rdi_set is False:
+            int_regs = 0
+        elif self.rdi_set is True and self.rsi_set is False:
+            int_regs = 1
+        elif self.rsi_set is True and self.rdx_set is False:
+            int_regs = 2
+        #special handling for syscalls where r10 is used
+        elif self.rdx_set is True and self.rcx_set is False and self.r10_set is False:
+            int_regs = 3
+        elif (self.rcx_set is True or self.r10_set is True) and self.r8_set is False:
+            int_regs = 4
+        elif self.r8_set is True and self.r9_set is False:
+            int_regs = 5
+        elif self.r9_set is True:
+            int_regs = 6
+
+        #Calculate number of fp arguments used in context
+        if self.xmm0_set is False:
+            fp_regs = 0
+        elif self.xmm0_set is True and self.xmm1_set is False:
+            fp_regs = 1
+        elif self.xmm1_set is True and self.xmm2_set is False:
+            fp_regs = 2
+        elif self.xmm2_set is True and self.xmm3_set is False:
+            fp_regs = 3
+        elif self.xmm3_set is True and self.xmm4_set is False:
+            fp_regs = 4
+        elif self.xmm4_set is True and self.xmm5_set is False:
+            fp_regs = 5
+        elif self.xmm5_set is True and self.xmm6_set is False:
+            fp_regs = 6
+        elif self.xmm6_set is True and self.xmm7_set is False:
+            fp_regs = 7
+        elif self.xmm7_set is True:
+            fp_regs = 8
+
+        return int_regs + fp_regs + self.extra_args
+#END CALLER_CONTEXT.PY---------------------------------------------------------
+
 MAX_DEPTH = 4
 MAX_CALLEE_SWEEP = 1000
 def callee_arg_sweep(ea, debug, next_func_ea, n):
@@ -655,7 +826,7 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
 
                         cpc = child_context.callee_calculate_cpc()
                         if cpc != 14: #ltj: clumsy checking for varargs function
-                            context.add_child_context(child_context)
+                            context.callee_add_child_context(child_context)
                     break
 
         if num_opnds == 0:
@@ -670,14 +841,14 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
             if opnd_1_type == o_reg:
                 if is_arg_reg(opnd_1):
                     if mnem in r_group or mnem in rw_group:
-                        context.add_src_arg(opnd_1)
+                        context.callee_add_src_arg(opnd_1)
                     elif mnem in w_group:
-                        context.add_set_arg(opnd_1)
+                        context.callee_add_set_arg(opnd_1)
                     else:
                         print("Unrecognized mnemonic: %x: %s %s" % (head,mnem,opnd_1))
             if opnd_1_type == o_phrase or opnd_1_type == o_displ:
                 for arg in arg_extract(opnd_1):
-                    context.add_src_arg(arg)
+                    context.callee_add_src_arg(arg)
 
         if num_opnds == 2:
             opnd_1_type = GetOpType(head, 0)
@@ -689,26 +860,27 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
             #XOR REG1 REG1 case:
             if opnd_1 == opnd_2:
                 if mnem in xor_insts or mnem in xorx_insts:
-                    context.add_set_arg(opnd_1)
+                    context.callee_add_set_arg(opnd_1)
+
+            # ltj:moved this before opnd_1 to fix case of movsxd rdi edi making rdi set
+            if opnd_2_type == o_reg:
+                if is_arg_reg(opnd_2):
+                    context.callee_add_src_arg(opnd_2)
+            elif opnd_2_type == o_phrase or opnd_2_type == o_displ:
+                for arg in arg_extract(opnd_2):
+                    context.callee_add_src_arg(arg)
 
             if opnd_1_type == o_reg:
                 if is_arg_reg(opnd_1):
                     if mnem in w_r_group:
-                        context.add_set_arg(opnd_1)
+                        context.callee_add_set_arg(opnd_1)
                     elif mnem in r_r_group or mnem in rw_r_group:
-                        context.add_src_arg(opnd_1)
+                        context.callee_add_src_arg(opnd_1)
                     else:
                         print("Unrecognized mnemonic: %x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
             elif opnd_1_type == o_phrase or opnd_1_type == o_displ:
                 for arg in arg_extract(opnd_1):
-                    context.add_src_arg(arg)
-
-            if opnd_2_type == o_reg:
-                if is_arg_reg(opnd_2):
-                    context.add_src_arg(opnd_2)
-            elif opnd_2_type == o_phrase or opnd_2_type == o_displ:
-                for arg in arg_extract(opnd_2):
-                    context.add_src_arg(arg)
+                    context.callee_add_src_arg(arg)
 
         if num_opnds == 3:
             opnd_1_type = GetOpType(head, 0)
@@ -720,27 +892,27 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
 
             if opnd_1_type == o_reg:
                 if is_arg_reg(opnd_1):
-                    context.add_set_arg(opnd_1)
+                    context.callee_add_set_arg(opnd_1)
             elif opnd_1_type == o_phrase or opnd_1_type == o_displ:
                 for arg in arg_extract(opnd_1):
-                    context.add_src_arg(arg)
+                    context.callee_add_src_arg(arg)
 
             if opnd_2_type == o_reg:
                 if is_arg_reg(opnd_2):
-                    context.add_src_arg(opnd_2)
+                    context.callee_add_src_arg(opnd_2)
             elif opnd_2_type == o_phrase or opnd_2_type == o_displ:
                 for arg in arg_extract(opnd_2):
-                    context.add_src_arg(arg)
+                    context.callee_add_src_arg(arg)
 
             if opnd_3_type == o_reg:
                 if is_arg_reg(opnd_3):
-                    context.add_src_arg(opnd_3)
+                    context.callee_add_src_arg(opnd_3)
             elif opnd_3_type == o_phrase or opnd_3_type == o_displ:
                 for arg in arg_extract(opnd_3):
-                    context.add_src_arg(arg)
+                    context.callee_add_src_arg(arg)
 
     if debug:
-        context.print_arg_regs()
+        context.callee_print_arg_regs()
     return context
 
 def arg_extract(opnd):
@@ -900,4 +1072,4 @@ if __name__ == '__main__':
         f.write(dict_out)
         f.close()
 
-    Exit(0)
+    #Exit(0)
