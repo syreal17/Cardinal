@@ -401,7 +401,37 @@ class CalleeContext(object):
     def __init__(self):
         self.extra_args = 0
         self.def_chain = list() #for debugging purpose, functions for ea cpc
-        self.callee_init_regs()
+        self.rdi_set = False
+        self.rsi_set = False
+        self.rdx_set = False
+        self.rcx_set = False
+        self.r10_set = False
+        self.r8_set = False
+        self.r9_set = False
+        self.xmm0_set = False
+        self.xmm1_set = False
+        self.xmm2_set = False
+        self.xmm3_set = False
+        self.xmm4_set = False
+        self.xmm5_set = False
+        self.xmm6_set = False
+        self.xmm7_set = False
+
+        self.rdi_src = False
+        self.rsi_src = False
+        self.rdx_src = False
+        self.rcx_src = False
+        self.r10_src = False
+        self.r8_src = False
+        self.r9_src = False
+        self.xmm0_src = False
+        self.xmm1_src = False
+        self.xmm2_src = False
+        self.xmm3_src = False
+        self.xmm4_src = False
+        self.xmm5_src = False
+        self.xmm6_src = False
+        self.xmm7_src = False
 
     def callee_init_regs(self):
         self.rdi_set = False
@@ -620,7 +650,21 @@ class CallerContext(object):
     def __init__(self):
         self.extra_args = 0
         self.def_chain = list() #for debugging purpose, functions for ea cpc
-        self.caller_init_regs()
+        self.rdi_set = False
+        self.rsi_set = False
+        self.rdx_set = False
+        self.rcx_set = False
+        self.r10_set = False
+        self.r8_set = False
+        self.r9_set = False
+        self.xmm0_set = False
+        self.xmm1_set = False
+        self.xmm2_set = False
+        self.xmm3_set = False
+        self.xmm4_set = False
+        self.xmm5_set = False
+        self.xmm6_set = False
+        self.xmm7_set = False
 
     def caller_init_regs(self):
         self.rdi_set = False
@@ -791,7 +835,10 @@ MAX_CALLEE_SWEEP = 1000
 def callee_arg_sweep(ea, debug, next_func_ea, n):
     if debug:
         print("next_func_ea:%x" % next_func_ea)
+
     context = CalleeContext()
+    stack_args = list()
+
     for head in Heads(ea, ea+MAX_CALLEE_SWEEP):
         mnem = GetMnem(head)
         num_opnds = 0
@@ -806,8 +853,7 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
         if opnd_3 != "":
            num_opnds = 3
 
-        #TODO: ltj: should this even be here? Rets can come before true end of function
-        if is_ret(mnem) or is_hlt(mnem) or head >= next_func_ea:
+        if head >= next_func_ea:
             break
 
         if is_jmp(mnem) or is_call(mnem):
@@ -826,9 +872,27 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                             callee_context_dict[op_val] = child_context
 
                         cpc = child_context.callee_calculate_cpc()
-                        if cpc != 14: #ltj: clumsy checking for varargs function
+                        if debug:
+                            print("child cpc: %d" % cpc)
+                        if cpc < 14: #ltj: clumsy checking for varargs function
                             context.callee_add_child_context(child_context)
                     break
+
+        if "arg_" in opnd_2:
+            if debug:
+                print("here2")
+            if opnd_2 not in stack_args:
+                stack_args.append(opnd_2)
+                if debug:
+                    print("stack arg: %s" % opnd_2)
+
+        if "arg_" in opnd_3:
+            if debug:
+                print("here3")
+            if opnd_3 not in stack_args:
+                stack_args.append(opnd_3)
+                if debug:
+                    print("stack arg: %s" % opnd_3)
 
         if num_opnds == 0:
             if debug:
@@ -913,7 +977,12 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                     context.callee_add_src_arg(arg)
 
     if debug:
+        print("stack_args len: %d" % len(stack_args))
+    context.extra_args = len(stack_args)
+
+    if debug:
         context.callee_print_arg_regs()
+
     return context
 
 def arg_extract(opnd):
@@ -983,30 +1052,32 @@ DICT_OUTPUT = False
 CPC_OUTPUT = False
 ADDR_DEBUG = False
 NAME_DEBUG = False
+batch = True
 CALLER_CPC_THRESH = 0.75
 CALLER_CONTEXT_REFRESH = 15
 sep = ","
 
 if __name__ == '__main__':
-    if ARGV[1] == '-c':
-        sep = ","
-        CPC_OUTPUT = True
-        ext = "chain"
-    elif ARGV[1] == '-f':
-        sep = "\n"
-        NAME_DEBUG = True
-        CPC_OUTPUT = True
-        ext = "func"
-    elif ARGV[1] == '-l':
-        sep = "\n"
-        CPC_OUTPUT = True
-        ext = "feature"
-    elif ARGV[1] == '-d':
-        DICT_OUTPUT = True
-        ext = "dict"
-    else:
-        print("Must pass -c (chain), -f (per function), -l (list), or -d (dictionary)")
-        sys.exit(1)
+    if batch:
+        if ARGV[1] == '-c':
+            sep = ","
+            CPC_OUTPUT = True
+            ext = "chain"
+        elif ARGV[1] == '-f':
+            sep = "\n"
+            NAME_DEBUG = True
+            CPC_OUTPUT = True
+            ext = "func"
+        elif ARGV[1] == '-l':
+            sep = "\n"
+            CPC_OUTPUT = True
+            ext = "feature"
+        elif ARGV[1] == '-d':
+            DICT_OUTPUT = True
+            ext = "dict"
+        else:
+            print("Must pass -c (chain), -f (per function), -l (list), or -d (dictionary)")
+            sys.exit(1)
 
     debug = False
     autoWait()
@@ -1057,6 +1128,10 @@ if __name__ == '__main__':
             opnd_2 = GetOpnd(head, 1)
             opnd_3 = GetOpnd(head, 2)
 
+            #disassemble a particular function:
+            # if func_name_list[f-1] == "CreateParams":
+            #     print("%x: %s %s %s %s" % (head,mnem,opnd_1,opnd_2,opnd_3))
+
             if opnd_1 != "":
                 num_opnds = 1
             if opnd_2 != "":
@@ -1072,19 +1147,24 @@ if __name__ == '__main__':
                         context_rval = callee_context_dict.get(op_val, None)
                         if context_rval is None:
                             i = func_ea_list.index(op_val)
-                            if func_name_list[i] == '//': # ercMarkCurrMBConcealed
+                            if func_name_list[i] == '//':
                                 context_rval = callee_arg_sweep(op_val, True, func_ea_list[i+1], 0)
                             else:
                                 context_rval = callee_arg_sweep(op_val, False, func_ea_list[i+1], 0)
 
                             callee_context_dict[op_val] = context_rval
 
-                        l = caller_context_dict.get(op_val, None)
-                        if l == None:
-                            caller_context_dict[op_val] = list()
-                        cur_context = copy.copy(context)
-                        caller_context_dict[op_val].append(cur_context)
-                        context.caller_init_regs()
+                        if op_val != func_ea_list[f-1]: # don't use recursive callsites as caller_contexts
+                            l = caller_context_dict.get(op_val, None)
+                            if l == None:
+                                caller_context_dict[op_val] = list()
+                            cur_context = copy.copy(context)
+                            caller_context_dict[op_val].append(cur_context)
+                            context.caller_init_regs()
+                        else:
+                            #print skipped functions:
+                            #print("op_val: %x. func: %s" % (op_val,func_name_list[f-1]))
+                            pass
 
                         addr_chain.append(op_val)
                         #cpc_chain += str(context_rval.callee_calculate_cpc())
@@ -1198,7 +1278,7 @@ if __name__ == '__main__':
                 caller_cpc = cpc
         maj = float(max_num) / float(len(caller_cpc_list))
 
-        if callee_cpc == 14:
+        if callee_cpc >= 14:
             callee_cpc = -1
         else:
             if maj < CALLER_CPC_THRESH:
@@ -1241,4 +1321,5 @@ if __name__ == '__main__':
         f.write(dict_out)
         f.close()
 
-    Exit(0)
+    if batch:
+        Exit(0)
