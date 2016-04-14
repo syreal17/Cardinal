@@ -22,7 +22,7 @@ def to_bloom(filename):
                 b.add(line)
 
         new_filename = filename + ".bloom"
-        out_f = open(new_filename, 'w')
+        out_f = open(new_filename, 'wb')
         b.tofile(out_f)
 
 

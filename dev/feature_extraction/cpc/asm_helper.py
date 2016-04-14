@@ -127,7 +127,7 @@ mov_insts = [ #w_r
     'mov','movapd','movaps','movd','movddup','movdq2q','movdqa','movdqu',
     'movhlps','movhpd','movhps','movlhps', 'movlpd','movlps','movmskpd',
     'movmskps','movntdq','movntdqa','movnti','movntpd','movntps','movntq',
-    'movntsd','movntss',' movq','movq2dq','movshdup',
+    'movntsd','movntss','movq','movq2dq','movshdup',
     'movsldup','movss','movsx','movsxd','movupd','movups',
     'movzx','vmovapd','vmovaps','vmovd','vmovddup','vmovdqa','vmovdqu',
     'vmovhlps','vmovhpd','vmovhps','vmovlhps','vmovlpd','vmovlps','vmovmskpd',
@@ -270,14 +270,14 @@ r_r_group = add_insts + and_insts + arpl_insts + bound_insts + bt_insts +\
     psadbw_insts + shuf_insts + psll_insts + psrl_insts + psra_insts +\
     pswap_insts + punpck_insts + xorx_insts + r_insts + rcp_insts +\
     round_insts + sqrt_insts + s_insts + sub_insts + unpck_insts +\
-    xadd_insts + xchg_insts + xor_insts
+    xadd_insts + xchg_insts + xor_insts + andx_insts
 rw_r_group = add_insts + and_insts + cmpxchg_insts + divx_insts + addx_insts +\
     blend_insts + min_insts + max_insts + imul_insts + mulx_insts + or_insts +\
     orx_insts + pack_insts + pavg_insts + pcmp_insts + pfacc_insts +\
     subx_insts + pfcmp_insts + psadbw_insts + shuf_insts + psll_insts +\
     psrl_insts + psra_insts + pswap_insts + punpck_insts + xorx_insts +\
     r_insts + rcp_insts + round_insts + sqrt_insts + s_insts + sub_insts +\
-    unpck_insts + xadd_insts + xchg_insts + xor_insts
+    unpck_insts + xadd_insts + xchg_insts + xor_insts + andx_insts
 w_r_group = bsf_insts + bsr_insts + cmov_insts + cvt_insts + in_insts +\
     extract_insts + insert_insts + load_insts + lea_insts + mov_insts +\
     p_insts + pfrcp_insts + pfrsqrt_insts + phminposuw_insts + popcnt_insts

@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------------
 # A Three-Pronged Approach to Exploring the Limits of Static Malware Analyses:
-# Callsite Parameter Cardinality (CPC) Counting: context.py
+# Callsite Parameter Cardinality (CPC) Counting: callee_context.py
 #
-# This is the container object for sections, registers and cardinality chains
-# for the CPC extractor driver
+# This is keeps track of argument registers at the callee level and performs
+# cpc calculation based on the registers used as source
 #
 # Luke Jones (luke.t.jones.814@gmail.com)
 #
