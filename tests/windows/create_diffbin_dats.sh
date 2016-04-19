@@ -46,4 +46,5 @@ gcc,O0-O0 gcc,O1-O1 gcc,O2-O2 gcc,O3-O3"
 
 get_dat plots/diff.bin.cpc.bloom.dat cpc-bloom plots/diff.bin.cpc.bloom.legend.txt
 get_dat plots/diff.bin.mcn.dat mc-bloom plots/diff.bin.mc.bloom.legend.txt
+get_dat plots/diff.bin.bbcp.bloom.dat bbcp-bloom plots/diff.bin.bbcp.bloom.legend.txt
 get_dat plots/diff.bin.cpc.edit.dat cpc-edit plots/diff.bin.cpc.edit.legend.txt

@@ -7,7 +7,7 @@ do
         samples="$samples $var"                                                 
 done          
 compilers="clang gcc"
-features="cpc mc"
+features="cpc mc bbcp"
 file="multi_sample.report"
 
 #clear file

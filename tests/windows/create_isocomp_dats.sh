@@ -37,7 +37,9 @@ get_dat () {
 
 get_dat plots/iso.clang.cpc.bloom.dat clang cpc-bloom
 get_dat plots/iso.clang.mcn.dat clang mc-bloom
+get_dat plots/iso.clang.bbcp.bloom.dat clang bbcp-bloom
 get_dat plots/iso.clang.cpc.edit.dat clang cpc-edit
 get_dat plots/iso.gcc.cpc.bloom.dat gcc cpc-bloom
 get_dat plots/iso.gcc.mcn.dat gcc mc-bloom
+get_dat plots/iso.gcc.bbcp.bloom.dat gcc bbcp-bloom
 get_dat plots/iso.gcc.cpc.edit.dat gcc cpc-edit
