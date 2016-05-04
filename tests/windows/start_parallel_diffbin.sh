@@ -5,7 +5,10 @@ samples=""
 for var in "$@"                                                                 
 do                                                                              
         samples="$samples $var"                                                 
-done          
+done 
 
-./generate_similarity_reports.sh $samples
-./generate_difference_reports.sh $samples
+#spin off one process per testee
+for testee in $samples
+do
+	./generate_difference_reports_parallel.sh $testee $samples
+done	
