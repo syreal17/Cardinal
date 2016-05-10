@@ -1,8 +1,8 @@
 #!/bin/bash
 
 printf "" > accuracy_report.txt
-find ../../../corpora/lin_bitcode_corpus/ -name *$1.llvm.o.cpc.gdict > gt_dict.txt
-find ../../../corpora/ -name *$1*.elf.cpc.dict -exec python ../get_cpc_accuracy.py \
+find ../../../corpora/lin_bitcode_corpus/ -wholename */$1.llvm.o.cpc.gdict > gt_dict.txt
+find ../../../corpora/ -wholename */$1*.elf.cpc.dict -exec python ../get_cpc_accuracy.py \
 	`cat gt_dict.txt` {} \; >> accuracy_report.txt
 
 printf "accuracy, $1\n"

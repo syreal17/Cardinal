@@ -5,9 +5,9 @@ samples=""
 testee=""                                                                    
 for var in "$@"                                                                 
 do       
-		if [ testee = ""] 
+		if [ $testee = ""] 
 		then
-			testee = $var
+			testee=$var
 		else
 			samples="$samples $var"
 		fi

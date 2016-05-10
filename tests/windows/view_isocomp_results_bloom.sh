@@ -22,7 +22,7 @@ then
 	exit 1
 fi
 
-find ../../../corpora/ -name *$1*$2*.$3.feature.bloom -exec /cygdrive/c/Python27/python.exe ../../dev/similarity/bloom-jaccard/bloom_jaccard_ind.py {} + > report.txt
+find ../../../corpora/ -wholename */$1*$2*.$3.feature.bloom -exec /cygdrive/c/Python27/python.exe ../../dev/similarity/bloom-jaccard/bloom_jaccard_ind.py {} + > report.txt
 
 printf "isocomp, $1-$2-$3:\n" 
 

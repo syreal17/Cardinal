@@ -5,10 +5,15 @@ samples=""
 for var in "$@"                                                                 
 do                                                                              
         samples="$samples $var"                                                 
-done 
+done          
 
-#spin off one process per testee
-for testee in $samples
+#Generate cpc chains (for edit distance) and lists (for Bloom filters) and
+#machine code ngrams to simulate BitShred
+printf "Starting feature generation\n"
+
+for sample in $samples
 do
-	./generate_difference_reports_parallel.sh $testee $samples &
-done	
+	printf "Generating $sample features\n"
+	./create_sigs.sh $sample
+	./create_chains.sh $sample
+done

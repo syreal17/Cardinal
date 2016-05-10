@@ -16,7 +16,7 @@ then
 	exit 1
 fi
 
-find ../../../corpora/ -name *$1*.$2.feature.bloom -exec python ../../dev/similarity/bloom-jaccard/bloom_jaccard_ind.py {} + > report.txt
+find ../../../corpora/ -wholename */$1*.$2.feature.bloom -exec python ../../dev/similarity/bloom-jaccard/bloom_jaccard_ind.py {} + > report.txt
 
 printf "diff comp, $1-$2:\n"
 

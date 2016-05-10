@@ -16,8 +16,8 @@ then
 	exit 1
 fi
 
-find ../../../corpora/ -name *$1*.cpc.chain > edits.txt
-find ../../../corpora/ -name *$2*.cpc.chain >> edits.txt
+find ../../../corpora/ -wholename */$1*.cpc.chain > edits.txt
+find ../../../corpora/ -wholename */$2*.cpc.chain >> edits.txt
 python ../../dev/similarity/editdistance/edit_distance.py `cat edits.txt` > report.txt
 
 printf "diffbin, edit distance, $1-$2:\n" 

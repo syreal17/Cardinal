@@ -16,7 +16,7 @@ then
 	exit 1
 fi
 
-find ../../../corpora/ -name *$1*$2*.cpc.chain -exec python ../../dev/similarity/editdistance/edit_distance.py {} + > report.txt
+find ../../../corpora/ -wholename */$1*$2*.cpc.chain -exec python ../../dev/similarity/editdistance/edit_distance.py {} + > report.txt
 
 printf "isocomp, $1-$2:\n" 
 

@@ -22,8 +22,8 @@ then
 	exit 1
 fi
 
-find ../../../corpora/ -name *$1*.$3.feature.bloom > blooms.txt
-find ../../../corpora/ -name *$2*.$3.feature.bloom >> blooms.txt
+find ../../../corpora/ -wholename */$1*.$3.feature.bloom > blooms.txt
+find ../../../corpora/ -wholename */$2*.$3.feature.bloom >> blooms.txt
 python ../../dev/similarity/bloom-jaccard/bloom_jaccard_ind.py `cat blooms.txt` > report.txt
 
 printf "diffbin bloom, $1-$2-$3:\n" 
