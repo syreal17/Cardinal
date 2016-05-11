@@ -1,0 +1,1 @@
+treecc make_dparser ldecod lua siod sqlite3 kc burg oggenc chcon chgrp chmod chown cp date dd df dir du factor ginstall ls mv pr ptx rm sha384sum sort split stat tail touch ln numfmt od realpath shred shuf stty

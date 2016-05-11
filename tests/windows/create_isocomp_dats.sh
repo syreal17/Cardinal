@@ -6,7 +6,7 @@ get_result () {
 	comp=$2
 	meth=$3
 	iso=$4
-	grep "$sample,$comp,$meth,$iso" multi_sample.report | cut -d " " -f 2 | \
+	grep "^$sample,$comp,$meth,$iso" multi_sample.report | cut -d " " -f 2 | \
 awk '{printf("%s",$0);}' >> $file
 	printf " " >> $file
 }

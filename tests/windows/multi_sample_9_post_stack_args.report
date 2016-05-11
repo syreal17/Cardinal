@@ -1,0 +1,3348 @@
+isocomp, treecc-clang-cpc:
+treecc,clang,cpc-bloom,O0-O1: 0.339988
+treecc,clang,cpc-bloom,O0-O2: 0.250471
+treecc,clang,cpc-bloom,O0-O3: 0.241379
+treecc,clang,cpc-bloom,O1-O2: 0.417803
+treecc,clang,cpc-bloom,O1-O3: 0.400841
+treecc,clang,cpc-bloom,O2-O3: 0.838509
+isocomp, treecc-clang-mc:
+treecc,clang,mc-bloom,O0-O1: 0.043199
+treecc,clang,mc-bloom,O0-O2: 0.044335
+treecc,clang,mc-bloom,O0-O3: 0.043126
+treecc,clang,mc-bloom,O1-O2: 0.246051
+treecc,clang,mc-bloom,O1-O3: 0.233794
+treecc,clang,mc-bloom,O2-O3: 0.448007
+isocomp, treecc-gcc-cpc:
+treecc,gcc,cpc-bloom,O0-O1: 0.411604
+treecc,gcc,cpc-bloom,O0-O2: 0.220817
+treecc,gcc,cpc-bloom,O0-O3: 0.177187
+treecc,gcc,cpc-bloom,O1-O2: 0.255115
+treecc,gcc,cpc-bloom,O1-O3: 0.201711
+treecc,gcc,cpc-bloom,O2-O3: 0.492614
+isocomp, treecc-gcc-mc:
+treecc,gcc,mc-bloom,O0-O1: 0.062973
+treecc,gcc,mc-bloom,O0-O2: 0.050417
+treecc,gcc,mc-bloom,O0-O3: 0.056027
+treecc,gcc,mc-bloom,O1-O2: 0.128252
+treecc,gcc,mc-bloom,O1-O3: 0.103739
+treecc,gcc,mc-bloom,O2-O3: 0.281231
+isocomp, make_dparser-clang-cpc:
+make_dparser,clang,cpc-bloom,O0-O1: 0.525674
+make_dparser,clang,cpc-bloom,O0-O2: 0.220159
+make_dparser,clang,cpc-bloom,O0-O3: 0.211317
+make_dparser,clang,cpc-bloom,O1-O2: 0.261524
+make_dparser,clang,cpc-bloom,O1-O3: 0.253296
+make_dparser,clang,cpc-bloom,O2-O3: 0.831740
+isocomp, make_dparser-clang-mc:
+make_dparser,clang,mc-bloom,O0-O1: 0.060804
+make_dparser,clang,mc-bloom,O0-O2: 0.063302
+make_dparser,clang,mc-bloom,O0-O3: 0.064070
+make_dparser,clang,mc-bloom,O1-O2: 0.217167
+make_dparser,clang,mc-bloom,O1-O3: 0.217837
+make_dparser,clang,mc-bloom,O2-O3: 0.601809
+isocomp, make_dparser-gcc-cpc:
+make_dparser,gcc,cpc-bloom,O0-O1: 0.426276
+make_dparser,gcc,cpc-bloom,O0-O2: 0.225649
+make_dparser,gcc,cpc-bloom,O0-O3: 0.211443
+make_dparser,gcc,cpc-bloom,O1-O2: 0.339520
+make_dparser,gcc,cpc-bloom,O1-O3: 0.258547
+make_dparser,gcc,cpc-bloom,O2-O3: 0.284314
+isocomp, make_dparser-gcc-mc:
+make_dparser,gcc,mc-bloom,O0-O1: 0.078853
+make_dparser,gcc,mc-bloom,O0-O2: 0.066093
+make_dparser,gcc,mc-bloom,O0-O3: 0.067421
+make_dparser,gcc,mc-bloom,O1-O2: 0.150522
+make_dparser,gcc,mc-bloom,O1-O3: 0.136136
+make_dparser,gcc,mc-bloom,O2-O3: 0.300302
+isocomp, ldecod-clang-cpc:
+ldecod,clang,cpc-bloom,O0-O1: 0.480780
+ldecod,clang,cpc-bloom,O0-O2: 0.288398
+ldecod,clang,cpc-bloom,O0-O3: 0.274360
+ldecod,clang,cpc-bloom,O1-O2: 0.384157
+ldecod,clang,cpc-bloom,O1-O3: 0.357974
+ldecod,clang,cpc-bloom,O2-O3: 0.782416
+isocomp, ldecod-clang-mc:
+ldecod,clang,mc-bloom,O0-O1: 0.080163
+ldecod,clang,mc-bloom,O0-O2: 0.074348
+ldecod,clang,mc-bloom,O0-O3: 0.074217
+ldecod,clang,mc-bloom,O1-O2: 0.192209
+ldecod,clang,mc-bloom,O1-O3: 0.184923
+ldecod,clang,mc-bloom,O2-O3: 0.536518
+isocomp, ldecod-gcc-cpc:
+ldecod,gcc,cpc-bloom,O0-O1: 0.504065
+ldecod,gcc,cpc-bloom,O0-O2: 0.230888
+ldecod,gcc,cpc-bloom,O0-O3: 0.204380
+ldecod,gcc,cpc-bloom,O1-O2: 0.274896
+ldecod,gcc,cpc-bloom,O1-O3: 0.239564
+ldecod,gcc,cpc-bloom,O2-O3: 0.444837
+isocomp, ldecod-gcc-mc:
+ldecod,gcc,mc-bloom,O0-O1: 0.085453
+ldecod,gcc,mc-bloom,O0-O2: 0.074583
+ldecod,gcc,mc-bloom,O0-O3: 0.070444
+ldecod,gcc,mc-bloom,O1-O2: 0.163569
+ldecod,gcc,mc-bloom,O1-O3: 0.144210
+ldecod,gcc,mc-bloom,O2-O3: 0.298028
+isocomp, lua-clang-cpc:
+lua,clang,cpc-bloom,O0-O1: 0.459595
+lua,clang,cpc-bloom,O0-O2: 0.219152
+lua,clang,cpc-bloom,O0-O3: 0.198699
+lua,clang,cpc-bloom,O1-O2: 0.246521
+lua,clang,cpc-bloom,O1-O3: 0.224168
+lua,clang,cpc-bloom,O2-O3: 0.682300
+isocomp, lua-clang-mc:
+lua,clang,mc-bloom,O0-O1: 0.062245
+lua,clang,mc-bloom,O0-O2: 0.062260
+lua,clang,mc-bloom,O0-O3: 0.062376
+lua,clang,mc-bloom,O1-O2: 0.209990
+lua,clang,mc-bloom,O1-O3: 0.192502
+lua,clang,mc-bloom,O2-O3: 0.463280
+isocomp, lua-gcc-cpc:
+lua,gcc,cpc-bloom,O0-O1: 0.485014
+lua,gcc,cpc-bloom,O0-O2: 0.272997
+lua,gcc,cpc-bloom,O0-O3: 0.171558
+lua,gcc,cpc-bloom,O1-O2: 0.317729
+lua,gcc,cpc-bloom,O1-O3: 0.188165
+lua,gcc,cpc-bloom,O2-O3: 0.224834
+isocomp, lua-gcc-mc:
+lua,gcc,mc-bloom,O0-O1: 0.082006
+lua,gcc,mc-bloom,O0-O2: 0.067509
+lua,gcc,mc-bloom,O0-O3: 0.065981
+lua,gcc,mc-bloom,O1-O2: 0.159629
+lua,gcc,mc-bloom,O1-O3: 0.128127
+lua,gcc,mc-bloom,O2-O3: 0.252428
+isocomp, siod-clang-cpc:
+siod,clang,cpc-bloom,O0-O1: 0.473779
+siod,clang,cpc-bloom,O0-O2: 0.292234
+siod,clang,cpc-bloom,O0-O3: 0.263820
+siod,clang,cpc-bloom,O1-O2: 0.376993
+siod,clang,cpc-bloom,O1-O3: 0.339453
+siod,clang,cpc-bloom,O2-O3: 0.738503
+isocomp, siod-clang-mc:
+siod,clang,mc-bloom,O0-O1: 0.049518
+siod,clang,mc-bloom,O0-O2: 0.048275
+siod,clang,mc-bloom,O0-O3: 0.049059
+siod,clang,mc-bloom,O1-O2: 0.191330
+siod,clang,mc-bloom,O1-O3: 0.174472
+siod,clang,mc-bloom,O2-O3: 0.334336
+isocomp, siod-gcc-cpc:
+siod,gcc,cpc-bloom,O0-O1: 0.604662
+siod,gcc,cpc-bloom,O0-O2: 0.306503
+siod,gcc,cpc-bloom,O0-O3: 0.199796
+siod,gcc,cpc-bloom,O1-O2: 0.365864
+siod,gcc,cpc-bloom,O1-O3: 0.230850
+siod,gcc,cpc-bloom,O2-O3: 0.336634
+isocomp, siod-gcc-mc:
+siod,gcc,mc-bloom,O0-O1: 0.078860
+siod,gcc,mc-bloom,O0-O2: 0.064349
+siod,gcc,mc-bloom,O0-O3: 0.059723
+siod,gcc,mc-bloom,O1-O2: 0.122664
+siod,gcc,mc-bloom,O1-O3: 0.096857
+siod,gcc,mc-bloom,O2-O3: 0.207611
+isocomp, sqlite3-clang-cpc:
+sqlite3,clang,cpc-bloom,O0-O1: 0.422640
+sqlite3,clang,cpc-bloom,O0-O2: 0.128485
+sqlite3,clang,cpc-bloom,O0-O3: 0.131465
+sqlite3,clang,cpc-bloom,O1-O2: 0.143572
+sqlite3,clang,cpc-bloom,O1-O3: 0.138931
+sqlite3,clang,cpc-bloom,O2-O3: 0.330876
+isocomp, sqlite3-clang-mc:
+sqlite3,clang,mc-bloom,O0-O1: 0.086923
+sqlite3,clang,mc-bloom,O0-O2: 0.083945
+sqlite3,clang,mc-bloom,O0-O3: 0.082071
+sqlite3,clang,mc-bloom,O1-O2: 0.188572
+sqlite3,clang,mc-bloom,O1-O3: 0.170425
+sqlite3,clang,mc-bloom,O2-O3: 0.351118
+isocomp, sqlite3-gcc-cpc:
+sqlite3,gcc,cpc-bloom,O0-O1: 0.380611
+sqlite3,gcc,cpc-bloom,O0-O2: 0.181835
+sqlite3,gcc,cpc-bloom,O0-O3: 0.151759
+sqlite3,gcc,cpc-bloom,O1-O2: 0.189218
+sqlite3,gcc,cpc-bloom,O1-O3: 0.146838
+sqlite3,gcc,cpc-bloom,O2-O3: 0.172543
+isocomp, sqlite3-gcc-mc:
+sqlite3,gcc,mc-bloom,O0-O1: 0.099771
+sqlite3,gcc,mc-bloom,O0-O2: 0.083127
+sqlite3,gcc,mc-bloom,O0-O3: 0.080157
+sqlite3,gcc,mc-bloom,O1-O2: 0.169811
+sqlite3,gcc,mc-bloom,O1-O3: 0.153666
+sqlite3,gcc,mc-bloom,O2-O3: 0.286512
+isocomp, kc-clang-cpc:
+kc,clang,cpc-bloom,O0-O1: 0.300998
+kc,clang,cpc-bloom,O0-O2: 0.145130
+kc,clang,cpc-bloom,O0-O3: 0.140216
+kc,clang,cpc-bloom,O1-O2: 0.154061
+kc,clang,cpc-bloom,O1-O3: 0.149431
+kc,clang,cpc-bloom,O2-O3: 0.817731
+isocomp, kc-clang-mc:
+kc,clang,mc-bloom,O0-O1: 0.070127
+kc,clang,mc-bloom,O0-O2: 0.065392
+kc,clang,mc-bloom,O0-O3: 0.065016
+kc,clang,mc-bloom,O1-O2: 0.143340
+kc,clang,mc-bloom,O1-O3: 0.138915
+kc,clang,mc-bloom,O2-O3: 0.305961
+isocomp, kc-gcc-cpc:
+kc,gcc,cpc-bloom,O0-O1: 0.165068
+kc,gcc,cpc-bloom,O0-O2: 0.141684
+kc,gcc,cpc-bloom,O0-O3: 0.148417
+kc,gcc,cpc-bloom,O1-O2: 0.204490
+kc,gcc,cpc-bloom,O1-O3: 0.189712
+kc,gcc,cpc-bloom,O2-O3: 0.426614
+isocomp, kc-gcc-mc:
+kc,gcc,mc-bloom,O0-O1: 0.075555
+kc,gcc,mc-bloom,O0-O2: 0.068585
+kc,gcc,mc-bloom,O0-O3: 0.070179
+kc,gcc,mc-bloom,O1-O2: 0.114994
+kc,gcc,mc-bloom,O1-O3: 0.105241
+kc,gcc,mc-bloom,O2-O3: 0.225651
+isocomp, burg-clang-cpc:
+burg,clang,cpc-bloom,O0-O1: 0.715596
+burg,clang,cpc-bloom,O0-O2: 0.359116
+burg,clang,cpc-bloom,O0-O3: 0.359116
+burg,clang,cpc-bloom,O1-O2: 0.353261
+burg,clang,cpc-bloom,O1-O3: 0.353261
+burg,clang,cpc-bloom,O2-O3: 0.954442
+isocomp, burg-clang-mc:
+burg,clang,mc-bloom,O0-O1: 0.047361
+burg,clang,mc-bloom,O0-O2: 0.047353
+burg,clang,mc-bloom,O0-O3: 0.047233
+burg,clang,mc-bloom,O1-O2: 0.206165
+burg,clang,mc-bloom,O1-O3: 0.201464
+burg,clang,mc-bloom,O2-O3: 0.501065
+isocomp, burg-gcc-cpc:
+burg,gcc,cpc-bloom,O0-O1: 0.313514
+burg,gcc,cpc-bloom,O0-O2: 0.241688
+burg,gcc,cpc-bloom,O0-O3: 0.245033
+burg,gcc,cpc-bloom,O1-O2: 0.349925
+burg,gcc,cpc-bloom,O1-O3: 0.321101
+burg,gcc,cpc-bloom,O2-O3: 0.646947
+isocomp, burg-gcc-mc:
+burg,gcc,mc-bloom,O0-O1: 0.068900
+burg,gcc,mc-bloom,O0-O2: 0.056840
+burg,gcc,mc-bloom,O0-O3: 0.058025
+burg,gcc,mc-bloom,O1-O2: 0.123119
+burg,gcc,mc-bloom,O1-O3: 0.108008
+burg,gcc,mc-bloom,O2-O3: 0.286307
+isocomp, oggenc-clang-cpc:
+oggenc,clang,cpc-bloom,O0-O1: 0.556933
+oggenc,clang,cpc-bloom,O0-O2: 0.218519
+oggenc,clang,cpc-bloom,O0-O3: 0.209738
+oggenc,clang,cpc-bloom,O1-O2: 0.245814
+oggenc,clang,cpc-bloom,O1-O3: 0.248640
+oggenc,clang,cpc-bloom,O2-O3: 0.590269
+isocomp, oggenc-clang-mc:
+oggenc,clang,mc-bloom,O0-O1: 0.079251
+oggenc,clang,mc-bloom,O0-O2: 0.077200
+oggenc,clang,mc-bloom,O0-O3: 0.075977
+oggenc,clang,mc-bloom,O1-O2: 0.214908
+oggenc,clang,mc-bloom,O1-O3: 0.198019
+oggenc,clang,mc-bloom,O2-O3: 0.488230
+isocomp, oggenc-gcc-cpc:
+oggenc,gcc,cpc-bloom,O0-O1: 0.448738
+oggenc,gcc,cpc-bloom,O0-O2: 0.217958
+oggenc,gcc,cpc-bloom,O0-O3: 0.148543
+oggenc,gcc,cpc-bloom,O1-O2: 0.244340
+oggenc,gcc,cpc-bloom,O1-O3: 0.152856
+oggenc,gcc,cpc-bloom,O2-O3: 0.194952
+isocomp, oggenc-gcc-mc:
+oggenc,gcc,mc-bloom,O0-O1: 0.081064
+oggenc,gcc,mc-bloom,O0-O2: 0.072154
+oggenc,gcc,mc-bloom,O0-O3: 0.067663
+oggenc,gcc,mc-bloom,O1-O2: 0.167733
+oggenc,gcc,mc-bloom,O1-O3: 0.138824
+oggenc,gcc,mc-bloom,O2-O3: 0.272721
+isocomp, treecc-clang:
+treecc,clang,cpc-edit,O0-O1: 0.854325
+treecc,clang,cpc-edit,O0-O2: 0.716056
+treecc,clang,cpc-edit,O0-O3: 0.705095
+treecc,clang,cpc-edit,O1-O2: 0.792676
+treecc,clang,cpc-edit,O1-O3: 0.779388
+treecc,clang,cpc-edit,O2-O3: 0.979704
+isocomp, treecc-gcc:
+treecc,gcc,cpc-edit,O0-O1: 0.684237
+treecc,gcc,cpc-edit,O0-O2: 0.628108
+treecc,gcc,cpc-edit,O0-O3: 0.594163
+treecc,gcc,cpc-edit,O1-O2: 0.696781
+treecc,gcc,cpc-edit,O1-O3: 0.598696
+treecc,gcc,cpc-edit,O2-O3: 0.681689
+isocomp, make_dparser-clang:
+make_dparser,clang,cpc-edit,O0-O1: 0.915942
+make_dparser,clang,cpc-edit,O0-O2: 0.454545
+make_dparser,clang,cpc-edit,O0-O3: 0.450408
+make_dparser,clang,cpc-edit,O1-O2: 0.495238
+make_dparser,clang,cpc-edit,O1-O3: 0.491061
+make_dparser,clang,cpc-edit,O2-O3: 0.981900
+isocomp, make_dparser-gcc:
+make_dparser,gcc,cpc-edit,O0-O1: 0.523560
+make_dparser,gcc,cpc-edit,O0-O2: 0.409483
+make_dparser,gcc,cpc-edit,O0-O3: 0.373481
+make_dparser,gcc,cpc-edit,O1-O2: 0.667473
+make_dparser,gcc,cpc-edit,O1-O3: 0.583333
+make_dparser,gcc,cpc-edit,O2-O3: 0.642214
+isocomp, ldecod-clang:
+ldecod,clang,cpc-edit,O0-O1: 0.858300
+ldecod,clang,cpc-edit,O0-O2: 0.565708
+ldecod,clang,cpc-edit,O0-O3: 0.559370
+ldecod,clang,cpc-edit,O1-O2: 0.606690
+ldecod,clang,cpc-edit,O1-O3: 0.594937
+ldecod,clang,cpc-edit,O2-O3: 0.960261
+isocomp, ldecod-gcc:
+ldecod,gcc,cpc-edit,O0-O1: 0.315278
+ldecod,gcc,cpc-edit,O0-O2: 0.258291
+ldecod,gcc,cpc-edit,O0-O3: 0.277829
+ldecod,gcc,cpc-edit,O1-O2: 0.746297
+ldecod,gcc,cpc-edit,O1-O3: 0.616646
+ldecod,gcc,cpc-edit,O2-O3: 0.775367
+isocomp, lua-clang:
+lua,clang,cpc-edit,O0-O1: 0.883775
+lua,clang,cpc-edit,O0-O2: 0.534624
+lua,clang,cpc-edit,O0-O3: 0.508532
+lua,clang,cpc-edit,O1-O2: 0.569057
+lua,clang,cpc-edit,O1-O3: 0.528871
+lua,clang,cpc-edit,O2-O3: 0.864583
+isocomp, lua-gcc:
+lua,gcc,cpc-edit,O0-O1: 0.582305
+lua,gcc,cpc-edit,O0-O2: 0.537736
+lua,gcc,cpc-edit,O0-O3: 0.439623
+lua,gcc,cpc-edit,O1-O2: 0.630372
+lua,gcc,cpc-edit,O1-O3: 0.445161
+lua,gcc,cpc-edit,O2-O3: 0.476190
+isocomp, siod-clang:
+siod,clang,cpc-edit,O0-O1: 0.913481
+siod,clang,cpc-edit,O0-O2: 0.699669
+siod,clang,cpc-edit,O0-O3: 0.696231
+siod,clang,cpc-edit,O1-O2: 0.728591
+siod,clang,cpc-edit,O1-O3: 0.717593
+siod,clang,cpc-edit,O2-O3: 0.911198
+isocomp, siod-gcc:
+siod,gcc,cpc-edit,O0-O1: 0.607072
+siod,gcc,cpc-edit,O0-O2: 0.555704
+siod,gcc,cpc-edit,O0-O3: 0.516783
+siod,gcc,cpc-edit,O1-O2: 0.730446
+siod,gcc,cpc-edit,O1-O3: 0.566576
+siod,gcc,cpc-edit,O2-O3: 0.651840
+isocomp, sqlite3-clang:
+sqlite3,clang,cpc-edit,O0-O1: 0.806314
+sqlite3,clang,cpc-edit,O0-O2: 0.325476
+sqlite3,clang,cpc-edit,O0-O3: 0.367555
+sqlite3,clang,cpc-edit,O1-O2: 0.345936
+sqlite3,clang,cpc-edit,O1-O3: 0.385154
+sqlite3,clang,cpc-edit,O2-O3: 0.597775
+isocomp, sqlite3-gcc:
+sqlite3,gcc,cpc-edit,O0-O1: 0.374063
+sqlite3,gcc,cpc-edit,O0-O2: 0.313710
+sqlite3,gcc,cpc-edit,O0-O3: 0.356937
+sqlite3,gcc,cpc-edit,O1-O2: 0.434768
+sqlite3,gcc,cpc-edit,O1-O3: 0.393224
+sqlite3,gcc,cpc-edit,O2-O3: 0.380306
+isocomp, kc-clang:
+kc,clang,cpc-edit,O0-O1: 0.730778
+kc,clang,cpc-edit,O0-O2: -0.025951
+kc,clang,cpc-edit,O0-O3: -0.036815
+kc,clang,cpc-edit,O1-O2: 0.124925
+kc,clang,cpc-edit,O1-O3: 0.111955
+kc,clang,cpc-edit,O2-O3: 0.968910
+isocomp, kc-gcc:
+kc,gcc,cpc-edit,O0-O1: 0.291343
+kc,gcc,cpc-edit,O0-O2: 0.026861
+kc,gcc,cpc-edit,O0-O3: 0.011430
+kc,gcc,cpc-edit,O1-O2: 0.512295
+kc,gcc,cpc-edit,O1-O3: 0.402133
+kc,gcc,cpc-edit,O2-O3: 0.788155
+isocomp, burg-clang:
+burg,clang,cpc-edit,O0-O1: 0.948605
+burg,clang,cpc-edit,O0-O2: 0.698234
+burg,clang,cpc-edit,O0-O3: 0.692926
+burg,clang,cpc-edit,O1-O2: 0.726537
+burg,clang,cpc-edit,O1-O3: 0.719611
+burg,clang,cpc-edit,O2-O3: 0.991055
+isocomp, burg-gcc:
+burg,gcc,cpc-edit,O0-O1: 0.657450
+burg,gcc,cpc-edit,O0-O2: 0.485938
+burg,gcc,cpc-edit,O0-O3: 0.465927
+burg,gcc,cpc-edit,O1-O2: 0.704202
+burg,gcc,cpc-edit,O1-O3: 0.643952
+burg,gcc,cpc-edit,O2-O3: 0.874783
+isocomp, oggenc-clang:
+oggenc,clang,cpc-edit,O0-O1: 0.924167
+oggenc,clang,cpc-edit,O0-O2: 0.460616
+oggenc,clang,cpc-edit,O0-O3: 0.387846
+oggenc,clang,cpc-edit,O1-O2: 0.471453
+oggenc,clang,cpc-edit,O1-O3: 0.402891
+oggenc,clang,cpc-edit,O2-O3: 0.840278
+isocomp, oggenc-gcc:
+oggenc,gcc,cpc-edit,O0-O1: 0.321270
+oggenc,gcc,cpc-edit,O0-O2: 0.280381
+oggenc,gcc,cpc-edit,O0-O3: 0.202962
+oggenc,gcc,cpc-edit,O1-O2: 0.555462
+oggenc,gcc,cpc-edit,O1-O3: 0.332715
+oggenc,gcc,cpc-edit,O2-O3: 0.525407
+diff comp, treecc-cpc:
+treecc,cpc-bloom,O0-O0: 0.856786
+treecc,cpc-bloom,O1-O1: 0.249544
+treecc,cpc-bloom,O2-O2: 0.210662
+treecc,cpc-bloom,O3-O3: 0.195747
+diff comp, treecc-mc:
+treecc,mc-bloom,O0-O0: 0.081539
+treecc,mc-bloom,O1-O1: 0.093226
+treecc,mc-bloom,O2-O2: 0.087380
+treecc,mc-bloom,O3-O3: 0.083880
+diff comp, make_dparser-cpc:
+make_dparser,cpc-bloom,O0-O0: 1.000000
+make_dparser,cpc-bloom,O1-O1: 0.294014
+make_dparser,cpc-bloom,O2-O2: 0.269364
+make_dparser,cpc-bloom,O3-O3: 0.303639
+diff comp, make_dparser-mc:
+make_dparser,mc-bloom,O0-O0: 0.099125
+make_dparser,mc-bloom,O1-O1: 0.097992
+make_dparser,mc-bloom,O2-O2: 0.099874
+make_dparser,mc-bloom,O3-O3: 0.101980
+diff comp, ldecod-cpc:
+ldecod,cpc-bloom,O0-O0: 0.838621
+ldecod,cpc-bloom,O1-O1: 0.429338
+ldecod,cpc-bloom,O2-O2: 0.256847
+ldecod,cpc-bloom,O3-O3: 0.242956
+diff comp, ldecod-mc:
+ldecod,mc-bloom,O0-O0: 0.097147
+ldecod,mc-bloom,O1-O1: 0.112683
+ldecod,mc-bloom,O2-O2: 0.106430
+ldecod,mc-bloom,O3-O3: 0.109967
+diff comp, lua-cpc:
+lua,cpc-bloom,O0-O0: 0.934146
+lua,cpc-bloom,O1-O1: 0.368883
+lua,cpc-bloom,O2-O2: 0.199067
+lua,cpc-bloom,O3-O3: 0.165068
+diff comp, lua-mc:
+lua,mc-bloom,O0-O0: 0.099349
+lua,mc-bloom,O1-O1: 0.110742
+lua,mc-bloom,O2-O2: 0.099386
+lua,mc-bloom,O3-O3: 0.102234
+diff comp, siod-cpc:
+siod,cpc-bloom,O0-O0: 0.750265
+siod,cpc-bloom,O1-O1: 0.357886
+siod,cpc-bloom,O2-O2: 0.244496
+siod,cpc-bloom,O3-O3: 0.245250
+diff comp, siod-mc:
+siod,mc-bloom,O0-O0: 0.071905
+siod,mc-bloom,O1-O1: 0.082594
+siod,mc-bloom,O2-O2: 0.076997
+siod,mc-bloom,O3-O3: 0.081949
+diff comp, sqlite3-cpc:
+sqlite3,cpc-bloom,O0-O0: 0.981592
+sqlite3,cpc-bloom,O1-O1: 0.271535
+sqlite3,cpc-bloom,O2-O2: 0.164906
+sqlite3,cpc-bloom,O3-O3: 0.136090
+diff comp, sqlite3-mc:
+sqlite3,mc-bloom,O0-O0: 0.113326
+sqlite3,mc-bloom,O1-O1: 0.135095
+sqlite3,mc-bloom,O2-O2: 0.129800
+sqlite3,mc-bloom,O3-O3: 0.137688
+diff comp, kc-cpc:
+kc,cpc-bloom,O0-O0: 0.562009
+kc,cpc-bloom,O1-O1: 0.154496
+kc,cpc-bloom,O2-O2: 0.181011
+kc,cpc-bloom,O3-O3: 0.174411
+diff comp, kc-mc:
+kc,mc-bloom,O0-O0: 0.079457
+kc,mc-bloom,O1-O1: 0.090263
+kc,mc-bloom,O2-O2: 0.091064
+kc,mc-bloom,O3-O3: 0.091595
+diff comp, burg-cpc:
+burg,cpc-bloom,O0-O0: 0.438667
+burg,cpc-bloom,O1-O1: 0.380952
+burg,cpc-bloom,O2-O2: 0.362364
+burg,cpc-bloom,O3-O3: 0.334913
+diff comp, burg-mc:
+burg,mc-bloom,O0-O0: 0.071061
+burg,mc-bloom,O1-O1: 0.084704
+burg,mc-bloom,O2-O2: 0.080876
+burg,mc-bloom,O3-O3: 0.079857
+diff comp, oggenc-cpc:
+oggenc,cpc-bloom,O0-O0: 0.893996
+oggenc,cpc-bloom,O1-O1: 0.337235
+oggenc,cpc-bloom,O2-O2: 0.201199
+oggenc,cpc-bloom,O3-O3: 0.239264
+diff comp, oggenc-mc:
+oggenc,mc-bloom,O0-O0: 0.119849
+oggenc,mc-bloom,O1-O1: 0.113124
+oggenc,mc-bloom,O2-O2: 0.114751
+oggenc,mc-bloom,O3-O3: 0.120639
+diff comp, treecc:
+treecc,cpc-edit,O0-O0: 0.688716
+treecc,cpc-edit,O1-O1: 0.659938
+treecc,cpc-edit,O2-O2: 0.654241
+treecc,cpc-edit,O3-O3: 0.572596
+diff comp, make_dparser:
+make_dparser,cpc-edit,O0-O0: 0.584440
+make_dparser,cpc-edit,O1-O1: 0.504274
+make_dparser,cpc-edit,O2-O2: 0.474044
+make_dparser,cpc-edit,O3-O3: 0.518362
+diff comp, ldecod:
+ldecod,cpc-edit,O0-O0: 0.547669
+ldecod,cpc-edit,O1-O1: 0.473204
+ldecod,cpc-edit,O2-O2: 0.539164
+ldecod,cpc-edit,O3-O3: 0.550955
+diff comp, lua:
+lua,cpc-edit,O0-O0: 0.582180
+lua,cpc-edit,O1-O1: 0.525852
+lua,cpc-edit,O2-O2: 0.458011
+lua,cpc-edit,O3-O3: 0.471261
+diff comp, siod:
+siod,cpc-edit,O0-O0: 0.753953
+siod,cpc-edit,O1-O1: 0.583109
+siod,cpc-edit,O2-O2: 0.549613
+siod,cpc-edit,O3-O3: 0.499552
+diff comp, sqlite3:
+sqlite3,cpc-edit,O0-O0: 0.390901
+sqlite3,cpc-edit,O1-O1: 0.369135
+sqlite3,cpc-edit,O2-O2: 0.340653
+sqlite3,cpc-edit,O3-O3: 0.352754
+diff comp, kc:
+kc,cpc-edit,O0-O0: 0.746049
+kc,cpc-edit,O1-O1: 0.350188
+kc,cpc-edit,O2-O2: 0.525486
+kc,cpc-edit,O3-O3: 0.531348
+diff comp, burg:
+burg,cpc-edit,O0-O0: 0.628075
+burg,cpc-edit,O1-O1: 0.624025
+burg,cpc-edit,O2-O2: 0.554196
+burg,cpc-edit,O3-O3: 0.565836
+diff comp, oggenc:
+oggenc,cpc-edit,O0-O0: 0.546732
+oggenc,cpc-edit,O1-O1: 0.331595
+oggenc,cpc-edit,O2-O2: 0.292829
+oggenc,cpc-edit,O3-O3: 0.353081
+diffbin bloom, treecc-treecc-cpc:
+treecc,treecc,cpc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,cpc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,cpc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,cpc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,cpc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,cpc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,cpc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,cpc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, treecc-treecc-mc:
+treecc,treecc,mc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,mc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,mc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,mc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,mc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,mc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,mc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,mc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, treecc-make_dparser-cpc:
+treecc,make_dparser,cpc-bloom,clang,O0-O0: 0.127803
+treecc,make_dparser,cpc-bloom,clang,O1-O1: 0.117076
+treecc,make_dparser,cpc-bloom,clang,O2-O2: 0.136174
+treecc,make_dparser,cpc-bloom,clang,O3-O3: 0.134600
+treecc,make_dparser,cpc-bloom,gcc,O0-O0: 0.125420
+treecc,make_dparser,cpc-bloom,gcc,O1-O1: 0.153054
+treecc,make_dparser,cpc-bloom,gcc,O2-O2: 0.101085
+treecc,make_dparser,cpc-bloom,gcc,O3-O3: 0.130466
+diffbin bloom, treecc-make_dparser-mc:
+treecc,make_dparser,mc-bloom,clang,O0-O0: 0.142961
+treecc,make_dparser,mc-bloom,clang,O1-O1: 0.075521
+treecc,make_dparser,mc-bloom,clang,O2-O2: 0.074301
+treecc,make_dparser,mc-bloom,clang,O3-O3: 0.074153
+treecc,make_dparser,mc-bloom,gcc,O0-O0: 0.132722
+treecc,make_dparser,mc-bloom,gcc,O1-O1: 0.078706
+treecc,make_dparser,mc-bloom,gcc,O2-O2: 0.078901
+treecc,make_dparser,mc-bloom,gcc,O3-O3: 0.085078
+diffbin bloom, treecc-ldecod-cpc:
+treecc,ldecod,cpc-bloom,clang,O0-O0: 0.132747
+treecc,ldecod,cpc-bloom,clang,O1-O1: 0.152639
+treecc,ldecod,cpc-bloom,clang,O2-O2: 0.130199
+treecc,ldecod,cpc-bloom,clang,O3-O3: 0.128326
+treecc,ldecod,cpc-bloom,gcc,O0-O0: 0.126611
+treecc,ldecod,cpc-bloom,gcc,O1-O1: 0.139483
+treecc,ldecod,cpc-bloom,gcc,O2-O2: 0.123443
+treecc,ldecod,cpc-bloom,gcc,O3-O3: 0.111794
+diffbin bloom, treecc-ldecod-mc:
+treecc,ldecod,mc-bloom,clang,O0-O0: 0.098568
+treecc,ldecod,mc-bloom,clang,O1-O1: 0.048228
+treecc,ldecod,mc-bloom,clang,O2-O2: 0.045104
+treecc,ldecod,mc-bloom,clang,O3-O3: 0.045094
+treecc,ldecod,mc-bloom,gcc,O0-O0: 0.084562
+treecc,ldecod,mc-bloom,gcc,O1-O1: 0.047528
+treecc,ldecod,mc-bloom,gcc,O2-O2: 0.052853
+treecc,ldecod,mc-bloom,gcc,O3-O3: 0.055452
+diffbin bloom, treecc-lua-cpc:
+treecc,lua,cpc-bloom,clang,O0-O0: 0.093487
+treecc,lua,cpc-bloom,clang,O1-O1: 0.101140
+treecc,lua,cpc-bloom,clang,O2-O2: 0.092243
+treecc,lua,cpc-bloom,clang,O3-O3: 0.091229
+treecc,lua,cpc-bloom,gcc,O0-O0: 0.093416
+treecc,lua,cpc-bloom,gcc,O1-O1: 0.090226
+treecc,lua,cpc-bloom,gcc,O2-O2: 0.085632
+treecc,lua,cpc-bloom,gcc,O3-O3: 0.072210
+diffbin bloom, treecc-lua-mc:
+treecc,lua,mc-bloom,clang,O0-O0: 0.128705
+treecc,lua,mc-bloom,clang,O1-O1: 0.074968
+treecc,lua,mc-bloom,clang,O2-O2: 0.070737
+treecc,lua,mc-bloom,clang,O3-O3: 0.069499
+treecc,lua,mc-bloom,gcc,O0-O0: 0.120330
+treecc,lua,mc-bloom,gcc,O1-O1: 0.077930
+treecc,lua,mc-bloom,gcc,O2-O2: 0.082417
+treecc,lua,mc-bloom,gcc,O3-O3: 0.083653
+diffbin bloom, treecc-siod-cpc:
+treecc,siod,cpc-bloom,clang,O0-O0: 0.106571
+treecc,siod,cpc-bloom,clang,O1-O1: 0.110065
+treecc,siod,cpc-bloom,clang,O2-O2: 0.106709
+treecc,siod,cpc-bloom,clang,O3-O3: 0.102575
+treecc,siod,cpc-bloom,gcc,O0-O0: 0.105389
+treecc,siod,cpc-bloom,gcc,O1-O1: 0.095078
+treecc,siod,cpc-bloom,gcc,O2-O2: 0.096894
+treecc,siod,cpc-bloom,gcc,O3-O3: 0.086727
+diffbin bloom, treecc-siod-mc:
+treecc,siod,mc-bloom,clang,O0-O0: 0.115298
+treecc,siod,mc-bloom,clang,O1-O1: 0.064916
+treecc,siod,mc-bloom,clang,O2-O2: 0.062864
+treecc,siod,mc-bloom,clang,O3-O3: 0.060723
+treecc,siod,mc-bloom,gcc,O0-O0: 0.095648
+treecc,siod,mc-bloom,gcc,O1-O1: 0.068441
+treecc,siod,mc-bloom,gcc,O2-O2: 0.070819
+treecc,siod,mc-bloom,gcc,O3-O3: 0.072155
+diffbin bloom, treecc-sqlite3-cpc:
+treecc,sqlite3,cpc-bloom,clang,O0-O0: 0.079882
+treecc,sqlite3,cpc-bloom,clang,O1-O1: 0.086314
+treecc,sqlite3,cpc-bloom,clang,O2-O2: 0.083361
+treecc,sqlite3,cpc-bloom,clang,O3-O3: 0.087392
+treecc,sqlite3,cpc-bloom,gcc,O0-O0: 0.080018
+treecc,sqlite3,cpc-bloom,gcc,O1-O1: 0.080146
+treecc,sqlite3,cpc-bloom,gcc,O2-O2: 0.082322
+treecc,sqlite3,cpc-bloom,gcc,O3-O3: 0.077345
+diffbin bloom, treecc-sqlite3-mc:
+treecc,sqlite3,mc-bloom,clang,O0-O0: 0.095990
+treecc,sqlite3,mc-bloom,clang,O1-O1: 0.060161
+treecc,sqlite3,mc-bloom,clang,O2-O2: 0.051355
+treecc,sqlite3,mc-bloom,clang,O3-O3: 0.046075
+treecc,sqlite3,mc-bloom,gcc,O0-O0: 0.088719
+treecc,sqlite3,mc-bloom,gcc,O1-O1: 0.057806
+treecc,sqlite3,mc-bloom,gcc,O2-O2: 0.060283
+treecc,sqlite3,mc-bloom,gcc,O3-O3: 0.064829
+diffbin bloom, treecc-kc-cpc:
+treecc,kc,cpc-bloom,clang,O0-O0: 0.083548
+treecc,kc,cpc-bloom,clang,O1-O1: 0.086188
+treecc,kc,cpc-bloom,clang,O2-O2: 0.085015
+treecc,kc,cpc-bloom,clang,O3-O3: 0.091142
+treecc,kc,cpc-bloom,gcc,O0-O0: 0.084156
+treecc,kc,cpc-bloom,gcc,O1-O1: 0.081165
+treecc,kc,cpc-bloom,gcc,O2-O2: 0.088940
+treecc,kc,cpc-bloom,gcc,O3-O3: 0.075066
+diffbin bloom, treecc-kc-mc:
+treecc,kc,mc-bloom,clang,O0-O0: 0.067030
+treecc,kc,mc-bloom,clang,O1-O1: 0.050230
+treecc,kc,mc-bloom,clang,O2-O2: 0.046619
+treecc,kc,mc-bloom,clang,O3-O3: 0.046628
+treecc,kc,mc-bloom,gcc,O0-O0: 0.055051
+treecc,kc,mc-bloom,gcc,O1-O1: 0.050984
+treecc,kc,mc-bloom,gcc,O2-O2: 0.053608
+treecc,kc,mc-bloom,gcc,O3-O3: 0.059320
+diffbin bloom, treecc-burg-cpc:
+treecc,burg,cpc-bloom,clang,O0-O0: 0.102243
+treecc,burg,cpc-bloom,clang,O1-O1: 0.125676
+treecc,burg,cpc-bloom,clang,O2-O2: 0.114432
+treecc,burg,cpc-bloom,clang,O3-O3: 0.112134
+treecc,burg,cpc-bloom,gcc,O0-O0: 0.111262
+treecc,burg,cpc-bloom,gcc,O1-O1: 0.108300
+treecc,burg,cpc-bloom,gcc,O2-O2: 0.106383
+treecc,burg,cpc-bloom,gcc,O3-O3: 0.101002
+diffbin bloom, treecc-burg-mc:
+treecc,burg,mc-bloom,clang,O0-O0: 0.127262
+treecc,burg,mc-bloom,clang,O1-O1: 0.057068
+treecc,burg,mc-bloom,clang,O2-O2: 0.055845
+treecc,burg,mc-bloom,clang,O3-O3: 0.056106
+treecc,burg,mc-bloom,gcc,O0-O0: 0.097076
+treecc,burg,mc-bloom,gcc,O1-O1: 0.063930
+treecc,burg,mc-bloom,gcc,O2-O2: 0.064342
+treecc,burg,mc-bloom,gcc,O3-O3: 0.066809
+diffbin bloom, treecc-oggenc-cpc:
+treecc,oggenc,cpc-bloom,clang,O0-O0: 0.124339
+treecc,oggenc,cpc-bloom,clang,O1-O1: 0.115834
+treecc,oggenc,cpc-bloom,clang,O2-O2: 0.146323
+treecc,oggenc,cpc-bloom,clang,O3-O3: 0.157571
+treecc,oggenc,cpc-bloom,gcc,O0-O0: 0.122029
+treecc,oggenc,cpc-bloom,gcc,O1-O1: 0.111735
+treecc,oggenc,cpc-bloom,gcc,O2-O2: 0.116981
+treecc,oggenc,cpc-bloom,gcc,O3-O3: 0.137034
+diffbin bloom, treecc-oggenc-mc:
+treecc,oggenc,mc-bloom,clang,O0-O0: 0.105824
+treecc,oggenc,mc-bloom,clang,O1-O1: 0.056639
+treecc,oggenc,mc-bloom,clang,O2-O2: 0.052412
+treecc,oggenc,mc-bloom,clang,O3-O3: 0.051322
+treecc,oggenc,mc-bloom,gcc,O0-O0: 0.094976
+treecc,oggenc,mc-bloom,gcc,O1-O1: 0.055851
+treecc,oggenc,mc-bloom,gcc,O2-O2: 0.059455
+treecc,oggenc,mc-bloom,gcc,O3-O3: 0.058987
+diffbin bloom, make_dparser-treecc-cpc:
+make_dparser,treecc,cpc-bloom,clang,O0-O0: 0.127803
+make_dparser,treecc,cpc-bloom,clang,O1-O1: 0.117076
+make_dparser,treecc,cpc-bloom,clang,O2-O2: 0.136174
+make_dparser,treecc,cpc-bloom,clang,O3-O3: 0.134600
+make_dparser,treecc,cpc-bloom,gcc,O0-O0: 0.125420
+make_dparser,treecc,cpc-bloom,gcc,O1-O1: 0.153054
+make_dparser,treecc,cpc-bloom,gcc,O2-O2: 0.101085
+make_dparser,treecc,cpc-bloom,gcc,O3-O3: 0.130466
+diffbin bloom, make_dparser-treecc-mc:
+make_dparser,treecc,mc-bloom,clang,O0-O0: 0.142961
+make_dparser,treecc,mc-bloom,clang,O1-O1: 0.075521
+make_dparser,treecc,mc-bloom,clang,O2-O2: 0.074301
+make_dparser,treecc,mc-bloom,clang,O3-O3: 0.074153
+make_dparser,treecc,mc-bloom,gcc,O0-O0: 0.132722
+make_dparser,treecc,mc-bloom,gcc,O1-O1: 0.078706
+make_dparser,treecc,mc-bloom,gcc,O2-O2: 0.078901
+make_dparser,treecc,mc-bloom,gcc,O3-O3: 0.085078
+diffbin bloom, make_dparser-make_dparser-cpc:
+make_dparser,make_dparser,cpc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,cpc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,cpc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,cpc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,cpc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,cpc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,cpc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,cpc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, make_dparser-make_dparser-mc:
+make_dparser,make_dparser,mc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,mc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,mc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,mc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,mc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,mc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,mc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,mc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, make_dparser-ldecod-cpc:
+make_dparser,ldecod,cpc-bloom,clang,O0-O0: 0.148377
+make_dparser,ldecod,cpc-bloom,clang,O1-O1: 0.122428
+make_dparser,ldecod,cpc-bloom,clang,O2-O2: 0.131198
+make_dparser,ldecod,cpc-bloom,clang,O3-O3: 0.127854
+make_dparser,ldecod,cpc-bloom,gcc,O0-O0: 0.154324
+make_dparser,ldecod,cpc-bloom,gcc,O1-O1: 0.154110
+make_dparser,ldecod,cpc-bloom,gcc,O2-O2: 0.133603
+make_dparser,ldecod,cpc-bloom,gcc,O3-O3: 0.141377
+diffbin bloom, make_dparser-ldecod-mc:
+make_dparser,ldecod,mc-bloom,clang,O0-O0: 0.139536
+make_dparser,ldecod,mc-bloom,clang,O1-O1: 0.067491
+make_dparser,ldecod,mc-bloom,clang,O2-O2: 0.066506
+make_dparser,ldecod,mc-bloom,clang,O3-O3: 0.066737
+make_dparser,ldecod,mc-bloom,gcc,O0-O0: 0.120321
+make_dparser,ldecod,mc-bloom,gcc,O1-O1: 0.069146
+make_dparser,ldecod,mc-bloom,gcc,O2-O2: 0.075930
+make_dparser,ldecod,mc-bloom,gcc,O3-O3: 0.079572
+diffbin bloom, make_dparser-lua-cpc:
+make_dparser,lua,cpc-bloom,clang,O0-O0: 0.099641
+make_dparser,lua,cpc-bloom,clang,O1-O1: 0.089624
+make_dparser,lua,cpc-bloom,clang,O2-O2: 0.075108
+make_dparser,lua,cpc-bloom,clang,O3-O3: 0.074387
+make_dparser,lua,cpc-bloom,gcc,O0-O0: 0.098862
+make_dparser,lua,cpc-bloom,gcc,O1-O1: 0.090313
+make_dparser,lua,cpc-bloom,gcc,O2-O2: 0.080202
+make_dparser,lua,cpc-bloom,gcc,O3-O3: 0.075730
+diffbin bloom, make_dparser-lua-mc:
+make_dparser,lua,mc-bloom,clang,O0-O0: 0.159297
+make_dparser,lua,mc-bloom,clang,O1-O1: 0.082952
+make_dparser,lua,mc-bloom,clang,O2-O2: 0.080449
+make_dparser,lua,mc-bloom,clang,O3-O3: 0.080278
+make_dparser,lua,mc-bloom,gcc,O0-O0: 0.154030
+make_dparser,lua,mc-bloom,gcc,O1-O1: 0.087717
+make_dparser,lua,mc-bloom,gcc,O2-O2: 0.090867
+make_dparser,lua,mc-bloom,gcc,O3-O3: 0.095505
+diffbin bloom, make_dparser-siod-cpc:
+make_dparser,siod,cpc-bloom,clang,O0-O0: 0.124281
+make_dparser,siod,cpc-bloom,clang,O1-O1: 0.117089
+make_dparser,siod,cpc-bloom,clang,O2-O2: 0.105996
+make_dparser,siod,cpc-bloom,clang,O3-O3: 0.093367
+make_dparser,siod,cpc-bloom,gcc,O0-O0: 0.123789
+make_dparser,siod,cpc-bloom,gcc,O1-O1: 0.098058
+make_dparser,siod,cpc-bloom,gcc,O2-O2: 0.105444
+make_dparser,siod,cpc-bloom,gcc,O3-O3: 0.082222
+diffbin bloom, make_dparser-siod-mc:
+make_dparser,siod,mc-bloom,clang,O0-O0: 0.130814
+make_dparser,siod,mc-bloom,clang,O1-O1: 0.069477
+make_dparser,siod,mc-bloom,clang,O2-O2: 0.068438
+make_dparser,siod,mc-bloom,clang,O3-O3: 0.068286
+make_dparser,siod,mc-bloom,gcc,O0-O0: 0.108586
+make_dparser,siod,mc-bloom,gcc,O1-O1: 0.070812
+make_dparser,siod,mc-bloom,gcc,O2-O2: 0.071574
+make_dparser,siod,mc-bloom,gcc,O3-O3: 0.077733
+diffbin bloom, make_dparser-sqlite3-cpc:
+make_dparser,sqlite3,cpc-bloom,clang,O0-O0: 0.104050
+make_dparser,sqlite3,cpc-bloom,clang,O1-O1: 0.090088
+make_dparser,sqlite3,cpc-bloom,clang,O2-O2: 0.085934
+make_dparser,sqlite3,cpc-bloom,clang,O3-O3: 0.076748
+make_dparser,sqlite3,cpc-bloom,gcc,O0-O0: 0.103849
+make_dparser,sqlite3,cpc-bloom,gcc,O1-O1: 0.083927
+make_dparser,sqlite3,cpc-bloom,gcc,O2-O2: 0.093638
+make_dparser,sqlite3,cpc-bloom,gcc,O3-O3: 0.068119
+diffbin bloom, make_dparser-sqlite3-mc:
+make_dparser,sqlite3,mc-bloom,clang,O0-O0: 0.135460
+make_dparser,sqlite3,mc-bloom,clang,O1-O1: 0.078140
+make_dparser,sqlite3,mc-bloom,clang,O2-O2: 0.073554
+make_dparser,sqlite3,mc-bloom,clang,O3-O3: 0.066676
+make_dparser,sqlite3,mc-bloom,gcc,O0-O0: 0.122117
+make_dparser,sqlite3,mc-bloom,gcc,O1-O1: 0.081802
+make_dparser,sqlite3,mc-bloom,gcc,O2-O2: 0.084480
+make_dparser,sqlite3,mc-bloom,gcc,O3-O3: 0.090884
+diffbin bloom, make_dparser-kc-cpc:
+make_dparser,kc,cpc-bloom,clang,O0-O0: 0.104201
+make_dparser,kc,cpc-bloom,clang,O1-O1: 0.098011
+make_dparser,kc,cpc-bloom,clang,O2-O2: 0.085961
+make_dparser,kc,cpc-bloom,clang,O3-O3: 0.087001
+make_dparser,kc,cpc-bloom,gcc,O0-O0: 0.103179
+make_dparser,kc,cpc-bloom,gcc,O1-O1: 0.095934
+make_dparser,kc,cpc-bloom,gcc,O2-O2: 0.104975
+make_dparser,kc,cpc-bloom,gcc,O3-O3: 0.095759
+diffbin bloom, make_dparser-kc-mc:
+make_dparser,kc,mc-bloom,clang,O0-O0: 0.082958
+make_dparser,kc,mc-bloom,clang,O1-O1: 0.055903
+make_dparser,kc,mc-bloom,clang,O2-O2: 0.058662
+make_dparser,kc,mc-bloom,clang,O3-O3: 0.058186
+make_dparser,kc,mc-bloom,gcc,O0-O0: 0.064844
+make_dparser,kc,mc-bloom,gcc,O1-O1: 0.059665
+make_dparser,kc,mc-bloom,gcc,O2-O2: 0.065139
+make_dparser,kc,mc-bloom,gcc,O3-O3: 0.071920
+diffbin bloom, make_dparser-burg-cpc:
+make_dparser,burg,cpc-bloom,clang,O0-O0: 0.131825
+make_dparser,burg,cpc-bloom,clang,O1-O1: 0.141941
+make_dparser,burg,cpc-bloom,clang,O2-O2: 0.144110
+make_dparser,burg,cpc-bloom,clang,O3-O3: 0.144487
+make_dparser,burg,cpc-bloom,gcc,O0-O0: 0.142397
+make_dparser,burg,cpc-bloom,gcc,O1-O1: 0.185475
+make_dparser,burg,cpc-bloom,gcc,O2-O2: 0.172376
+make_dparser,burg,cpc-bloom,gcc,O3-O3: 0.144691
+diffbin bloom, make_dparser-burg-mc:
+make_dparser,burg,mc-bloom,clang,O0-O0: 0.137712
+make_dparser,burg,mc-bloom,clang,O1-O1: 0.063232
+make_dparser,burg,mc-bloom,clang,O2-O2: 0.060145
+make_dparser,burg,mc-bloom,clang,O3-O3: 0.060590
+make_dparser,burg,mc-bloom,gcc,O0-O0: 0.113468
+make_dparser,burg,mc-bloom,gcc,O1-O1: 0.067347
+make_dparser,burg,mc-bloom,gcc,O2-O2: 0.067670
+make_dparser,burg,mc-bloom,gcc,O3-O3: 0.070055
+diffbin bloom, make_dparser-oggenc-cpc:
+make_dparser,oggenc,cpc-bloom,clang,O0-O0: 0.155947
+make_dparser,oggenc,cpc-bloom,clang,O1-O1: 0.152605
+make_dparser,oggenc,cpc-bloom,clang,O2-O2: 0.171548
+make_dparser,oggenc,cpc-bloom,clang,O3-O3: 0.179039
+make_dparser,oggenc,cpc-bloom,gcc,O0-O0: 0.155852
+make_dparser,oggenc,cpc-bloom,gcc,O1-O1: 0.137441
+make_dparser,oggenc,cpc-bloom,gcc,O2-O2: 0.160504
+make_dparser,oggenc,cpc-bloom,gcc,O3-O3: 0.174524
+diffbin bloom, make_dparser-oggenc-mc:
+make_dparser,oggenc,mc-bloom,clang,O0-O0: 0.146336
+make_dparser,oggenc,mc-bloom,clang,O1-O1: 0.076682
+make_dparser,oggenc,mc-bloom,clang,O2-O2: 0.076652
+make_dparser,oggenc,mc-bloom,clang,O3-O3: 0.076226
+make_dparser,oggenc,mc-bloom,gcc,O0-O0: 0.136003
+make_dparser,oggenc,mc-bloom,gcc,O1-O1: 0.079065
+make_dparser,oggenc,mc-bloom,gcc,O2-O2: 0.085215
+make_dparser,oggenc,mc-bloom,gcc,O3-O3: 0.085970
+diffbin bloom, ldecod-treecc-cpc:
+ldecod,treecc,cpc-bloom,clang,O0-O0: 0.132747
+ldecod,treecc,cpc-bloom,clang,O1-O1: 0.152639
+ldecod,treecc,cpc-bloom,clang,O2-O2: 0.130199
+ldecod,treecc,cpc-bloom,clang,O3-O3: 0.128326
+ldecod,treecc,cpc-bloom,gcc,O0-O0: 0.126611
+ldecod,treecc,cpc-bloom,gcc,O1-O1: 0.139483
+ldecod,treecc,cpc-bloom,gcc,O2-O2: 0.123443
+ldecod,treecc,cpc-bloom,gcc,O3-O3: 0.111794
+diffbin bloom, ldecod-treecc-mc:
+ldecod,treecc,mc-bloom,clang,O0-O0: 0.098568
+ldecod,treecc,mc-bloom,clang,O1-O1: 0.048228
+ldecod,treecc,mc-bloom,clang,O2-O2: 0.045104
+ldecod,treecc,mc-bloom,clang,O3-O3: 0.045094
+ldecod,treecc,mc-bloom,gcc,O0-O0: 0.084562
+ldecod,treecc,mc-bloom,gcc,O1-O1: 0.047528
+ldecod,treecc,mc-bloom,gcc,O2-O2: 0.052853
+ldecod,treecc,mc-bloom,gcc,O3-O3: 0.055452
+diffbin bloom, ldecod-make_dparser-cpc:
+ldecod,make_dparser,cpc-bloom,clang,O0-O0: 0.148377
+ldecod,make_dparser,cpc-bloom,clang,O1-O1: 0.122428
+ldecod,make_dparser,cpc-bloom,clang,O2-O2: 0.131198
+ldecod,make_dparser,cpc-bloom,clang,O3-O3: 0.127854
+ldecod,make_dparser,cpc-bloom,gcc,O0-O0: 0.154324
+ldecod,make_dparser,cpc-bloom,gcc,O1-O1: 0.154110
+ldecod,make_dparser,cpc-bloom,gcc,O2-O2: 0.133603
+ldecod,make_dparser,cpc-bloom,gcc,O3-O3: 0.141377
+diffbin bloom, ldecod-make_dparser-mc:
+ldecod,make_dparser,mc-bloom,clang,O0-O0: 0.139536
+ldecod,make_dparser,mc-bloom,clang,O1-O1: 0.067491
+ldecod,make_dparser,mc-bloom,clang,O2-O2: 0.066506
+ldecod,make_dparser,mc-bloom,clang,O3-O3: 0.066737
+ldecod,make_dparser,mc-bloom,gcc,O0-O0: 0.120321
+ldecod,make_dparser,mc-bloom,gcc,O1-O1: 0.069146
+ldecod,make_dparser,mc-bloom,gcc,O2-O2: 0.075930
+ldecod,make_dparser,mc-bloom,gcc,O3-O3: 0.079572
+diffbin bloom, ldecod-ldecod-cpc:
+ldecod,ldecod,cpc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,cpc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,cpc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,cpc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,cpc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,cpc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,cpc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,cpc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, ldecod-ldecod-mc:
+ldecod,ldecod,mc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,mc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,mc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,mc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,mc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,mc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,mc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,mc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, ldecod-lua-cpc:
+ldecod,lua,cpc-bloom,clang,O0-O0: 0.104189
+ldecod,lua,cpc-bloom,clang,O1-O1: 0.105377
+ldecod,lua,cpc-bloom,clang,O2-O2: 0.092101
+ldecod,lua,cpc-bloom,clang,O3-O3: 0.092334
+ldecod,lua,cpc-bloom,gcc,O0-O0: 0.103495
+ldecod,lua,cpc-bloom,gcc,O1-O1: 0.091685
+ldecod,lua,cpc-bloom,gcc,O2-O2: 0.097227
+ldecod,lua,cpc-bloom,gcc,O3-O3: 0.071316
+diffbin bloom, ldecod-lua-mc:
+ldecod,lua,mc-bloom,clang,O0-O0: 0.136401
+ldecod,lua,mc-bloom,clang,O1-O1: 0.064994
+ldecod,lua,mc-bloom,clang,O2-O2: 0.065193
+ldecod,lua,mc-bloom,clang,O3-O3: 0.065818
+ldecod,lua,mc-bloom,gcc,O0-O0: 0.117752
+ldecod,lua,mc-bloom,gcc,O1-O1: 0.068149
+ldecod,lua,mc-bloom,gcc,O2-O2: 0.073368
+ldecod,lua,mc-bloom,gcc,O3-O3: 0.079145
+diffbin bloom, ldecod-siod-cpc:
+ldecod,siod,cpc-bloom,clang,O0-O0: 0.120346
+ldecod,siod,cpc-bloom,clang,O1-O1: 0.120473
+ldecod,siod,cpc-bloom,clang,O2-O2: 0.117800
+ldecod,siod,cpc-bloom,clang,O3-O3: 0.118679
+ldecod,siod,cpc-bloom,gcc,O0-O0: 0.125848
+ldecod,siod,cpc-bloom,gcc,O1-O1: 0.122062
+ldecod,siod,cpc-bloom,gcc,O2-O2: 0.125624
+ldecod,siod,cpc-bloom,gcc,O3-O3: 0.087887
+diffbin bloom, ldecod-siod-mc:
+ldecod,siod,mc-bloom,clang,O0-O0: 0.104177
+ldecod,siod,mc-bloom,clang,O1-O1: 0.047197
+ldecod,siod,mc-bloom,clang,O2-O2: 0.050446
+ldecod,siod,mc-bloom,clang,O3-O3: 0.051113
+ldecod,siod,mc-bloom,gcc,O0-O0: 0.080140
+ldecod,siod,mc-bloom,gcc,O1-O1: 0.048857
+ldecod,siod,mc-bloom,gcc,O2-O2: 0.052275
+ldecod,siod,mc-bloom,gcc,O3-O3: 0.057658
+diffbin bloom, ldecod-sqlite3-cpc:
+ldecod,sqlite3,cpc-bloom,clang,O0-O0: 0.100110
+ldecod,sqlite3,cpc-bloom,clang,O1-O1: 0.112289
+ldecod,sqlite3,cpc-bloom,clang,O2-O2: 0.091713
+ldecod,sqlite3,cpc-bloom,clang,O3-O3: 0.096354
+ldecod,sqlite3,cpc-bloom,gcc,O0-O0: 0.105286
+ldecod,sqlite3,cpc-bloom,gcc,O1-O1: 0.106793
+ldecod,sqlite3,cpc-bloom,gcc,O2-O2: 0.111306
+ldecod,sqlite3,cpc-bloom,gcc,O3-O3: 0.080189
+diffbin bloom, ldecod-sqlite3-mc:
+ldecod,sqlite3,mc-bloom,clang,O0-O0: 0.155463
+ldecod,sqlite3,mc-bloom,clang,O1-O1: 0.092427
+ldecod,sqlite3,mc-bloom,clang,O2-O2: 0.094107
+ldecod,sqlite3,mc-bloom,clang,O3-O3: 0.093087
+ldecod,sqlite3,mc-bloom,gcc,O0-O0: 0.137571
+ldecod,sqlite3,mc-bloom,gcc,O1-O1: 0.093809
+ldecod,sqlite3,mc-bloom,gcc,O2-O2: 0.101730
+ldecod,sqlite3,mc-bloom,gcc,O3-O3: 0.108384
+diffbin bloom, ldecod-kc-cpc:
+ldecod,kc,cpc-bloom,clang,O0-O0: 0.104411
+ldecod,kc,cpc-bloom,clang,O1-O1: 0.119035
+ldecod,kc,cpc-bloom,clang,O2-O2: 0.086066
+ldecod,kc,cpc-bloom,clang,O3-O3: 0.092030
+ldecod,kc,cpc-bloom,gcc,O0-O0: 0.104601
+ldecod,kc,cpc-bloom,gcc,O1-O1: 0.108256
+ldecod,kc,cpc-bloom,gcc,O2-O2: 0.109266
+ldecod,kc,cpc-bloom,gcc,O3-O3: 0.086453
+diffbin bloom, ldecod-kc-mc:
+ldecod,kc,mc-bloom,clang,O0-O0: 0.094218
+ldecod,kc,mc-bloom,clang,O1-O1: 0.059843
+ldecod,kc,mc-bloom,clang,O2-O2: 0.060131
+ldecod,kc,mc-bloom,clang,O3-O3: 0.060893
+ldecod,kc,mc-bloom,gcc,O0-O0: 0.074357
+ldecod,kc,mc-bloom,gcc,O1-O1: 0.060973
+ldecod,kc,mc-bloom,gcc,O2-O2: 0.069457
+ldecod,kc,mc-bloom,gcc,O3-O3: 0.074739
+diffbin bloom, ldecod-burg-cpc:
+ldecod,burg,cpc-bloom,clang,O0-O0: 0.110588
+ldecod,burg,cpc-bloom,clang,O1-O1: 0.132256
+ldecod,burg,cpc-bloom,clang,O2-O2: 0.123525
+ldecod,burg,cpc-bloom,clang,O3-O3: 0.123534
+ldecod,burg,cpc-bloom,gcc,O0-O0: 0.129562
+ldecod,burg,cpc-bloom,gcc,O1-O1: 0.137725
+ldecod,burg,cpc-bloom,gcc,O2-O2: 0.144478
+ldecod,burg,cpc-bloom,gcc,O3-O3: 0.128849
+diffbin bloom, ldecod-burg-mc:
+ldecod,burg,mc-bloom,clang,O0-O0: 0.094258
+ldecod,burg,mc-bloom,clang,O1-O1: 0.043361
+ldecod,burg,mc-bloom,clang,O2-O2: 0.038748
+ldecod,burg,mc-bloom,clang,O3-O3: 0.038418
+ldecod,burg,mc-bloom,gcc,O0-O0: 0.079056
+ldecod,burg,mc-bloom,gcc,O1-O1: 0.043044
+ldecod,burg,mc-bloom,gcc,O2-O2: 0.045918
+ldecod,burg,mc-bloom,gcc,O3-O3: 0.044681
+diffbin bloom, ldecod-oggenc-cpc:
+ldecod,oggenc,cpc-bloom,clang,O0-O0: 0.115769
+ldecod,oggenc,cpc-bloom,clang,O1-O1: 0.132425
+ldecod,oggenc,cpc-bloom,clang,O2-O2: 0.124484
+ldecod,oggenc,cpc-bloom,clang,O3-O3: 0.131837
+ldecod,oggenc,cpc-bloom,gcc,O0-O0: 0.123202
+ldecod,oggenc,cpc-bloom,gcc,O1-O1: 0.138489
+ldecod,oggenc,cpc-bloom,gcc,O2-O2: 0.151382
+ldecod,oggenc,cpc-bloom,gcc,O3-O3: 0.124290
+diffbin bloom, ldecod-oggenc-mc:
+ldecod,oggenc,mc-bloom,clang,O0-O0: 0.153597
+ldecod,oggenc,mc-bloom,clang,O1-O1: 0.085116
+ldecod,oggenc,mc-bloom,clang,O2-O2: 0.091483
+ldecod,oggenc,mc-bloom,clang,O3-O3: 0.093549
+ldecod,oggenc,mc-bloom,gcc,O0-O0: 0.137139
+ldecod,oggenc,mc-bloom,gcc,O1-O1: 0.084872
+ldecod,oggenc,mc-bloom,gcc,O2-O2: 0.091038
+ldecod,oggenc,mc-bloom,gcc,O3-O3: 0.102997
+diffbin bloom, lua-treecc-cpc:
+lua,treecc,cpc-bloom,clang,O0-O0: 0.093487
+lua,treecc,cpc-bloom,clang,O1-O1: 0.101140
+lua,treecc,cpc-bloom,clang,O2-O2: 0.092243
+lua,treecc,cpc-bloom,clang,O3-O3: 0.091229
+lua,treecc,cpc-bloom,gcc,O0-O0: 0.093416
+lua,treecc,cpc-bloom,gcc,O1-O1: 0.090226
+lua,treecc,cpc-bloom,gcc,O2-O2: 0.085632
+lua,treecc,cpc-bloom,gcc,O3-O3: 0.072210
+diffbin bloom, lua-treecc-mc:
+lua,treecc,mc-bloom,clang,O0-O0: 0.128705
+lua,treecc,mc-bloom,clang,O1-O1: 0.074968
+lua,treecc,mc-bloom,clang,O2-O2: 0.070737
+lua,treecc,mc-bloom,clang,O3-O3: 0.069499
+lua,treecc,mc-bloom,gcc,O0-O0: 0.120330
+lua,treecc,mc-bloom,gcc,O1-O1: 0.077930
+lua,treecc,mc-bloom,gcc,O2-O2: 0.082417
+lua,treecc,mc-bloom,gcc,O3-O3: 0.083653
+diffbin bloom, lua-make_dparser-cpc:
+lua,make_dparser,cpc-bloom,clang,O0-O0: 0.099641
+lua,make_dparser,cpc-bloom,clang,O1-O1: 0.089624
+lua,make_dparser,cpc-bloom,clang,O2-O2: 0.075108
+lua,make_dparser,cpc-bloom,clang,O3-O3: 0.074387
+lua,make_dparser,cpc-bloom,gcc,O0-O0: 0.098862
+lua,make_dparser,cpc-bloom,gcc,O1-O1: 0.090313
+lua,make_dparser,cpc-bloom,gcc,O2-O2: 0.080202
+lua,make_dparser,cpc-bloom,gcc,O3-O3: 0.075730
+diffbin bloom, lua-make_dparser-mc:
+lua,make_dparser,mc-bloom,clang,O0-O0: 0.159297
+lua,make_dparser,mc-bloom,clang,O1-O1: 0.082952
+lua,make_dparser,mc-bloom,clang,O2-O2: 0.080449
+lua,make_dparser,mc-bloom,clang,O3-O3: 0.080278
+lua,make_dparser,mc-bloom,gcc,O0-O0: 0.154030
+lua,make_dparser,mc-bloom,gcc,O1-O1: 0.087717
+lua,make_dparser,mc-bloom,gcc,O2-O2: 0.090867
+lua,make_dparser,mc-bloom,gcc,O3-O3: 0.095505
+diffbin bloom, lua-ldecod-cpc:
+lua,ldecod,cpc-bloom,clang,O0-O0: 0.104189
+lua,ldecod,cpc-bloom,clang,O1-O1: 0.105377
+lua,ldecod,cpc-bloom,clang,O2-O2: 0.092101
+lua,ldecod,cpc-bloom,clang,O3-O3: 0.092334
+lua,ldecod,cpc-bloom,gcc,O0-O0: 0.103495
+lua,ldecod,cpc-bloom,gcc,O1-O1: 0.091685
+lua,ldecod,cpc-bloom,gcc,O2-O2: 0.097227
+lua,ldecod,cpc-bloom,gcc,O3-O3: 0.071316
+diffbin bloom, lua-ldecod-mc:
+lua,ldecod,mc-bloom,clang,O0-O0: 0.136401
+lua,ldecod,mc-bloom,clang,O1-O1: 0.064994
+lua,ldecod,mc-bloom,clang,O2-O2: 0.065193
+lua,ldecod,mc-bloom,clang,O3-O3: 0.065818
+lua,ldecod,mc-bloom,gcc,O0-O0: 0.117752
+lua,ldecod,mc-bloom,gcc,O1-O1: 0.068149
+lua,ldecod,mc-bloom,gcc,O2-O2: 0.073368
+lua,ldecod,mc-bloom,gcc,O3-O3: 0.079145
+diffbin bloom, lua-lua-cpc:
+lua,lua,cpc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,cpc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,cpc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,cpc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,cpc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,cpc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,cpc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,cpc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, lua-lua-mc:
+lua,lua,mc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,mc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,mc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,mc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,mc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,mc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,mc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,mc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, lua-siod-cpc:
+lua,siod,cpc-bloom,clang,O0-O0: 0.106250
+lua,siod,cpc-bloom,clang,O1-O1: 0.112805
+lua,siod,cpc-bloom,clang,O2-O2: 0.093607
+lua,siod,cpc-bloom,clang,O3-O3: 0.092682
+lua,siod,cpc-bloom,gcc,O0-O0: 0.099330
+lua,siod,cpc-bloom,gcc,O1-O1: 0.106535
+lua,siod,cpc-bloom,gcc,O2-O2: 0.100274
+lua,siod,cpc-bloom,gcc,O3-O3: 0.073610
+diffbin bloom, lua-siod-mc:
+lua,siod,mc-bloom,clang,O0-O0: 0.134542
+lua,siod,mc-bloom,clang,O1-O1: 0.074720
+lua,siod,mc-bloom,clang,O2-O2: 0.070643
+lua,siod,mc-bloom,clang,O3-O3: 0.071542
+lua,siod,mc-bloom,gcc,O0-O0: 0.110971
+lua,siod,mc-bloom,gcc,O1-O1: 0.080678
+lua,siod,mc-bloom,gcc,O2-O2: 0.081006
+lua,siod,mc-bloom,gcc,O3-O3: 0.084282
+diffbin bloom, lua-sqlite3-cpc:
+lua,sqlite3,cpc-bloom,clang,O0-O0: 0.134520
+lua,sqlite3,cpc-bloom,clang,O1-O1: 0.135376
+lua,sqlite3,cpc-bloom,clang,O2-O2: 0.087544
+lua,sqlite3,cpc-bloom,clang,O3-O3: 0.106042
+lua,sqlite3,cpc-bloom,gcc,O0-O0: 0.132700
+lua,sqlite3,cpc-bloom,gcc,O1-O1: 0.117759
+lua,sqlite3,cpc-bloom,gcc,O2-O2: 0.129666
+lua,sqlite3,cpc-bloom,gcc,O3-O3: 0.112409
+diffbin bloom, lua-sqlite3-mc:
+lua,sqlite3,mc-bloom,clang,O0-O0: 0.154483
+lua,sqlite3,mc-bloom,clang,O1-O1: 0.086774
+lua,sqlite3,mc-bloom,clang,O2-O2: 0.079721
+lua,sqlite3,mc-bloom,clang,O3-O3: 0.074986
+lua,sqlite3,mc-bloom,gcc,O0-O0: 0.139268
+lua,sqlite3,mc-bloom,gcc,O1-O1: 0.089618
+lua,sqlite3,mc-bloom,gcc,O2-O2: 0.092437
+lua,sqlite3,mc-bloom,gcc,O3-O3: 0.096793
+diffbin bloom, lua-kc-cpc:
+lua,kc,cpc-bloom,clang,O0-O0: 0.117490
+lua,kc,cpc-bloom,clang,O1-O1: 0.126766
+lua,kc,cpc-bloom,clang,O2-O2: 0.097945
+lua,kc,cpc-bloom,clang,O3-O3: 0.085472
+lua,kc,cpc-bloom,gcc,O0-O0: 0.125000
+lua,kc,cpc-bloom,gcc,O1-O1: 0.113453
+lua,kc,cpc-bloom,gcc,O2-O2: 0.103112
+lua,kc,cpc-bloom,gcc,O3-O3: 0.096907
+diffbin bloom, lua-kc-mc:
+lua,kc,mc-bloom,clang,O0-O0: 0.097534
+lua,kc,mc-bloom,clang,O1-O1: 0.066116
+lua,kc,mc-bloom,clang,O2-O2: 0.063882
+lua,kc,mc-bloom,clang,O3-O3: 0.064792
+lua,kc,mc-bloom,gcc,O0-O0: 0.075539
+lua,kc,mc-bloom,gcc,O1-O1: 0.067695
+lua,kc,mc-bloom,gcc,O2-O2: 0.071992
+lua,kc,mc-bloom,gcc,O3-O3: 0.079062
+diffbin bloom, lua-burg-cpc:
+lua,burg,cpc-bloom,clang,O0-O0: 0.072371
+lua,burg,cpc-bloom,clang,O1-O1: 0.091713
+lua,burg,cpc-bloom,clang,O2-O2: 0.079371
+lua,burg,cpc-bloom,clang,O3-O3: 0.079737
+lua,burg,cpc-bloom,gcc,O0-O0: 0.064256
+lua,burg,cpc-bloom,gcc,O1-O1: 0.071591
+lua,burg,cpc-bloom,gcc,O2-O2: 0.081195
+lua,burg,cpc-bloom,gcc,O3-O3: 0.059439
+diffbin bloom, lua-burg-mc:
+lua,burg,mc-bloom,clang,O0-O0: 0.117345
+lua,burg,mc-bloom,clang,O1-O1: 0.058230
+lua,burg,mc-bloom,clang,O2-O2: 0.054166
+lua,burg,mc-bloom,clang,O3-O3: 0.054092
+lua,burg,mc-bloom,gcc,O0-O0: 0.097984
+lua,burg,mc-bloom,gcc,O1-O1: 0.060905
+lua,burg,mc-bloom,gcc,O2-O2: 0.061842
+lua,burg,mc-bloom,gcc,O3-O3: 0.062399
+diffbin bloom, lua-oggenc-cpc:
+lua,oggenc,cpc-bloom,clang,O0-O0: 0.095114
+lua,oggenc,cpc-bloom,clang,O1-O1: 0.095377
+lua,oggenc,cpc-bloom,clang,O2-O2: 0.081709
+lua,oggenc,cpc-bloom,clang,O3-O3: 0.087665
+lua,oggenc,cpc-bloom,gcc,O0-O0: 0.095914
+lua,oggenc,cpc-bloom,gcc,O1-O1: 0.081956
+lua,oggenc,cpc-bloom,gcc,O2-O2: 0.092457
+lua,oggenc,cpc-bloom,gcc,O3-O3: 0.083871
+diffbin bloom, lua-oggenc-mc:
+lua,oggenc,mc-bloom,clang,O0-O0: 0.149749
+lua,oggenc,mc-bloom,clang,O1-O1: 0.076040
+lua,oggenc,mc-bloom,clang,O2-O2: 0.075250
+lua,oggenc,mc-bloom,clang,O3-O3: 0.074825
+lua,oggenc,mc-bloom,gcc,O0-O0: 0.137625
+lua,oggenc,mc-bloom,gcc,O1-O1: 0.081043
+lua,oggenc,mc-bloom,gcc,O2-O2: 0.084397
+lua,oggenc,mc-bloom,gcc,O3-O3: 0.084902
+diffbin bloom, siod-treecc-cpc:
+siod,treecc,cpc-bloom,clang,O0-O0: 0.106571
+siod,treecc,cpc-bloom,clang,O1-O1: 0.110065
+siod,treecc,cpc-bloom,clang,O2-O2: 0.106709
+siod,treecc,cpc-bloom,clang,O3-O3: 0.102575
+siod,treecc,cpc-bloom,gcc,O0-O0: 0.105389
+siod,treecc,cpc-bloom,gcc,O1-O1: 0.095078
+siod,treecc,cpc-bloom,gcc,O2-O2: 0.096894
+siod,treecc,cpc-bloom,gcc,O3-O3: 0.086727
+diffbin bloom, siod-treecc-mc:
+siod,treecc,mc-bloom,clang,O0-O0: 0.115298
+siod,treecc,mc-bloom,clang,O1-O1: 0.064916
+siod,treecc,mc-bloom,clang,O2-O2: 0.062864
+siod,treecc,mc-bloom,clang,O3-O3: 0.060723
+siod,treecc,mc-bloom,gcc,O0-O0: 0.095648
+siod,treecc,mc-bloom,gcc,O1-O1: 0.068441
+siod,treecc,mc-bloom,gcc,O2-O2: 0.070819
+siod,treecc,mc-bloom,gcc,O3-O3: 0.072155
+diffbin bloom, siod-make_dparser-cpc:
+siod,make_dparser,cpc-bloom,clang,O0-O0: 0.124281
+siod,make_dparser,cpc-bloom,clang,O1-O1: 0.117089
+siod,make_dparser,cpc-bloom,clang,O2-O2: 0.105996
+siod,make_dparser,cpc-bloom,clang,O3-O3: 0.093367
+siod,make_dparser,cpc-bloom,gcc,O0-O0: 0.123789
+siod,make_dparser,cpc-bloom,gcc,O1-O1: 0.098058
+siod,make_dparser,cpc-bloom,gcc,O2-O2: 0.105444
+siod,make_dparser,cpc-bloom,gcc,O3-O3: 0.082222
+diffbin bloom, siod-make_dparser-mc:
+siod,make_dparser,mc-bloom,clang,O0-O0: 0.130814
+siod,make_dparser,mc-bloom,clang,O1-O1: 0.069477
+siod,make_dparser,mc-bloom,clang,O2-O2: 0.068438
+siod,make_dparser,mc-bloom,clang,O3-O3: 0.068286
+siod,make_dparser,mc-bloom,gcc,O0-O0: 0.108586
+siod,make_dparser,mc-bloom,gcc,O1-O1: 0.070812
+siod,make_dparser,mc-bloom,gcc,O2-O2: 0.071574
+siod,make_dparser,mc-bloom,gcc,O3-O3: 0.077733
+diffbin bloom, siod-ldecod-cpc:
+siod,ldecod,cpc-bloom,clang,O0-O0: 0.120346
+siod,ldecod,cpc-bloom,clang,O1-O1: 0.120473
+siod,ldecod,cpc-bloom,clang,O2-O2: 0.117800
+siod,ldecod,cpc-bloom,clang,O3-O3: 0.118679
+siod,ldecod,cpc-bloom,gcc,O0-O0: 0.125848
+siod,ldecod,cpc-bloom,gcc,O1-O1: 0.122062
+siod,ldecod,cpc-bloom,gcc,O2-O2: 0.125624
+siod,ldecod,cpc-bloom,gcc,O3-O3: 0.087887
+diffbin bloom, siod-ldecod-mc:
+siod,ldecod,mc-bloom,clang,O0-O0: 0.104177
+siod,ldecod,mc-bloom,clang,O1-O1: 0.047197
+siod,ldecod,mc-bloom,clang,O2-O2: 0.050446
+siod,ldecod,mc-bloom,clang,O3-O3: 0.051113
+siod,ldecod,mc-bloom,gcc,O0-O0: 0.080140
+siod,ldecod,mc-bloom,gcc,O1-O1: 0.048857
+siod,ldecod,mc-bloom,gcc,O2-O2: 0.052275
+siod,ldecod,mc-bloom,gcc,O3-O3: 0.057658
+diffbin bloom, siod-lua-cpc:
+siod,lua,cpc-bloom,clang,O0-O0: 0.106250
+siod,lua,cpc-bloom,clang,O1-O1: 0.112805
+siod,lua,cpc-bloom,clang,O2-O2: 0.093607
+siod,lua,cpc-bloom,clang,O3-O3: 0.092682
+siod,lua,cpc-bloom,gcc,O0-O0: 0.099330
+siod,lua,cpc-bloom,gcc,O1-O1: 0.106535
+siod,lua,cpc-bloom,gcc,O2-O2: 0.100274
+siod,lua,cpc-bloom,gcc,O3-O3: 0.073610
+diffbin bloom, siod-lua-mc:
+siod,lua,mc-bloom,clang,O0-O0: 0.134542
+siod,lua,mc-bloom,clang,O1-O1: 0.074720
+siod,lua,mc-bloom,clang,O2-O2: 0.070643
+siod,lua,mc-bloom,clang,O3-O3: 0.071542
+siod,lua,mc-bloom,gcc,O0-O0: 0.110971
+siod,lua,mc-bloom,gcc,O1-O1: 0.080678
+siod,lua,mc-bloom,gcc,O2-O2: 0.081006
+siod,lua,mc-bloom,gcc,O3-O3: 0.084282
+diffbin bloom, siod-siod-cpc:
+siod,siod,cpc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,cpc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,cpc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,cpc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,cpc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,cpc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,cpc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,cpc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, siod-siod-mc:
+siod,siod,mc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,mc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,mc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,mc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,mc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,mc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,mc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,mc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, siod-sqlite3-cpc:
+siod,sqlite3,cpc-bloom,clang,O0-O0: 0.106197
+siod,sqlite3,cpc-bloom,clang,O1-O1: 0.116050
+siod,sqlite3,cpc-bloom,clang,O2-O2: 0.106840
+siod,sqlite3,cpc-bloom,clang,O3-O3: 0.107477
+siod,sqlite3,cpc-bloom,gcc,O0-O0: 0.105132
+siod,sqlite3,cpc-bloom,gcc,O1-O1: 0.115318
+siod,sqlite3,cpc-bloom,gcc,O2-O2: 0.130682
+siod,sqlite3,cpc-bloom,gcc,O3-O3: 0.096449
+diffbin bloom, siod-sqlite3-mc:
+siod,sqlite3,mc-bloom,clang,O0-O0: 0.105486
+siod,sqlite3,mc-bloom,clang,O1-O1: 0.059711
+siod,sqlite3,mc-bloom,clang,O2-O2: 0.058663
+siod,sqlite3,mc-bloom,clang,O3-O3: 0.055960
+siod,sqlite3,mc-bloom,gcc,O0-O0: 0.086410
+siod,sqlite3,mc-bloom,gcc,O1-O1: 0.062051
+siod,sqlite3,mc-bloom,gcc,O2-O2: 0.060438
+siod,sqlite3,mc-bloom,gcc,O3-O3: 0.069370
+diffbin bloom, siod-kc-cpc:
+siod,kc,cpc-bloom,clang,O0-O0: 0.130031
+siod,kc,cpc-bloom,clang,O1-O1: 0.117443
+siod,kc,cpc-bloom,clang,O2-O2: 0.091492
+siod,kc,cpc-bloom,clang,O3-O3: 0.087484
+siod,kc,cpc-bloom,gcc,O0-O0: 0.122352
+siod,kc,cpc-bloom,gcc,O1-O1: 0.112343
+siod,kc,cpc-bloom,gcc,O2-O2: 0.107648
+siod,kc,cpc-bloom,gcc,O3-O3: 0.098667
+diffbin bloom, siod-kc-mc:
+siod,kc,mc-bloom,clang,O0-O0: 0.081264
+siod,kc,mc-bloom,clang,O1-O1: 0.055930
+siod,kc,mc-bloom,clang,O2-O2: 0.058379
+siod,kc,mc-bloom,clang,O3-O3: 0.059142
+siod,kc,mc-bloom,gcc,O0-O0: 0.060692
+siod,kc,mc-bloom,gcc,O1-O1: 0.058900
+siod,kc,mc-bloom,gcc,O2-O2: 0.058712
+siod,kc,mc-bloom,gcc,O3-O3: 0.070134
+diffbin bloom, siod-burg-cpc:
+siod,burg,cpc-bloom,clang,O0-O0: 0.117259
+siod,burg,cpc-bloom,clang,O1-O1: 0.128298
+siod,burg,cpc-bloom,clang,O2-O2: 0.119710
+siod,burg,cpc-bloom,clang,O3-O3: 0.108879
+siod,burg,cpc-bloom,gcc,O0-O0: 0.111168
+siod,burg,cpc-bloom,gcc,O1-O1: 0.099057
+siod,burg,cpc-bloom,gcc,O2-O2: 0.110106
+siod,burg,cpc-bloom,gcc,O3-O3: 0.079320
+diffbin bloom, siod-burg-mc:
+siod,burg,mc-bloom,clang,O0-O0: 0.114876
+siod,burg,mc-bloom,clang,O1-O1: 0.059235
+siod,burg,mc-bloom,clang,O2-O2: 0.053700
+siod,burg,mc-bloom,clang,O3-O3: 0.052746
+siod,burg,mc-bloom,gcc,O0-O0: 0.094489
+siod,burg,mc-bloom,gcc,O1-O1: 0.060404
+siod,burg,mc-bloom,gcc,O2-O2: 0.062196
+siod,burg,mc-bloom,gcc,O3-O3: 0.063499
+diffbin bloom, siod-oggenc-cpc:
+siod,oggenc,cpc-bloom,clang,O0-O0: 0.105789
+siod,oggenc,cpc-bloom,clang,O1-O1: 0.108051
+siod,oggenc,cpc-bloom,clang,O2-O2: 0.091535
+siod,oggenc,cpc-bloom,clang,O3-O3: 0.092699
+siod,oggenc,cpc-bloom,gcc,O0-O0: 0.106268
+siod,oggenc,cpc-bloom,gcc,O1-O1: 0.085013
+siod,oggenc,cpc-bloom,gcc,O2-O2: 0.107685
+siod,oggenc,cpc-bloom,gcc,O3-O3: 0.080751
+diffbin bloom, siod-oggenc-mc:
+siod,oggenc,mc-bloom,clang,O0-O0: 0.115635
+siod,oggenc,mc-bloom,clang,O1-O1: 0.057298
+siod,oggenc,mc-bloom,clang,O2-O2: 0.057570
+siod,oggenc,mc-bloom,clang,O3-O3: 0.058411
+siod,oggenc,mc-bloom,gcc,O0-O0: 0.095400
+siod,oggenc,mc-bloom,gcc,O1-O1: 0.060152
+siod,oggenc,mc-bloom,gcc,O2-O2: 0.061424
+siod,oggenc,mc-bloom,gcc,O3-O3: 0.062665
+diffbin bloom, sqlite3-treecc-cpc:
+sqlite3,treecc,cpc-bloom,clang,O0-O0: 0.079882
+sqlite3,treecc,cpc-bloom,clang,O1-O1: 0.086314
+sqlite3,treecc,cpc-bloom,clang,O2-O2: 0.083361
+sqlite3,treecc,cpc-bloom,clang,O3-O3: 0.087392
+sqlite3,treecc,cpc-bloom,gcc,O0-O0: 0.080018
+sqlite3,treecc,cpc-bloom,gcc,O1-O1: 0.080146
+sqlite3,treecc,cpc-bloom,gcc,O2-O2: 0.082322
+sqlite3,treecc,cpc-bloom,gcc,O3-O3: 0.077345
+diffbin bloom, sqlite3-treecc-mc:
+sqlite3,treecc,mc-bloom,clang,O0-O0: 0.095990
+sqlite3,treecc,mc-bloom,clang,O1-O1: 0.060161
+sqlite3,treecc,mc-bloom,clang,O2-O2: 0.051355
+sqlite3,treecc,mc-bloom,clang,O3-O3: 0.046075
+sqlite3,treecc,mc-bloom,gcc,O0-O0: 0.088719
+sqlite3,treecc,mc-bloom,gcc,O1-O1: 0.057806
+sqlite3,treecc,mc-bloom,gcc,O2-O2: 0.060283
+sqlite3,treecc,mc-bloom,gcc,O3-O3: 0.064829
+diffbin bloom, sqlite3-make_dparser-cpc:
+sqlite3,make_dparser,cpc-bloom,clang,O0-O0: 0.104050
+sqlite3,make_dparser,cpc-bloom,clang,O1-O1: 0.090088
+sqlite3,make_dparser,cpc-bloom,clang,O2-O2: 0.085934
+sqlite3,make_dparser,cpc-bloom,clang,O3-O3: 0.076748
+sqlite3,make_dparser,cpc-bloom,gcc,O0-O0: 0.103849
+sqlite3,make_dparser,cpc-bloom,gcc,O1-O1: 0.083927
+sqlite3,make_dparser,cpc-bloom,gcc,O2-O2: 0.093638
+sqlite3,make_dparser,cpc-bloom,gcc,O3-O3: 0.068119
+diffbin bloom, sqlite3-make_dparser-mc:
+sqlite3,make_dparser,mc-bloom,clang,O0-O0: 0.135460
+sqlite3,make_dparser,mc-bloom,clang,O1-O1: 0.078140
+sqlite3,make_dparser,mc-bloom,clang,O2-O2: 0.073554
+sqlite3,make_dparser,mc-bloom,clang,O3-O3: 0.066676
+sqlite3,make_dparser,mc-bloom,gcc,O0-O0: 0.122117
+sqlite3,make_dparser,mc-bloom,gcc,O1-O1: 0.081802
+sqlite3,make_dparser,mc-bloom,gcc,O2-O2: 0.084480
+sqlite3,make_dparser,mc-bloom,gcc,O3-O3: 0.090884
+diffbin bloom, sqlite3-ldecod-cpc:
+sqlite3,ldecod,cpc-bloom,clang,O0-O0: 0.100110
+sqlite3,ldecod,cpc-bloom,clang,O1-O1: 0.112289
+sqlite3,ldecod,cpc-bloom,clang,O2-O2: 0.091713
+sqlite3,ldecod,cpc-bloom,clang,O3-O3: 0.096354
+sqlite3,ldecod,cpc-bloom,gcc,O0-O0: 0.105286
+sqlite3,ldecod,cpc-bloom,gcc,O1-O1: 0.106793
+sqlite3,ldecod,cpc-bloom,gcc,O2-O2: 0.111306
+sqlite3,ldecod,cpc-bloom,gcc,O3-O3: 0.080189
+diffbin bloom, sqlite3-ldecod-mc:
+sqlite3,ldecod,mc-bloom,clang,O0-O0: 0.155463
+sqlite3,ldecod,mc-bloom,clang,O1-O1: 0.092427
+sqlite3,ldecod,mc-bloom,clang,O2-O2: 0.094107
+sqlite3,ldecod,mc-bloom,clang,O3-O3: 0.093087
+sqlite3,ldecod,mc-bloom,gcc,O0-O0: 0.137571
+sqlite3,ldecod,mc-bloom,gcc,O1-O1: 0.093809
+sqlite3,ldecod,mc-bloom,gcc,O2-O2: 0.101730
+sqlite3,ldecod,mc-bloom,gcc,O3-O3: 0.108384
+diffbin bloom, sqlite3-lua-cpc:
+sqlite3,lua,cpc-bloom,clang,O0-O0: 0.134520
+sqlite3,lua,cpc-bloom,clang,O1-O1: 0.135376
+sqlite3,lua,cpc-bloom,clang,O2-O2: 0.087544
+sqlite3,lua,cpc-bloom,clang,O3-O3: 0.106042
+sqlite3,lua,cpc-bloom,gcc,O0-O0: 0.132700
+sqlite3,lua,cpc-bloom,gcc,O1-O1: 0.117759
+sqlite3,lua,cpc-bloom,gcc,O2-O2: 0.129666
+sqlite3,lua,cpc-bloom,gcc,O3-O3: 0.112409
+diffbin bloom, sqlite3-lua-mc:
+sqlite3,lua,mc-bloom,clang,O0-O0: 0.154483
+sqlite3,lua,mc-bloom,clang,O1-O1: 0.086774
+sqlite3,lua,mc-bloom,clang,O2-O2: 0.079721
+sqlite3,lua,mc-bloom,clang,O3-O3: 0.074986
+sqlite3,lua,mc-bloom,gcc,O0-O0: 0.139268
+sqlite3,lua,mc-bloom,gcc,O1-O1: 0.089618
+sqlite3,lua,mc-bloom,gcc,O2-O2: 0.092437
+sqlite3,lua,mc-bloom,gcc,O3-O3: 0.096793
+diffbin bloom, sqlite3-siod-cpc:
+sqlite3,siod,cpc-bloom,clang,O0-O0: 0.106197
+sqlite3,siod,cpc-bloom,clang,O1-O1: 0.116050
+sqlite3,siod,cpc-bloom,clang,O2-O2: 0.106840
+sqlite3,siod,cpc-bloom,clang,O3-O3: 0.107477
+sqlite3,siod,cpc-bloom,gcc,O0-O0: 0.105132
+sqlite3,siod,cpc-bloom,gcc,O1-O1: 0.115318
+sqlite3,siod,cpc-bloom,gcc,O2-O2: 0.130682
+sqlite3,siod,cpc-bloom,gcc,O3-O3: 0.096449
+diffbin bloom, sqlite3-siod-mc:
+sqlite3,siod,mc-bloom,clang,O0-O0: 0.105486
+sqlite3,siod,mc-bloom,clang,O1-O1: 0.059711
+sqlite3,siod,mc-bloom,clang,O2-O2: 0.058663
+sqlite3,siod,mc-bloom,clang,O3-O3: 0.055960
+sqlite3,siod,mc-bloom,gcc,O0-O0: 0.086410
+sqlite3,siod,mc-bloom,gcc,O1-O1: 0.062051
+sqlite3,siod,mc-bloom,gcc,O2-O2: 0.060438
+sqlite3,siod,mc-bloom,gcc,O3-O3: 0.069370
+diffbin bloom, sqlite3-sqlite3-cpc:
+sqlite3,sqlite3,cpc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,cpc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,cpc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,cpc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,cpc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,cpc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,cpc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,cpc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, sqlite3-sqlite3-mc:
+sqlite3,sqlite3,mc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,mc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,mc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,mc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,mc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,mc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,mc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,mc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, sqlite3-kc-cpc:
+sqlite3,kc,cpc-bloom,clang,O0-O0: 0.123586
+sqlite3,kc,cpc-bloom,clang,O1-O1: 0.125260
+sqlite3,kc,cpc-bloom,clang,O2-O2: 0.094480
+sqlite3,kc,cpc-bloom,clang,O3-O3: 0.098931
+sqlite3,kc,cpc-bloom,gcc,O0-O0: 0.122538
+sqlite3,kc,cpc-bloom,gcc,O1-O1: 0.117257
+sqlite3,kc,cpc-bloom,gcc,O2-O2: 0.105839
+sqlite3,kc,cpc-bloom,gcc,O3-O3: 0.109452
+diffbin bloom, sqlite3-kc-mc:
+sqlite3,kc,mc-bloom,clang,O0-O0: 0.117512
+sqlite3,kc,mc-bloom,clang,O1-O1: 0.080830
+sqlite3,kc,mc-bloom,clang,O2-O2: 0.077591
+sqlite3,kc,mc-bloom,clang,O3-O3: 0.076581
+sqlite3,kc,mc-bloom,gcc,O0-O0: 0.096859
+sqlite3,kc,mc-bloom,gcc,O1-O1: 0.083498
+sqlite3,kc,mc-bloom,gcc,O2-O2: 0.089244
+sqlite3,kc,mc-bloom,gcc,O3-O3: 0.095770
+diffbin bloom, sqlite3-burg-cpc:
+sqlite3,burg,cpc-bloom,clang,O0-O0: 0.071501
+sqlite3,burg,cpc-bloom,clang,O1-O1: 0.069964
+sqlite3,burg,cpc-bloom,clang,O2-O2: 0.070515
+sqlite3,burg,cpc-bloom,clang,O3-O3: 0.078083
+sqlite3,burg,cpc-bloom,gcc,O0-O0: 0.063754
+sqlite3,burg,cpc-bloom,gcc,O1-O1: 0.060076
+sqlite3,burg,cpc-bloom,gcc,O2-O2: 0.085549
+sqlite3,burg,cpc-bloom,gcc,O3-O3: 0.077620
+diffbin bloom, sqlite3-burg-mc:
+sqlite3,burg,mc-bloom,clang,O0-O0: 0.080302
+sqlite3,burg,mc-bloom,clang,O1-O1: 0.042079
+sqlite3,burg,mc-bloom,clang,O2-O2: 0.035498
+sqlite3,burg,mc-bloom,clang,O3-O3: 0.031863
+sqlite3,burg,mc-bloom,gcc,O0-O0: 0.070179
+sqlite3,burg,mc-bloom,gcc,O1-O1: 0.043599
+sqlite3,burg,mc-bloom,gcc,O2-O2: 0.044549
+sqlite3,burg,mc-bloom,gcc,O3-O3: 0.044318
+diffbin bloom, sqlite3-oggenc-cpc:
+sqlite3,oggenc,cpc-bloom,clang,O0-O0: 0.094300
+sqlite3,oggenc,cpc-bloom,clang,O1-O1: 0.100788
+sqlite3,oggenc,cpc-bloom,clang,O2-O2: 0.095133
+sqlite3,oggenc,cpc-bloom,clang,O3-O3: 0.087243
+sqlite3,oggenc,cpc-bloom,gcc,O0-O0: 0.095640
+sqlite3,oggenc,cpc-bloom,gcc,O1-O1: 0.088830
+sqlite3,oggenc,cpc-bloom,gcc,O2-O2: 0.096683
+sqlite3,oggenc,cpc-bloom,gcc,O3-O3: 0.071820
+diffbin bloom, sqlite3-oggenc-mc:
+sqlite3,oggenc,mc-bloom,clang,O0-O0: 0.150244
+sqlite3,oggenc,mc-bloom,clang,O1-O1: 0.094629
+sqlite3,oggenc,mc-bloom,clang,O2-O2: 0.096607
+sqlite3,oggenc,mc-bloom,clang,O3-O3: 0.095470
+sqlite3,oggenc,mc-bloom,gcc,O0-O0: 0.140810
+sqlite3,oggenc,mc-bloom,gcc,O1-O1: 0.094010
+sqlite3,oggenc,mc-bloom,gcc,O2-O2: 0.098467
+sqlite3,oggenc,mc-bloom,gcc,O3-O3: 0.109430
+diffbin bloom, kc-treecc-cpc:
+kc,treecc,cpc-bloom,clang,O0-O0: 0.083548
+kc,treecc,cpc-bloom,clang,O1-O1: 0.086188
+kc,treecc,cpc-bloom,clang,O2-O2: 0.085015
+kc,treecc,cpc-bloom,clang,O3-O3: 0.091142
+kc,treecc,cpc-bloom,gcc,O0-O0: 0.084156
+kc,treecc,cpc-bloom,gcc,O1-O1: 0.081165
+kc,treecc,cpc-bloom,gcc,O2-O2: 0.088940
+kc,treecc,cpc-bloom,gcc,O3-O3: 0.075066
+diffbin bloom, kc-treecc-mc:
+kc,treecc,mc-bloom,clang,O0-O0: 0.067030
+kc,treecc,mc-bloom,clang,O1-O1: 0.050230
+kc,treecc,mc-bloom,clang,O2-O2: 0.046619
+kc,treecc,mc-bloom,clang,O3-O3: 0.046628
+kc,treecc,mc-bloom,gcc,O0-O0: 0.055051
+kc,treecc,mc-bloom,gcc,O1-O1: 0.050984
+kc,treecc,mc-bloom,gcc,O2-O2: 0.053608
+kc,treecc,mc-bloom,gcc,O3-O3: 0.059320
+diffbin bloom, kc-make_dparser-cpc:
+kc,make_dparser,cpc-bloom,clang,O0-O0: 0.104201
+kc,make_dparser,cpc-bloom,clang,O1-O1: 0.098011
+kc,make_dparser,cpc-bloom,clang,O2-O2: 0.085961
+kc,make_dparser,cpc-bloom,clang,O3-O3: 0.087001
+kc,make_dparser,cpc-bloom,gcc,O0-O0: 0.103179
+kc,make_dparser,cpc-bloom,gcc,O1-O1: 0.095934
+kc,make_dparser,cpc-bloom,gcc,O2-O2: 0.104975
+kc,make_dparser,cpc-bloom,gcc,O3-O3: 0.095759
+diffbin bloom, kc-make_dparser-mc:
+kc,make_dparser,mc-bloom,clang,O0-O0: 0.082958
+kc,make_dparser,mc-bloom,clang,O1-O1: 0.055903
+kc,make_dparser,mc-bloom,clang,O2-O2: 0.058662
+kc,make_dparser,mc-bloom,clang,O3-O3: 0.058186
+kc,make_dparser,mc-bloom,gcc,O0-O0: 0.064844
+kc,make_dparser,mc-bloom,gcc,O1-O1: 0.059665
+kc,make_dparser,mc-bloom,gcc,O2-O2: 0.065139
+kc,make_dparser,mc-bloom,gcc,O3-O3: 0.071920
+diffbin bloom, kc-ldecod-cpc:
+kc,ldecod,cpc-bloom,clang,O0-O0: 0.104411
+kc,ldecod,cpc-bloom,clang,O1-O1: 0.119035
+kc,ldecod,cpc-bloom,clang,O2-O2: 0.086066
+kc,ldecod,cpc-bloom,clang,O3-O3: 0.092030
+kc,ldecod,cpc-bloom,gcc,O0-O0: 0.104601
+kc,ldecod,cpc-bloom,gcc,O1-O1: 0.108256
+kc,ldecod,cpc-bloom,gcc,O2-O2: 0.109266
+kc,ldecod,cpc-bloom,gcc,O3-O3: 0.086453
+diffbin bloom, kc-ldecod-mc:
+kc,ldecod,mc-bloom,clang,O0-O0: 0.094218
+kc,ldecod,mc-bloom,clang,O1-O1: 0.059843
+kc,ldecod,mc-bloom,clang,O2-O2: 0.060131
+kc,ldecod,mc-bloom,clang,O3-O3: 0.060893
+kc,ldecod,mc-bloom,gcc,O0-O0: 0.074357
+kc,ldecod,mc-bloom,gcc,O1-O1: 0.060973
+kc,ldecod,mc-bloom,gcc,O2-O2: 0.069457
+kc,ldecod,mc-bloom,gcc,O3-O3: 0.074739
+diffbin bloom, kc-lua-cpc:
+kc,lua,cpc-bloom,clang,O0-O0: 0.117490
+kc,lua,cpc-bloom,clang,O1-O1: 0.126766
+kc,lua,cpc-bloom,clang,O2-O2: 0.097945
+kc,lua,cpc-bloom,clang,O3-O3: 0.085472
+kc,lua,cpc-bloom,gcc,O0-O0: 0.125000
+kc,lua,cpc-bloom,gcc,O1-O1: 0.113453
+kc,lua,cpc-bloom,gcc,O2-O2: 0.103112
+kc,lua,cpc-bloom,gcc,O3-O3: 0.096907
+diffbin bloom, kc-lua-mc:
+kc,lua,mc-bloom,clang,O0-O0: 0.097534
+kc,lua,mc-bloom,clang,O1-O1: 0.066116
+kc,lua,mc-bloom,clang,O2-O2: 0.063882
+kc,lua,mc-bloom,clang,O3-O3: 0.064792
+kc,lua,mc-bloom,gcc,O0-O0: 0.075539
+kc,lua,mc-bloom,gcc,O1-O1: 0.067695
+kc,lua,mc-bloom,gcc,O2-O2: 0.071992
+kc,lua,mc-bloom,gcc,O3-O3: 0.079062
+diffbin bloom, kc-siod-cpc:
+kc,siod,cpc-bloom,clang,O0-O0: 0.130031
+kc,siod,cpc-bloom,clang,O1-O1: 0.117443
+kc,siod,cpc-bloom,clang,O2-O2: 0.091492
+kc,siod,cpc-bloom,clang,O3-O3: 0.087484
+kc,siod,cpc-bloom,gcc,O0-O0: 0.122352
+kc,siod,cpc-bloom,gcc,O1-O1: 0.112343
+kc,siod,cpc-bloom,gcc,O2-O2: 0.107648
+kc,siod,cpc-bloom,gcc,O3-O3: 0.098667
+diffbin bloom, kc-siod-mc:
+kc,siod,mc-bloom,clang,O0-O0: 0.081264
+kc,siod,mc-bloom,clang,O1-O1: 0.055930
+kc,siod,mc-bloom,clang,O2-O2: 0.058379
+kc,siod,mc-bloom,clang,O3-O3: 0.059142
+kc,siod,mc-bloom,gcc,O0-O0: 0.060692
+kc,siod,mc-bloom,gcc,O1-O1: 0.058900
+kc,siod,mc-bloom,gcc,O2-O2: 0.058712
+kc,siod,mc-bloom,gcc,O3-O3: 0.070134
+diffbin bloom, kc-sqlite3-cpc:
+kc,sqlite3,cpc-bloom,clang,O0-O0: 0.123586
+kc,sqlite3,cpc-bloom,clang,O1-O1: 0.125260
+kc,sqlite3,cpc-bloom,clang,O2-O2: 0.094480
+kc,sqlite3,cpc-bloom,clang,O3-O3: 0.098931
+kc,sqlite3,cpc-bloom,gcc,O0-O0: 0.122538
+kc,sqlite3,cpc-bloom,gcc,O1-O1: 0.117257
+kc,sqlite3,cpc-bloom,gcc,O2-O2: 0.105839
+kc,sqlite3,cpc-bloom,gcc,O3-O3: 0.109452
+diffbin bloom, kc-sqlite3-mc:
+kc,sqlite3,mc-bloom,clang,O0-O0: 0.117512
+kc,sqlite3,mc-bloom,clang,O1-O1: 0.080830
+kc,sqlite3,mc-bloom,clang,O2-O2: 0.077591
+kc,sqlite3,mc-bloom,clang,O3-O3: 0.076581
+kc,sqlite3,mc-bloom,gcc,O0-O0: 0.096859
+kc,sqlite3,mc-bloom,gcc,O1-O1: 0.083498
+kc,sqlite3,mc-bloom,gcc,O2-O2: 0.089244
+kc,sqlite3,mc-bloom,gcc,O3-O3: 0.095770
+diffbin bloom, kc-kc-cpc:
+kc,kc,cpc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,cpc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,cpc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,cpc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,cpc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,cpc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,cpc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,cpc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, kc-kc-mc:
+kc,kc,mc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,mc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,mc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,mc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,mc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,mc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,mc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,mc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, kc-burg-cpc:
+kc,burg,cpc-bloom,clang,O0-O0: 0.077876
+kc,burg,cpc-bloom,clang,O1-O1: 0.082526
+kc,burg,cpc-bloom,clang,O2-O2: 0.084463
+kc,burg,cpc-bloom,clang,O3-O3: 0.085073
+kc,burg,cpc-bloom,gcc,O0-O0: 0.074663
+kc,burg,cpc-bloom,gcc,O1-O1: 0.088824
+kc,burg,cpc-bloom,gcc,O2-O2: 0.085219
+kc,burg,cpc-bloom,gcc,O3-O3: 0.097906
+diffbin bloom, kc-burg-mc:
+kc,burg,mc-bloom,clang,O0-O0: 0.058706
+kc,burg,mc-bloom,clang,O1-O1: 0.041316
+kc,burg,mc-bloom,clang,O2-O2: 0.041074
+kc,burg,mc-bloom,clang,O3-O3: 0.040943
+kc,burg,mc-bloom,gcc,O0-O0: 0.048788
+kc,burg,mc-bloom,gcc,O1-O1: 0.044002
+kc,burg,mc-bloom,gcc,O2-O2: 0.045242
+kc,burg,mc-bloom,gcc,O3-O3: 0.048144
+diffbin bloom, kc-oggenc-cpc:
+kc,oggenc,cpc-bloom,clang,O0-O0: 0.095759
+kc,oggenc,cpc-bloom,clang,O1-O1: 0.098675
+kc,oggenc,cpc-bloom,clang,O2-O2: 0.114522
+kc,oggenc,cpc-bloom,clang,O3-O3: 0.094614
+kc,oggenc,cpc-bloom,gcc,O0-O0: 0.094675
+kc,oggenc,cpc-bloom,gcc,O1-O1: 0.087668
+kc,oggenc,cpc-bloom,gcc,O2-O2: 0.094853
+kc,oggenc,cpc-bloom,gcc,O3-O3: 0.089127
+diffbin bloom, kc-oggenc-mc:
+kc,oggenc,mc-bloom,clang,O0-O0: 0.087124
+kc,oggenc,mc-bloom,clang,O1-O1: 0.059822
+kc,oggenc,mc-bloom,clang,O2-O2: 0.060945
+kc,oggenc,mc-bloom,clang,O3-O3: 0.061494
+kc,oggenc,mc-bloom,gcc,O0-O0: 0.071415
+kc,oggenc,mc-bloom,gcc,O1-O1: 0.060944
+kc,oggenc,mc-bloom,gcc,O2-O2: 0.067243
+kc,oggenc,mc-bloom,gcc,O3-O3: 0.073764
+diffbin bloom, burg-treecc-cpc:
+burg,treecc,cpc-bloom,clang,O0-O0: 0.102243
+burg,treecc,cpc-bloom,clang,O1-O1: 0.125676
+burg,treecc,cpc-bloom,clang,O2-O2: 0.114432
+burg,treecc,cpc-bloom,clang,O3-O3: 0.112134
+burg,treecc,cpc-bloom,gcc,O0-O0: 0.111262
+burg,treecc,cpc-bloom,gcc,O1-O1: 0.108300
+burg,treecc,cpc-bloom,gcc,O2-O2: 0.106383
+burg,treecc,cpc-bloom,gcc,O3-O3: 0.101002
+diffbin bloom, burg-treecc-mc:
+burg,treecc,mc-bloom,clang,O0-O0: 0.127262
+burg,treecc,mc-bloom,clang,O1-O1: 0.057068
+burg,treecc,mc-bloom,clang,O2-O2: 0.055845
+burg,treecc,mc-bloom,clang,O3-O3: 0.056106
+burg,treecc,mc-bloom,gcc,O0-O0: 0.097076
+burg,treecc,mc-bloom,gcc,O1-O1: 0.063930
+burg,treecc,mc-bloom,gcc,O2-O2: 0.064342
+burg,treecc,mc-bloom,gcc,O3-O3: 0.066809
+diffbin bloom, burg-make_dparser-cpc:
+burg,make_dparser,cpc-bloom,clang,O0-O0: 0.131825
+burg,make_dparser,cpc-bloom,clang,O1-O1: 0.141941
+burg,make_dparser,cpc-bloom,clang,O2-O2: 0.144110
+burg,make_dparser,cpc-bloom,clang,O3-O3: 0.144487
+burg,make_dparser,cpc-bloom,gcc,O0-O0: 0.142397
+burg,make_dparser,cpc-bloom,gcc,O1-O1: 0.185475
+burg,make_dparser,cpc-bloom,gcc,O2-O2: 0.172376
+burg,make_dparser,cpc-bloom,gcc,O3-O3: 0.144691
+diffbin bloom, burg-make_dparser-mc:
+burg,make_dparser,mc-bloom,clang,O0-O0: 0.137712
+burg,make_dparser,mc-bloom,clang,O1-O1: 0.063232
+burg,make_dparser,mc-bloom,clang,O2-O2: 0.060145
+burg,make_dparser,mc-bloom,clang,O3-O3: 0.060590
+burg,make_dparser,mc-bloom,gcc,O0-O0: 0.113468
+burg,make_dparser,mc-bloom,gcc,O1-O1: 0.067347
+burg,make_dparser,mc-bloom,gcc,O2-O2: 0.067670
+burg,make_dparser,mc-bloom,gcc,O3-O3: 0.070055
+diffbin bloom, burg-ldecod-cpc:
+burg,ldecod,cpc-bloom,clang,O0-O0: 0.110588
+burg,ldecod,cpc-bloom,clang,O1-O1: 0.132256
+burg,ldecod,cpc-bloom,clang,O2-O2: 0.123525
+burg,ldecod,cpc-bloom,clang,O3-O3: 0.123534
+burg,ldecod,cpc-bloom,gcc,O0-O0: 0.129562
+burg,ldecod,cpc-bloom,gcc,O1-O1: 0.137725
+burg,ldecod,cpc-bloom,gcc,O2-O2: 0.144478
+burg,ldecod,cpc-bloom,gcc,O3-O3: 0.128849
+diffbin bloom, burg-ldecod-mc:
+burg,ldecod,mc-bloom,clang,O0-O0: 0.094258
+burg,ldecod,mc-bloom,clang,O1-O1: 0.043361
+burg,ldecod,mc-bloom,clang,O2-O2: 0.038748
+burg,ldecod,mc-bloom,clang,O3-O3: 0.038418
+burg,ldecod,mc-bloom,gcc,O0-O0: 0.079056
+burg,ldecod,mc-bloom,gcc,O1-O1: 0.043044
+burg,ldecod,mc-bloom,gcc,O2-O2: 0.045918
+burg,ldecod,mc-bloom,gcc,O3-O3: 0.044681
+diffbin bloom, burg-lua-cpc:
+burg,lua,cpc-bloom,clang,O0-O0: 0.072371
+burg,lua,cpc-bloom,clang,O1-O1: 0.091713
+burg,lua,cpc-bloom,clang,O2-O2: 0.079371
+burg,lua,cpc-bloom,clang,O3-O3: 0.079737
+burg,lua,cpc-bloom,gcc,O0-O0: 0.064256
+burg,lua,cpc-bloom,gcc,O1-O1: 0.071591
+burg,lua,cpc-bloom,gcc,O2-O2: 0.081195
+burg,lua,cpc-bloom,gcc,O3-O3: 0.059439
+diffbin bloom, burg-lua-mc:
+burg,lua,mc-bloom,clang,O0-O0: 0.117345
+burg,lua,mc-bloom,clang,O1-O1: 0.058230
+burg,lua,mc-bloom,clang,O2-O2: 0.054166
+burg,lua,mc-bloom,clang,O3-O3: 0.054092
+burg,lua,mc-bloom,gcc,O0-O0: 0.097984
+burg,lua,mc-bloom,gcc,O1-O1: 0.060905
+burg,lua,mc-bloom,gcc,O2-O2: 0.061842
+burg,lua,mc-bloom,gcc,O3-O3: 0.062399
+diffbin bloom, burg-siod-cpc:
+burg,siod,cpc-bloom,clang,O0-O0: 0.117259
+burg,siod,cpc-bloom,clang,O1-O1: 0.128298
+burg,siod,cpc-bloom,clang,O2-O2: 0.119710
+burg,siod,cpc-bloom,clang,O3-O3: 0.108879
+burg,siod,cpc-bloom,gcc,O0-O0: 0.111168
+burg,siod,cpc-bloom,gcc,O1-O1: 0.099057
+burg,siod,cpc-bloom,gcc,O2-O2: 0.110106
+burg,siod,cpc-bloom,gcc,O3-O3: 0.079320
+diffbin bloom, burg-siod-mc:
+burg,siod,mc-bloom,clang,O0-O0: 0.114876
+burg,siod,mc-bloom,clang,O1-O1: 0.059235
+burg,siod,mc-bloom,clang,O2-O2: 0.053700
+burg,siod,mc-bloom,clang,O3-O3: 0.052746
+burg,siod,mc-bloom,gcc,O0-O0: 0.094489
+burg,siod,mc-bloom,gcc,O1-O1: 0.060404
+burg,siod,mc-bloom,gcc,O2-O2: 0.062196
+burg,siod,mc-bloom,gcc,O3-O3: 0.063499
+diffbin bloom, burg-sqlite3-cpc:
+burg,sqlite3,cpc-bloom,clang,O0-O0: 0.071501
+burg,sqlite3,cpc-bloom,clang,O1-O1: 0.069964
+burg,sqlite3,cpc-bloom,clang,O2-O2: 0.070515
+burg,sqlite3,cpc-bloom,clang,O3-O3: 0.078083
+burg,sqlite3,cpc-bloom,gcc,O0-O0: 0.063754
+burg,sqlite3,cpc-bloom,gcc,O1-O1: 0.060076
+burg,sqlite3,cpc-bloom,gcc,O2-O2: 0.085549
+burg,sqlite3,cpc-bloom,gcc,O3-O3: 0.077620
+diffbin bloom, burg-sqlite3-mc:
+burg,sqlite3,mc-bloom,clang,O0-O0: 0.080302
+burg,sqlite3,mc-bloom,clang,O1-O1: 0.042079
+burg,sqlite3,mc-bloom,clang,O2-O2: 0.035498
+burg,sqlite3,mc-bloom,clang,O3-O3: 0.031863
+burg,sqlite3,mc-bloom,gcc,O0-O0: 0.070179
+burg,sqlite3,mc-bloom,gcc,O1-O1: 0.043599
+burg,sqlite3,mc-bloom,gcc,O2-O2: 0.044549
+burg,sqlite3,mc-bloom,gcc,O3-O3: 0.044318
+diffbin bloom, burg-kc-cpc:
+burg,kc,cpc-bloom,clang,O0-O0: 0.077876
+burg,kc,cpc-bloom,clang,O1-O1: 0.082526
+burg,kc,cpc-bloom,clang,O2-O2: 0.084463
+burg,kc,cpc-bloom,clang,O3-O3: 0.085073
+burg,kc,cpc-bloom,gcc,O0-O0: 0.074663
+burg,kc,cpc-bloom,gcc,O1-O1: 0.088824
+burg,kc,cpc-bloom,gcc,O2-O2: 0.085219
+burg,kc,cpc-bloom,gcc,O3-O3: 0.097906
+diffbin bloom, burg-kc-mc:
+burg,kc,mc-bloom,clang,O0-O0: 0.058706
+burg,kc,mc-bloom,clang,O1-O1: 0.041316
+burg,kc,mc-bloom,clang,O2-O2: 0.041074
+burg,kc,mc-bloom,clang,O3-O3: 0.040943
+burg,kc,mc-bloom,gcc,O0-O0: 0.048788
+burg,kc,mc-bloom,gcc,O1-O1: 0.044002
+burg,kc,mc-bloom,gcc,O2-O2: 0.045242
+burg,kc,mc-bloom,gcc,O3-O3: 0.048144
+diffbin bloom, burg-burg-cpc:
+burg,burg,cpc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,cpc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,cpc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,cpc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,cpc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,cpc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,cpc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,cpc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, burg-burg-mc:
+burg,burg,mc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,mc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,mc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,mc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,mc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,mc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,mc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,mc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, burg-oggenc-cpc:
+burg,oggenc,cpc-bloom,clang,O0-O0: 0.109220
+burg,oggenc,cpc-bloom,clang,O1-O1: 0.123209
+burg,oggenc,cpc-bloom,clang,O2-O2: 0.132979
+burg,oggenc,cpc-bloom,clang,O3-O3: 0.138614
+burg,oggenc,cpc-bloom,gcc,O0-O0: 0.122987
+burg,oggenc,cpc-bloom,gcc,O1-O1: 0.126325
+burg,oggenc,cpc-bloom,gcc,O2-O2: 0.168431
+burg,oggenc,cpc-bloom,gcc,O3-O3: 0.149606
+diffbin bloom, burg-oggenc-mc:
+burg,oggenc,mc-bloom,clang,O0-O0: 0.100806
+burg,oggenc,mc-bloom,clang,O1-O1: 0.046593
+burg,oggenc,mc-bloom,clang,O2-O2: 0.041440
+burg,oggenc,mc-bloom,clang,O3-O3: 0.040935
+burg,oggenc,mc-bloom,gcc,O0-O0: 0.082092
+burg,oggenc,mc-bloom,gcc,O1-O1: 0.047836
+burg,oggenc,mc-bloom,gcc,O2-O2: 0.049892
+burg,oggenc,mc-bloom,gcc,O3-O3: 0.045916
+diffbin bloom, oggenc-treecc-cpc:
+oggenc,treecc,cpc-bloom,clang,O0-O0: 0.124339
+oggenc,treecc,cpc-bloom,clang,O1-O1: 0.115834
+oggenc,treecc,cpc-bloom,clang,O2-O2: 0.146323
+oggenc,treecc,cpc-bloom,clang,O3-O3: 0.157571
+oggenc,treecc,cpc-bloom,gcc,O0-O0: 0.122029
+oggenc,treecc,cpc-bloom,gcc,O1-O1: 0.111735
+oggenc,treecc,cpc-bloom,gcc,O2-O2: 0.116981
+oggenc,treecc,cpc-bloom,gcc,O3-O3: 0.137034
+diffbin bloom, oggenc-treecc-mc:
+oggenc,treecc,mc-bloom,clang,O0-O0: 0.105824
+oggenc,treecc,mc-bloom,clang,O1-O1: 0.056639
+oggenc,treecc,mc-bloom,clang,O2-O2: 0.052412
+oggenc,treecc,mc-bloom,clang,O3-O3: 0.051322
+oggenc,treecc,mc-bloom,gcc,O0-O0: 0.094976
+oggenc,treecc,mc-bloom,gcc,O1-O1: 0.055851
+oggenc,treecc,mc-bloom,gcc,O2-O2: 0.059455
+oggenc,treecc,mc-bloom,gcc,O3-O3: 0.058987
+diffbin bloom, oggenc-make_dparser-cpc:
+oggenc,make_dparser,cpc-bloom,clang,O0-O0: 0.155947
+oggenc,make_dparser,cpc-bloom,clang,O1-O1: 0.152605
+oggenc,make_dparser,cpc-bloom,clang,O2-O2: 0.171548
+oggenc,make_dparser,cpc-bloom,clang,O3-O3: 0.179039
+oggenc,make_dparser,cpc-bloom,gcc,O0-O0: 0.155852
+oggenc,make_dparser,cpc-bloom,gcc,O1-O1: 0.137441
+oggenc,make_dparser,cpc-bloom,gcc,O2-O2: 0.160504
+oggenc,make_dparser,cpc-bloom,gcc,O3-O3: 0.174524
+diffbin bloom, oggenc-make_dparser-mc:
+oggenc,make_dparser,mc-bloom,clang,O0-O0: 0.146336
+oggenc,make_dparser,mc-bloom,clang,O1-O1: 0.076682
+oggenc,make_dparser,mc-bloom,clang,O2-O2: 0.076652
+oggenc,make_dparser,mc-bloom,clang,O3-O3: 0.076226
+oggenc,make_dparser,mc-bloom,gcc,O0-O0: 0.136003
+oggenc,make_dparser,mc-bloom,gcc,O1-O1: 0.079065
+oggenc,make_dparser,mc-bloom,gcc,O2-O2: 0.085215
+oggenc,make_dparser,mc-bloom,gcc,O3-O3: 0.085970
+diffbin bloom, oggenc-ldecod-cpc:
+oggenc,ldecod,cpc-bloom,clang,O0-O0: 0.115769
+oggenc,ldecod,cpc-bloom,clang,O1-O1: 0.132425
+oggenc,ldecod,cpc-bloom,clang,O2-O2: 0.124484
+oggenc,ldecod,cpc-bloom,clang,O3-O3: 0.131837
+oggenc,ldecod,cpc-bloom,gcc,O0-O0: 0.123202
+oggenc,ldecod,cpc-bloom,gcc,O1-O1: 0.138489
+oggenc,ldecod,cpc-bloom,gcc,O2-O2: 0.151382
+oggenc,ldecod,cpc-bloom,gcc,O3-O3: 0.124290
+diffbin bloom, oggenc-ldecod-mc:
+oggenc,ldecod,mc-bloom,clang,O0-O0: 0.153597
+oggenc,ldecod,mc-bloom,clang,O1-O1: 0.085116
+oggenc,ldecod,mc-bloom,clang,O2-O2: 0.091483
+oggenc,ldecod,mc-bloom,clang,O3-O3: 0.093549
+oggenc,ldecod,mc-bloom,gcc,O0-O0: 0.137139
+oggenc,ldecod,mc-bloom,gcc,O1-O1: 0.084872
+oggenc,ldecod,mc-bloom,gcc,O2-O2: 0.091038
+oggenc,ldecod,mc-bloom,gcc,O3-O3: 0.102997
+diffbin bloom, oggenc-lua-cpc:
+oggenc,lua,cpc-bloom,clang,O0-O0: 0.095114
+oggenc,lua,cpc-bloom,clang,O1-O1: 0.095377
+oggenc,lua,cpc-bloom,clang,O2-O2: 0.081709
+oggenc,lua,cpc-bloom,clang,O3-O3: 0.087665
+oggenc,lua,cpc-bloom,gcc,O0-O0: 0.095914
+oggenc,lua,cpc-bloom,gcc,O1-O1: 0.081956
+oggenc,lua,cpc-bloom,gcc,O2-O2: 0.092457
+oggenc,lua,cpc-bloom,gcc,O3-O3: 0.083871
+diffbin bloom, oggenc-lua-mc:
+oggenc,lua,mc-bloom,clang,O0-O0: 0.149749
+oggenc,lua,mc-bloom,clang,O1-O1: 0.076040
+oggenc,lua,mc-bloom,clang,O2-O2: 0.075250
+oggenc,lua,mc-bloom,clang,O3-O3: 0.074825
+oggenc,lua,mc-bloom,gcc,O0-O0: 0.137625
+oggenc,lua,mc-bloom,gcc,O1-O1: 0.081043
+oggenc,lua,mc-bloom,gcc,O2-O2: 0.084397
+oggenc,lua,mc-bloom,gcc,O3-O3: 0.084902
+diffbin bloom, oggenc-siod-cpc:
+oggenc,siod,cpc-bloom,clang,O0-O0: 0.105789
+oggenc,siod,cpc-bloom,clang,O1-O1: 0.108051
+oggenc,siod,cpc-bloom,clang,O2-O2: 0.091535
+oggenc,siod,cpc-bloom,clang,O3-O3: 0.092699
+oggenc,siod,cpc-bloom,gcc,O0-O0: 0.106268
+oggenc,siod,cpc-bloom,gcc,O1-O1: 0.085013
+oggenc,siod,cpc-bloom,gcc,O2-O2: 0.107685
+oggenc,siod,cpc-bloom,gcc,O3-O3: 0.080751
+diffbin bloom, oggenc-siod-mc:
+oggenc,siod,mc-bloom,clang,O0-O0: 0.115635
+oggenc,siod,mc-bloom,clang,O1-O1: 0.057298
+oggenc,siod,mc-bloom,clang,O2-O2: 0.057570
+oggenc,siod,mc-bloom,clang,O3-O3: 0.058411
+oggenc,siod,mc-bloom,gcc,O0-O0: 0.095400
+oggenc,siod,mc-bloom,gcc,O1-O1: 0.060152
+oggenc,siod,mc-bloom,gcc,O2-O2: 0.061424
+oggenc,siod,mc-bloom,gcc,O3-O3: 0.062665
+diffbin bloom, oggenc-sqlite3-cpc:
+oggenc,sqlite3,cpc-bloom,clang,O0-O0: 0.094300
+oggenc,sqlite3,cpc-bloom,clang,O1-O1: 0.100788
+oggenc,sqlite3,cpc-bloom,clang,O2-O2: 0.095133
+oggenc,sqlite3,cpc-bloom,clang,O3-O3: 0.087243
+oggenc,sqlite3,cpc-bloom,gcc,O0-O0: 0.095640
+oggenc,sqlite3,cpc-bloom,gcc,O1-O1: 0.088830
+oggenc,sqlite3,cpc-bloom,gcc,O2-O2: 0.096683
+oggenc,sqlite3,cpc-bloom,gcc,O3-O3: 0.071820
+diffbin bloom, oggenc-sqlite3-mc:
+oggenc,sqlite3,mc-bloom,clang,O0-O0: 0.150244
+oggenc,sqlite3,mc-bloom,clang,O1-O1: 0.094629
+oggenc,sqlite3,mc-bloom,clang,O2-O2: 0.096607
+oggenc,sqlite3,mc-bloom,clang,O3-O3: 0.095470
+oggenc,sqlite3,mc-bloom,gcc,O0-O0: 0.140810
+oggenc,sqlite3,mc-bloom,gcc,O1-O1: 0.094010
+oggenc,sqlite3,mc-bloom,gcc,O2-O2: 0.098467
+oggenc,sqlite3,mc-bloom,gcc,O3-O3: 0.109430
+diffbin bloom, oggenc-kc-cpc:
+oggenc,kc,cpc-bloom,clang,O0-O0: 0.095759
+oggenc,kc,cpc-bloom,clang,O1-O1: 0.098675
+oggenc,kc,cpc-bloom,clang,O2-O2: 0.114522
+oggenc,kc,cpc-bloom,clang,O3-O3: 0.094614
+oggenc,kc,cpc-bloom,gcc,O0-O0: 0.094675
+oggenc,kc,cpc-bloom,gcc,O1-O1: 0.087668
+oggenc,kc,cpc-bloom,gcc,O2-O2: 0.094853
+oggenc,kc,cpc-bloom,gcc,O3-O3: 0.089127
+diffbin bloom, oggenc-kc-mc:
+oggenc,kc,mc-bloom,clang,O0-O0: 0.087124
+oggenc,kc,mc-bloom,clang,O1-O1: 0.059822
+oggenc,kc,mc-bloom,clang,O2-O2: 0.060945
+oggenc,kc,mc-bloom,clang,O3-O3: 0.061494
+oggenc,kc,mc-bloom,gcc,O0-O0: 0.071415
+oggenc,kc,mc-bloom,gcc,O1-O1: 0.060944
+oggenc,kc,mc-bloom,gcc,O2-O2: 0.067243
+oggenc,kc,mc-bloom,gcc,O3-O3: 0.073764
+diffbin bloom, oggenc-burg-cpc:
+oggenc,burg,cpc-bloom,clang,O0-O0: 0.109220
+oggenc,burg,cpc-bloom,clang,O1-O1: 0.123209
+oggenc,burg,cpc-bloom,clang,O2-O2: 0.132979
+oggenc,burg,cpc-bloom,clang,O3-O3: 0.138614
+oggenc,burg,cpc-bloom,gcc,O0-O0: 0.122987
+oggenc,burg,cpc-bloom,gcc,O1-O1: 0.126325
+oggenc,burg,cpc-bloom,gcc,O2-O2: 0.168431
+oggenc,burg,cpc-bloom,gcc,O3-O3: 0.149606
+diffbin bloom, oggenc-burg-mc:
+oggenc,burg,mc-bloom,clang,O0-O0: 0.100806
+oggenc,burg,mc-bloom,clang,O1-O1: 0.046593
+oggenc,burg,mc-bloom,clang,O2-O2: 0.041440
+oggenc,burg,mc-bloom,clang,O3-O3: 0.040935
+oggenc,burg,mc-bloom,gcc,O0-O0: 0.082092
+oggenc,burg,mc-bloom,gcc,O1-O1: 0.047836
+oggenc,burg,mc-bloom,gcc,O2-O2: 0.049892
+oggenc,burg,mc-bloom,gcc,O3-O3: 0.045916
+diffbin bloom, oggenc-oggenc-cpc:
+oggenc,oggenc,cpc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,cpc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,cpc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,cpc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,cpc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,cpc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,cpc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,cpc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin bloom, oggenc-oggenc-mc:
+oggenc,oggenc,mc-bloom,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,mc-bloom,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,mc-bloom,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,mc-bloom,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,mc-bloom,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,mc-bloom,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,mc-bloom,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,mc-bloom,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin, edit distance, treecc-treecc:
+treecc,treecc,cpc-edit,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,cpc-edit,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,cpc-edit,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,cpc-edit,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,cpc-edit,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,cpc-edit,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,cpc-edit,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+treecc,treecc,cpc-edit,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin, edit distance, treecc-make_dparser:
+treecc,make_dparser,cpc-edit,clang,O0-O0: 0.102894
+treecc,make_dparser,cpc-edit,clang,O1-O1: 0.126973
+treecc,make_dparser,cpc-edit,clang,O2-O2: -0.091129
+treecc,make_dparser,cpc-edit,clang,O3-O3: -0.093098
+treecc,make_dparser,cpc-edit,gcc,O0-O0: 0.104756
+treecc,make_dparser,cpc-edit,gcc,O1-O1: 0.017718
+treecc,make_dparser,cpc-edit,gcc,O2-O2: -0.018615
+treecc,make_dparser,cpc-edit,gcc,O3-O3: -0.143320
+diffbin, edit distance, treecc-ldecod:
+treecc,ldecod,cpc-edit,clang,O0-O0: 0.330059
+treecc,ldecod,cpc-edit,clang,O1-O1: 0.340636
+treecc,ldecod,cpc-edit,clang,O2-O2: 0.320789
+treecc,ldecod,cpc-edit,clang,O3-O3: 0.321853
+treecc,ldecod,cpc-edit,gcc,O0-O0: 0.271857
+treecc,ldecod,cpc-edit,gcc,O1-O1: 0.279254
+treecc,ldecod,cpc-edit,gcc,O2-O2: 0.296491
+treecc,ldecod,cpc-edit,gcc,O3-O3: 0.226463
+diffbin, edit distance, treecc-lua:
+treecc,lua,cpc-edit,clang,O0-O0: 0.267560
+treecc,lua,cpc-edit,clang,O1-O1: 0.248867
+treecc,lua,cpc-edit,clang,O2-O2: 0.204413
+treecc,lua,cpc-edit,clang,O3-O3: 0.176492
+treecc,lua,cpc-edit,gcc,O0-O0: 0.267198
+treecc,lua,cpc-edit,gcc,O1-O1: 0.284992
+treecc,lua,cpc-edit,gcc,O2-O2: 0.265331
+treecc,lua,cpc-edit,gcc,O3-O3: 0.220312
+diffbin, edit distance, treecc-siod:
+treecc,siod,cpc-edit,clang,O0-O0: 0.307541
+treecc,siod,cpc-edit,clang,O1-O1: 0.279436
+treecc,siod,cpc-edit,clang,O2-O2: 0.320199
+treecc,siod,cpc-edit,clang,O3-O3: 0.332121
+treecc,siod,cpc-edit,gcc,O0-O0: 0.304399
+treecc,siod,cpc-edit,gcc,O1-O1: 0.268165
+treecc,siod,cpc-edit,gcc,O2-O2: 0.246479
+treecc,siod,cpc-edit,gcc,O3-O3: 0.256940
+diffbin, edit distance, treecc-sqlite3:
+treecc,sqlite3,cpc-edit,clang,O0-O0: -0.161456
+treecc,sqlite3,cpc-edit,clang,O1-O1: -0.183964
+treecc,sqlite3,cpc-edit,clang,O2-O2: -0.155386
+treecc,sqlite3,cpc-edit,clang,O3-O3: -0.128487
+treecc,sqlite3,cpc-edit,gcc,O0-O0: -0.162017
+treecc,sqlite3,cpc-edit,gcc,O1-O1: -0.129270
+treecc,sqlite3,cpc-edit,gcc,O2-O2: -0.134959
+treecc,sqlite3,cpc-edit,gcc,O3-O3: -0.147434
+diffbin, edit distance, treecc-kc:
+treecc,kc,cpc-edit,clang,O0-O0: -0.640931
+treecc,kc,cpc-edit,clang,O1-O1: -0.601430
+treecc,kc,cpc-edit,clang,O2-O2: -0.242958
+treecc,kc,cpc-edit,clang,O3-O3: -0.233831
+treecc,kc,cpc-edit,gcc,O0-O0: -0.632580
+treecc,kc,cpc-edit,gcc,O1-O1: -0.410974
+treecc,kc,cpc-edit,gcc,O2-O2: -0.315885
+treecc,kc,cpc-edit,gcc,O3-O3: -0.230502
+diffbin, edit distance, treecc-burg:
+treecc,burg,cpc-edit,clang,O0-O0: -0.149417
+treecc,burg,cpc-edit,clang,O1-O1: -0.120529
+treecc,burg,cpc-edit,clang,O2-O2: -0.202862
+treecc,burg,cpc-edit,clang,O3-O3: -0.208543
+treecc,burg,cpc-edit,gcc,O0-O0: -0.112645
+treecc,burg,cpc-edit,gcc,O1-O1: -0.192696
+treecc,burg,cpc-edit,gcc,O2-O2: -0.203239
+treecc,burg,cpc-edit,gcc,O3-O3: -0.332873
+diffbin, edit distance, treecc-oggenc:
+treecc,oggenc,cpc-edit,clang,O0-O0: 0.212069
+treecc,oggenc,cpc-edit,clang,O1-O1: 0.254248
+treecc,oggenc,cpc-edit,clang,O2-O2: 0.021245
+treecc,oggenc,cpc-edit,clang,O3-O3: -0.059002
+treecc,oggenc,cpc-edit,gcc,O0-O0: 0.212191
+treecc,oggenc,cpc-edit,gcc,O1-O1: 0.180812
+treecc,oggenc,cpc-edit,gcc,O2-O2: 0.106040
+treecc,oggenc,cpc-edit,gcc,O3-O3: -0.153029
+diffbin, edit distance, make_dparser-treecc:
+make_dparser,treecc,cpc-edit,clang,O0-O0: 0.102894
+make_dparser,treecc,cpc-edit,clang,O1-O1: 0.126973
+make_dparser,treecc,cpc-edit,clang,O2-O2: -0.091129
+make_dparser,treecc,cpc-edit,clang,O3-O3: -0.093098
+make_dparser,treecc,cpc-edit,gcc,O0-O0: 0.104756
+make_dparser,treecc,cpc-edit,gcc,O1-O1: 0.017718
+make_dparser,treecc,cpc-edit,gcc,O2-O2: -0.018615
+make_dparser,treecc,cpc-edit,gcc,O3-O3: -0.143320
+diffbin, edit distance, make_dparser-make_dparser:
+make_dparser,make_dparser,cpc-edit,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,cpc-edit,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,cpc-edit,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,cpc-edit,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,cpc-edit,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,cpc-edit,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,cpc-edit,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+make_dparser,make_dparser,cpc-edit,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin, edit distance, make_dparser-ldecod:
+make_dparser,ldecod,cpc-edit,clang,O0-O0: 0.126467
+make_dparser,ldecod,cpc-edit,clang,O1-O1: 0.136087
+make_dparser,ldecod,cpc-edit,clang,O2-O2: 0.036463
+make_dparser,ldecod,cpc-edit,clang,O3-O3: 0.033636
+make_dparser,ldecod,cpc-edit,gcc,O0-O0: -0.038906
+make_dparser,ldecod,cpc-edit,gcc,O1-O1: 0.137675
+make_dparser,ldecod,cpc-edit,gcc,O2-O2: 0.110540
+make_dparser,ldecod,cpc-edit,gcc,O3-O3: 0.098556
+diffbin, edit distance, make_dparser-lua:
+make_dparser,lua,cpc-edit,clang,O0-O0: -0.134513
+make_dparser,lua,cpc-edit,clang,O1-O1: -0.139946
+make_dparser,lua,cpc-edit,clang,O2-O2: -0.361914
+make_dparser,lua,cpc-edit,clang,O3-O3: -0.393280
+make_dparser,lua,cpc-edit,gcc,O0-O0: -0.126437
+make_dparser,lua,cpc-edit,gcc,O1-O1: -0.203869
+make_dparser,lua,cpc-edit,gcc,O2-O2: -0.241291
+make_dparser,lua,cpc-edit,gcc,O3-O3: -0.373991
+diffbin, edit distance, make_dparser-siod:
+make_dparser,siod,cpc-edit,clang,O0-O0: -0.085127
+make_dparser,siod,cpc-edit,clang,O1-O1: -0.080629
+make_dparser,siod,cpc-edit,clang,O2-O2: -0.330971
+make_dparser,siod,cpc-edit,clang,O3-O3: -0.354839
+make_dparser,siod,cpc-edit,gcc,O0-O0: -0.080156
+make_dparser,siod,cpc-edit,gcc,O1-O1: -0.194832
+make_dparser,siod,cpc-edit,gcc,O2-O2: -0.233565
+make_dparser,siod,cpc-edit,gcc,O3-O3: -0.355032
+diffbin, edit distance, make_dparser-sqlite3:
+make_dparser,sqlite3,cpc-edit,clang,O0-O0: -0.478873
+make_dparser,sqlite3,cpc-edit,clang,O1-O1: -0.480980
+make_dparser,sqlite3,cpc-edit,clang,O2-O2: -0.543232
+make_dparser,sqlite3,cpc-edit,clang,O3-O3: -0.590331
+make_dparser,sqlite3,cpc-edit,gcc,O0-O0: -0.479779
+make_dparser,sqlite3,cpc-edit,gcc,O1-O1: -0.528323
+make_dparser,sqlite3,cpc-edit,gcc,O2-O2: -0.518589
+make_dparser,sqlite3,cpc-edit,gcc,O3-O3: -0.581984
+diffbin, edit distance, make_dparser-kc:
+make_dparser,kc,cpc-edit,clang,O0-O0: -0.805102
+make_dparser,kc,cpc-edit,clang,O1-O1: -0.773782
+make_dparser,kc,cpc-edit,clang,O2-O2: -0.652823
+make_dparser,kc,cpc-edit,clang,O3-O3: -0.651086
+make_dparser,kc,cpc-edit,gcc,O0-O0: -0.800387
+make_dparser,kc,cpc-edit,gcc,O1-O1: -0.712906
+make_dparser,kc,cpc-edit,gcc,O2-O2: -0.657662
+make_dparser,kc,cpc-edit,gcc,O3-O3: -0.670082
+diffbin, edit distance, make_dparser-burg:
+make_dparser,burg,cpc-edit,clang,O0-O0: 0.245977
+make_dparser,burg,cpc-edit,clang,O1-O1: 0.251773
+make_dparser,burg,cpc-edit,clang,O2-O2: 0.338235
+make_dparser,burg,cpc-edit,clang,O3-O3: 0.340984
+make_dparser,burg,cpc-edit,gcc,O0-O0: 0.252283
+make_dparser,burg,cpc-edit,gcc,O1-O1: 0.269494
+make_dparser,burg,cpc-edit,gcc,O2-O2: 0.281792
+make_dparser,burg,cpc-edit,gcc,O3-O3: 0.268182
+diffbin, edit distance, make_dparser-oggenc:
+make_dparser,oggenc,cpc-edit,clang,O0-O0: 0.301292
+make_dparser,oggenc,cpc-edit,clang,O1-O1: 0.295530
+make_dparser,oggenc,cpc-edit,clang,O2-O2: 0.264892
+make_dparser,oggenc,cpc-edit,clang,O3-O3: 0.296748
+make_dparser,oggenc,cpc-edit,gcc,O0-O0: 0.284100
+make_dparser,oggenc,cpc-edit,gcc,O1-O1: 0.214953
+make_dparser,oggenc,cpc-edit,gcc,O2-O2: 0.236536
+make_dparser,oggenc,cpc-edit,gcc,O3-O3: 0.298893
+diffbin, edit distance, ldecod-treecc:
+ldecod,treecc,cpc-edit,clang,O0-O0: 0.330059
+ldecod,treecc,cpc-edit,clang,O1-O1: 0.340636
+ldecod,treecc,cpc-edit,clang,O2-O2: 0.320789
+ldecod,treecc,cpc-edit,clang,O3-O3: 0.321853
+ldecod,treecc,cpc-edit,gcc,O0-O0: 0.271857
+ldecod,treecc,cpc-edit,gcc,O1-O1: 0.279254
+ldecod,treecc,cpc-edit,gcc,O2-O2: 0.296491
+ldecod,treecc,cpc-edit,gcc,O3-O3: 0.226463
+diffbin, edit distance, ldecod-make_dparser:
+ldecod,make_dparser,cpc-edit,clang,O0-O0: 0.126467
+ldecod,make_dparser,cpc-edit,clang,O1-O1: 0.136087
+ldecod,make_dparser,cpc-edit,clang,O2-O2: 0.036463
+ldecod,make_dparser,cpc-edit,clang,O3-O3: 0.033636
+ldecod,make_dparser,cpc-edit,gcc,O0-O0: -0.038906
+ldecod,make_dparser,cpc-edit,gcc,O1-O1: 0.137675
+ldecod,make_dparser,cpc-edit,gcc,O2-O2: 0.110540
+ldecod,make_dparser,cpc-edit,gcc,O3-O3: 0.098556
+diffbin, edit distance, ldecod-ldecod:
+ldecod,ldecod,cpc-edit,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,cpc-edit,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,cpc-edit,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,cpc-edit,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,cpc-edit,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,cpc-edit,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,cpc-edit,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+ldecod,ldecod,cpc-edit,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin, edit distance, ldecod-lua:
+ldecod,lua,cpc-edit,clang,O0-O0: 0.207953
+ldecod,lua,cpc-edit,clang,O1-O1: 0.213643
+ldecod,lua,cpc-edit,clang,O2-O2: 0.074590
+ldecod,lua,cpc-edit,clang,O3-O3: 0.037632
+ldecod,lua,cpc-edit,gcc,O0-O0: 0.327220
+ldecod,lua,cpc-edit,gcc,O1-O1: 0.107789
+ldecod,lua,cpc-edit,gcc,O2-O2: 0.115136
+ldecod,lua,cpc-edit,gcc,O3-O3: 0.005043
+diffbin, edit distance, ldecod-siod:
+ldecod,siod,cpc-edit,clang,O0-O0: 0.230891
+ldecod,siod,cpc-edit,clang,O1-O1: 0.241776
+ldecod,siod,cpc-edit,clang,O2-O2: 0.117725
+ldecod,siod,cpc-edit,clang,O3-O3: 0.093133
+ldecod,siod,cpc-edit,gcc,O0-O0: 0.330221
+ldecod,siod,cpc-edit,gcc,O1-O1: 0.117698
+ldecod,siod,cpc-edit,gcc,O2-O2: 0.109026
+ldecod,siod,cpc-edit,gcc,O3-O3: 0.025106
+diffbin, edit distance, ldecod-sqlite3:
+ldecod,sqlite3,cpc-edit,clang,O0-O0: -0.190263
+ldecod,sqlite3,cpc-edit,clang,O1-O1: -0.186598
+ldecod,sqlite3,cpc-edit,clang,O2-O2: -0.203072
+ldecod,sqlite3,cpc-edit,clang,O3-O3: -0.248953
+ldecod,sqlite3,cpc-edit,gcc,O0-O0: -0.039362
+ldecod,sqlite3,cpc-edit,gcc,O1-O1: -0.271178
+ldecod,sqlite3,cpc-edit,gcc,O2-O2: -0.238475
+ldecod,sqlite3,cpc-edit,gcc,O3-O3: -0.290642
+diffbin, edit distance, ldecod-kc:
+ldecod,kc,cpc-edit,clang,O0-O0: -0.651455
+ldecod,kc,cpc-edit,clang,O1-O1: -0.600670
+ldecod,kc,cpc-edit,clang,O2-O2: -0.327423
+ldecod,kc,cpc-edit,clang,O3-O3: -0.322209
+ldecod,kc,cpc-edit,gcc,O0-O0: -0.532779
+ldecod,kc,cpc-edit,gcc,O1-O1: -0.527507
+ldecod,kc,cpc-edit,gcc,O2-O2: -0.429799
+ldecod,kc,cpc-edit,gcc,O3-O3: -0.408430
+diffbin, edit distance, ldecod-burg:
+ldecod,burg,cpc-edit,clang,O0-O0: -0.098446
+ldecod,burg,cpc-edit,clang,O1-O1: -0.079632
+ldecod,burg,cpc-edit,clang,O2-O2: -0.058373
+ldecod,burg,cpc-edit,clang,O3-O3: -0.062023
+ldecod,burg,cpc-edit,gcc,O0-O0: -0.253775
+ldecod,burg,cpc-edit,gcc,O1-O1: -0.034894
+ldecod,burg,cpc-edit,gcc,O2-O2: -0.023607
+ldecod,burg,cpc-edit,gcc,O3-O3: -0.075646
+diffbin, edit distance, ldecod-oggenc:
+ldecod,oggenc,cpc-edit,clang,O0-O0: 0.248982
+ldecod,oggenc,cpc-edit,clang,O1-O1: 0.257794
+ldecod,oggenc,cpc-edit,clang,O2-O2: 0.186579
+ldecod,oggenc,cpc-edit,clang,O3-O3: 0.112150
+ldecod,oggenc,cpc-edit,gcc,O0-O0: 0.132374
+ldecod,oggenc,cpc-edit,gcc,O1-O1: 0.266106
+ldecod,oggenc,cpc-edit,gcc,O2-O2: 0.242770
+ldecod,oggenc,cpc-edit,gcc,O3-O3: 0.118027
+diffbin, edit distance, lua-treecc:
+lua,treecc,cpc-edit,clang,O0-O0: 0.267560
+lua,treecc,cpc-edit,clang,O1-O1: 0.248867
+lua,treecc,cpc-edit,clang,O2-O2: 0.204413
+lua,treecc,cpc-edit,clang,O3-O3: 0.176492
+lua,treecc,cpc-edit,gcc,O0-O0: 0.267198
+lua,treecc,cpc-edit,gcc,O1-O1: 0.284992
+lua,treecc,cpc-edit,gcc,O2-O2: 0.265331
+lua,treecc,cpc-edit,gcc,O3-O3: 0.220312
+diffbin, edit distance, lua-make_dparser:
+lua,make_dparser,cpc-edit,clang,O0-O0: -0.134513
+lua,make_dparser,cpc-edit,clang,O1-O1: -0.139946
+lua,make_dparser,cpc-edit,clang,O2-O2: -0.361914
+lua,make_dparser,cpc-edit,clang,O3-O3: -0.393280
+lua,make_dparser,cpc-edit,gcc,O0-O0: -0.126437
+lua,make_dparser,cpc-edit,gcc,O1-O1: -0.203869
+lua,make_dparser,cpc-edit,gcc,O2-O2: -0.241291
+lua,make_dparser,cpc-edit,gcc,O3-O3: -0.373991
+diffbin, edit distance, lua-ldecod:
+lua,ldecod,cpc-edit,clang,O0-O0: 0.207953
+lua,ldecod,cpc-edit,clang,O1-O1: 0.213643
+lua,ldecod,cpc-edit,clang,O2-O2: 0.074590
+lua,ldecod,cpc-edit,clang,O3-O3: 0.037632
+lua,ldecod,cpc-edit,gcc,O0-O0: 0.327220
+lua,ldecod,cpc-edit,gcc,O1-O1: 0.107789
+lua,ldecod,cpc-edit,gcc,O2-O2: 0.115136
+lua,ldecod,cpc-edit,gcc,O3-O3: 0.005043
+diffbin, edit distance, lua-lua:
+lua,lua,cpc-edit,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,cpc-edit,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,cpc-edit,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,cpc-edit,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,cpc-edit,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,cpc-edit,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,cpc-edit,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+lua,lua,cpc-edit,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin, edit distance, lua-siod:
+lua,siod,cpc-edit,clang,O0-O0: 0.338868
+lua,siod,cpc-edit,clang,O1-O1: 0.345242
+lua,siod,cpc-edit,clang,O2-O2: 0.378974
+lua,siod,cpc-edit,clang,O3-O3: 0.368941
+lua,siod,cpc-edit,gcc,O0-O0: 0.340713
+lua,siod,cpc-edit,gcc,O1-O1: 0.350985
+lua,siod,cpc-edit,gcc,O2-O2: 0.360238
+lua,siod,cpc-edit,gcc,O3-O3: 0.329880
+diffbin, edit distance, lua-sqlite3:
+lua,sqlite3,cpc-edit,clang,O0-O0: 0.098784
+lua,sqlite3,cpc-edit,clang,O1-O1: 0.105389
+lua,sqlite3,cpc-edit,clang,O2-O2: 0.183718
+lua,sqlite3,cpc-edit,clang,O3-O3: 0.181066
+lua,sqlite3,cpc-edit,gcc,O0-O0: 0.093503
+lua,sqlite3,cpc-edit,gcc,O1-O1: 0.097112
+lua,sqlite3,cpc-edit,gcc,O2-O2: 0.113488
+lua,sqlite3,cpc-edit,gcc,O3-O3: 0.170379
+diffbin, edit distance, lua-kc:
+lua,kc,cpc-edit,clang,O0-O0: -0.464213
+lua,kc,cpc-edit,clang,O1-O1: -0.384507
+lua,kc,cpc-edit,clang,O2-O2: 0.031437
+lua,kc,cpc-edit,clang,O3-O3: 0.052280
+lua,kc,cpc-edit,gcc,O0-O0: -0.452994
+lua,kc,cpc-edit,gcc,O1-O1: -0.223308
+lua,kc,cpc-edit,gcc,O2-O2: -0.103293
+lua,kc,cpc-edit,gcc,O3-O3: -0.008346
+diffbin, edit distance, lua-burg:
+lua,burg,cpc-edit,clang,O0-O0: -0.378430
+lua,burg,cpc-edit,clang,O1-O1: -0.373589
+lua,burg,cpc-edit,clang,O2-O2: -0.449335
+lua,burg,cpc-edit,clang,O3-O3: -0.478409
+lua,burg,cpc-edit,gcc,O0-O0: -0.367435
+lua,burg,cpc-edit,gcc,O1-O1: -0.391649
+lua,burg,cpc-edit,gcc,O2-O2: -0.398590
+lua,burg,cpc-edit,gcc,O3-O3: -0.513502
+diffbin, edit distance, lua-oggenc:
+lua,oggenc,cpc-edit,clang,O0-O0: 0.019223
+lua,oggenc,cpc-edit,clang,O1-O1: 0.027095
+lua,oggenc,cpc-edit,clang,O2-O2: -0.220084
+lua,oggenc,cpc-edit,clang,O3-O3: -0.318410
+lua,oggenc,cpc-edit,gcc,O0-O0: 0.015133
+lua,oggenc,cpc-edit,gcc,O1-O1: 0.017481
+lua,oggenc,cpc-edit,gcc,O2-O2: -0.070476
+lua,oggenc,cpc-edit,gcc,O3-O3: -0.321725
+diffbin, edit distance, siod-treecc:
+siod,treecc,cpc-edit,clang,O0-O0: 0.307541
+siod,treecc,cpc-edit,clang,O1-O1: 0.279436
+siod,treecc,cpc-edit,clang,O2-O2: 0.320199
+siod,treecc,cpc-edit,clang,O3-O3: 0.332121
+siod,treecc,cpc-edit,gcc,O0-O0: 0.304399
+siod,treecc,cpc-edit,gcc,O1-O1: 0.268165
+siod,treecc,cpc-edit,gcc,O2-O2: 0.246479
+siod,treecc,cpc-edit,gcc,O3-O3: 0.256940
+diffbin, edit distance, siod-make_dparser:
+siod,make_dparser,cpc-edit,clang,O0-O0: -0.085127
+siod,make_dparser,cpc-edit,clang,O1-O1: -0.080629
+siod,make_dparser,cpc-edit,clang,O2-O2: -0.330971
+siod,make_dparser,cpc-edit,clang,O3-O3: -0.354839
+siod,make_dparser,cpc-edit,gcc,O0-O0: -0.080156
+siod,make_dparser,cpc-edit,gcc,O1-O1: -0.194832
+siod,make_dparser,cpc-edit,gcc,O2-O2: -0.233565
+siod,make_dparser,cpc-edit,gcc,O3-O3: -0.355032
+diffbin, edit distance, siod-ldecod:
+siod,ldecod,cpc-edit,clang,O0-O0: 0.230891
+siod,ldecod,cpc-edit,clang,O1-O1: 0.241776
+siod,ldecod,cpc-edit,clang,O2-O2: 0.117725
+siod,ldecod,cpc-edit,clang,O3-O3: 0.093133
+siod,ldecod,cpc-edit,gcc,O0-O0: 0.330221
+siod,ldecod,cpc-edit,gcc,O1-O1: 0.117698
+siod,ldecod,cpc-edit,gcc,O2-O2: 0.109026
+siod,ldecod,cpc-edit,gcc,O3-O3: 0.025106
+diffbin, edit distance, siod-lua:
+siod,lua,cpc-edit,clang,O0-O0: 0.338868
+siod,lua,cpc-edit,clang,O1-O1: 0.345242
+siod,lua,cpc-edit,clang,O2-O2: 0.378974
+siod,lua,cpc-edit,clang,O3-O3: 0.368941
+siod,lua,cpc-edit,gcc,O0-O0: 0.340713
+siod,lua,cpc-edit,gcc,O1-O1: 0.350985
+siod,lua,cpc-edit,gcc,O2-O2: 0.360238
+siod,lua,cpc-edit,gcc,O3-O3: 0.329880
+diffbin, edit distance, siod-siod:
+siod,siod,cpc-edit,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,cpc-edit,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,cpc-edit,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,cpc-edit,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,cpc-edit,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,cpc-edit,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,cpc-edit,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+siod,siod,cpc-edit,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin, edit distance, siod-sqlite3:
+siod,sqlite3,cpc-edit,clang,O0-O0: 0.067445
+siod,sqlite3,cpc-edit,clang,O1-O1: 0.071980
+siod,sqlite3,cpc-edit,clang,O2-O2: 0.126503
+siod,sqlite3,cpc-edit,clang,O3-O3: 0.136946
+siod,sqlite3,cpc-edit,gcc,O0-O0: 0.070408
+siod,sqlite3,cpc-edit,gcc,O1-O1: 0.117762
+siod,sqlite3,cpc-edit,gcc,O2-O2: 0.123518
+siod,sqlite3,cpc-edit,gcc,O3-O3: 0.172784
+diffbin, edit distance, siod-kc:
+siod,kc,cpc-edit,clang,O0-O0: -0.486437
+siod,kc,cpc-edit,clang,O1-O1: -0.417941
+siod,kc,cpc-edit,clang,O2-O2: 0.010713
+siod,kc,cpc-edit,clang,O3-O3: 0.010481
+siod,kc,cpc-edit,gcc,O0-O0: -0.477086
+siod,kc,cpc-edit,gcc,O1-O1: -0.222731
+siod,kc,cpc-edit,gcc,O2-O2: -0.092768
+siod,kc,cpc-edit,gcc,O3-O3: -0.005169
+diffbin, edit distance, siod-burg:
+siod,burg,cpc-edit,clang,O0-O0: -0.299839
+siod,burg,cpc-edit,clang,O1-O1: -0.286349
+siod,burg,cpc-edit,clang,O2-O2: -0.400112
+siod,burg,cpc-edit,clang,O3-O3: -0.421968
+siod,burg,cpc-edit,gcc,O0-O0: -0.294212
+siod,burg,cpc-edit,gcc,O1-O1: -0.357261
+siod,burg,cpc-edit,gcc,O2-O2: -0.361316
+siod,burg,cpc-edit,gcc,O3-O3: -0.465734
+diffbin, edit distance, siod-oggenc:
+siod,oggenc,cpc-edit,clang,O0-O0: 0.046658
+siod,oggenc,cpc-edit,clang,O1-O1: 0.058715
+siod,oggenc,cpc-edit,clang,O2-O2: -0.220010
+siod,oggenc,cpc-edit,clang,O3-O3: -0.306911
+siod,oggenc,cpc-edit,gcc,O0-O0: 0.045312
+siod,oggenc,cpc-edit,gcc,O1-O1: 0.013023
+siod,oggenc,cpc-edit,gcc,O2-O2: -0.076313
+siod,oggenc,cpc-edit,gcc,O3-O3: -0.321348
+diffbin, edit distance, sqlite3-treecc:
+sqlite3,treecc,cpc-edit,clang,O0-O0: -0.161456
+sqlite3,treecc,cpc-edit,clang,O1-O1: -0.183964
+sqlite3,treecc,cpc-edit,clang,O2-O2: -0.155386
+sqlite3,treecc,cpc-edit,clang,O3-O3: -0.128487
+sqlite3,treecc,cpc-edit,gcc,O0-O0: -0.162017
+sqlite3,treecc,cpc-edit,gcc,O1-O1: -0.129270
+sqlite3,treecc,cpc-edit,gcc,O2-O2: -0.134959
+sqlite3,treecc,cpc-edit,gcc,O3-O3: -0.147434
+diffbin, edit distance, sqlite3-make_dparser:
+sqlite3,make_dparser,cpc-edit,clang,O0-O0: -0.478873
+sqlite3,make_dparser,cpc-edit,clang,O1-O1: -0.480980
+sqlite3,make_dparser,cpc-edit,clang,O2-O2: -0.543232
+sqlite3,make_dparser,cpc-edit,clang,O3-O3: -0.590331
+sqlite3,make_dparser,cpc-edit,gcc,O0-O0: -0.479779
+sqlite3,make_dparser,cpc-edit,gcc,O1-O1: -0.528323
+sqlite3,make_dparser,cpc-edit,gcc,O2-O2: -0.518589
+sqlite3,make_dparser,cpc-edit,gcc,O3-O3: -0.581984
+diffbin, edit distance, sqlite3-ldecod:
+sqlite3,ldecod,cpc-edit,clang,O0-O0: -0.190263
+sqlite3,ldecod,cpc-edit,clang,O1-O1: -0.186598
+sqlite3,ldecod,cpc-edit,clang,O2-O2: -0.203072
+sqlite3,ldecod,cpc-edit,clang,O3-O3: -0.248953
+sqlite3,ldecod,cpc-edit,gcc,O0-O0: -0.039362
+sqlite3,ldecod,cpc-edit,gcc,O1-O1: -0.271178
+sqlite3,ldecod,cpc-edit,gcc,O2-O2: -0.238475
+sqlite3,ldecod,cpc-edit,gcc,O3-O3: -0.290642
+diffbin, edit distance, sqlite3-lua:
+sqlite3,lua,cpc-edit,clang,O0-O0: 0.098784
+sqlite3,lua,cpc-edit,clang,O1-O1: 0.105389
+sqlite3,lua,cpc-edit,clang,O2-O2: 0.183718
+sqlite3,lua,cpc-edit,clang,O3-O3: 0.181066
+sqlite3,lua,cpc-edit,gcc,O0-O0: 0.093503
+sqlite3,lua,cpc-edit,gcc,O1-O1: 0.097112
+sqlite3,lua,cpc-edit,gcc,O2-O2: 0.113488
+sqlite3,lua,cpc-edit,gcc,O3-O3: 0.170379
+diffbin, edit distance, sqlite3-siod:
+sqlite3,siod,cpc-edit,clang,O0-O0: 0.067445
+sqlite3,siod,cpc-edit,clang,O1-O1: 0.071980
+sqlite3,siod,cpc-edit,clang,O2-O2: 0.126503
+sqlite3,siod,cpc-edit,clang,O3-O3: 0.136946
+sqlite3,siod,cpc-edit,gcc,O0-O0: 0.070408
+sqlite3,siod,cpc-edit,gcc,O1-O1: 0.117762
+sqlite3,siod,cpc-edit,gcc,O2-O2: 0.123518
+sqlite3,siod,cpc-edit,gcc,O3-O3: 0.172784
+diffbin, edit distance, sqlite3-sqlite3:
+sqlite3,sqlite3,cpc-edit,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,cpc-edit,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,cpc-edit,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,cpc-edit,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,cpc-edit,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,cpc-edit,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,cpc-edit,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+sqlite3,sqlite3,cpc-edit,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin, edit distance, sqlite3-kc:
+sqlite3,kc,cpc-edit,clang,O0-O0: -0.157536
+sqlite3,kc,cpc-edit,clang,O1-O1: -0.069860
+sqlite3,kc,cpc-edit,clang,O2-O2: 0.143786
+sqlite3,kc,cpc-edit,clang,O3-O3: 0.226671
+sqlite3,kc,cpc-edit,gcc,O0-O0: -0.139593
+sqlite3,kc,cpc-edit,gcc,O1-O1: 0.056626
+sqlite3,kc,cpc-edit,gcc,O2-O2: 0.109301
+sqlite3,kc,cpc-edit,gcc,O3-O3: 0.162755
+diffbin, edit distance, sqlite3-burg:
+sqlite3,burg,cpc-edit,clang,O0-O0: -0.654100
+sqlite3,burg,cpc-edit,clang,O1-O1: -0.648759
+sqlite3,burg,cpc-edit,clang,O2-O2: -0.610469
+sqlite3,burg,cpc-edit,clang,O3-O3: -0.652652
+sqlite3,burg,cpc-edit,gcc,O0-O0: -0.649566
+sqlite3,burg,cpc-edit,gcc,O1-O1: -0.655060
+sqlite3,burg,cpc-edit,gcc,O2-O2: -0.631129
+sqlite3,burg,cpc-edit,gcc,O3-O3: -0.678050
+diffbin, edit distance, sqlite3-oggenc:
+sqlite3,oggenc,cpc-edit,clang,O0-O0: -0.346792
+sqlite3,oggenc,cpc-edit,clang,O1-O1: -0.335815
+sqlite3,oggenc,cpc-edit,clang,O2-O2: -0.435697
+sqlite3,oggenc,cpc-edit,clang,O3-O3: -0.534617
+sqlite3,oggenc,cpc-edit,gcc,O0-O0: -0.349664
+sqlite3,oggenc,cpc-edit,gcc,O1-O1: -0.350590
+sqlite3,oggenc,cpc-edit,gcc,O2-O2: -0.380880
+sqlite3,oggenc,cpc-edit,gcc,O3-O3: -0.535624
+diffbin, edit distance, kc-treecc:
+kc,treecc,cpc-edit,clang,O0-O0: -0.640931
+kc,treecc,cpc-edit,clang,O1-O1: -0.601430
+kc,treecc,cpc-edit,clang,O2-O2: -0.242958
+kc,treecc,cpc-edit,clang,O3-O3: -0.233831
+kc,treecc,cpc-edit,gcc,O0-O0: -0.632580
+kc,treecc,cpc-edit,gcc,O1-O1: -0.410974
+kc,treecc,cpc-edit,gcc,O2-O2: -0.315885
+kc,treecc,cpc-edit,gcc,O3-O3: -0.230502
+diffbin, edit distance, kc-make_dparser:
+kc,make_dparser,cpc-edit,clang,O0-O0: -0.805102
+kc,make_dparser,cpc-edit,clang,O1-O1: -0.773782
+kc,make_dparser,cpc-edit,clang,O2-O2: -0.652823
+kc,make_dparser,cpc-edit,clang,O3-O3: -0.651086
+kc,make_dparser,cpc-edit,gcc,O0-O0: -0.800387
+kc,make_dparser,cpc-edit,gcc,O1-O1: -0.712906
+kc,make_dparser,cpc-edit,gcc,O2-O2: -0.657662
+kc,make_dparser,cpc-edit,gcc,O3-O3: -0.670082
+diffbin, edit distance, kc-ldecod:
+kc,ldecod,cpc-edit,clang,O0-O0: -0.651455
+kc,ldecod,cpc-edit,clang,O1-O1: -0.600670
+kc,ldecod,cpc-edit,clang,O2-O2: -0.327423
+kc,ldecod,cpc-edit,clang,O3-O3: -0.322209
+kc,ldecod,cpc-edit,gcc,O0-O0: -0.532779
+kc,ldecod,cpc-edit,gcc,O1-O1: -0.527507
+kc,ldecod,cpc-edit,gcc,O2-O2: -0.429799
+kc,ldecod,cpc-edit,gcc,O3-O3: -0.408430
+diffbin, edit distance, kc-lua:
+kc,lua,cpc-edit,clang,O0-O0: -0.464213
+kc,lua,cpc-edit,clang,O1-O1: -0.384507
+kc,lua,cpc-edit,clang,O2-O2: 0.031437
+kc,lua,cpc-edit,clang,O3-O3: 0.052280
+kc,lua,cpc-edit,gcc,O0-O0: -0.452994
+kc,lua,cpc-edit,gcc,O1-O1: -0.223308
+kc,lua,cpc-edit,gcc,O2-O2: -0.103293
+kc,lua,cpc-edit,gcc,O3-O3: -0.008346
+diffbin, edit distance, kc-siod:
+kc,siod,cpc-edit,clang,O0-O0: -0.486437
+kc,siod,cpc-edit,clang,O1-O1: -0.417941
+kc,siod,cpc-edit,clang,O2-O2: 0.010713
+kc,siod,cpc-edit,clang,O3-O3: 0.010481
+kc,siod,cpc-edit,gcc,O0-O0: -0.477086
+kc,siod,cpc-edit,gcc,O1-O1: -0.222731
+kc,siod,cpc-edit,gcc,O2-O2: -0.092768
+kc,siod,cpc-edit,gcc,O3-O3: -0.005169
+diffbin, edit distance, kc-sqlite3:
+kc,sqlite3,cpc-edit,clang,O0-O0: -0.157536
+kc,sqlite3,cpc-edit,clang,O1-O1: -0.069860
+kc,sqlite3,cpc-edit,clang,O2-O2: 0.143786
+kc,sqlite3,cpc-edit,clang,O3-O3: 0.226671
+kc,sqlite3,cpc-edit,gcc,O0-O0: -0.139593
+kc,sqlite3,cpc-edit,gcc,O1-O1: 0.056626
+kc,sqlite3,cpc-edit,gcc,O2-O2: 0.109301
+kc,sqlite3,cpc-edit,gcc,O3-O3: 0.162755
+diffbin, edit distance, kc-kc:
+kc,kc,cpc-edit,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,cpc-edit,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,cpc-edit,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,cpc-edit,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,cpc-edit,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,cpc-edit,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,cpc-edit,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+kc,kc,cpc-edit,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin, edit distance, kc-burg:
+kc,burg,cpc-edit,clang,O0-O0: -0.867910
+kc,burg,cpc-edit,clang,O1-O1: -0.843217
+kc,burg,cpc-edit,clang,O2-O2: -0.693833
+kc,burg,cpc-edit,clang,O3-O3: -0.692608
+kc,burg,cpc-edit,gcc,O0-O0: -0.863516
+kc,burg,cpc-edit,gcc,O1-O1: -0.783881
+kc,burg,cpc-edit,gcc,O2-O2: -0.730044
+kc,burg,cpc-edit,gcc,O3-O3: -0.737846
+diffbin, edit distance, kc-oggenc:
+kc,oggenc,cpc-edit,clang,O0-O0: -0.744754
+kc,oggenc,cpc-edit,clang,O1-O1: -0.699521
+kc,oggenc,cpc-edit,clang,O2-O2: -0.552901
+kc,oggenc,cpc-edit,clang,O3-O3: -0.596283
+kc,oggenc,cpc-edit,gcc,O0-O0: -0.739234
+kc,oggenc,cpc-edit,gcc,O1-O1: -0.593570
+kc,oggenc,cpc-edit,gcc,O2-O2: -0.550747
+kc,oggenc,cpc-edit,gcc,O3-O3: -0.628931
+diffbin, edit distance, burg-treecc:
+burg,treecc,cpc-edit,clang,O0-O0: -0.149417
+burg,treecc,cpc-edit,clang,O1-O1: -0.120529
+burg,treecc,cpc-edit,clang,O2-O2: -0.202862
+burg,treecc,cpc-edit,clang,O3-O3: -0.208543
+burg,treecc,cpc-edit,gcc,O0-O0: -0.112645
+burg,treecc,cpc-edit,gcc,O1-O1: -0.192696
+burg,treecc,cpc-edit,gcc,O2-O2: -0.203239
+burg,treecc,cpc-edit,gcc,O3-O3: -0.332873
+diffbin, edit distance, burg-make_dparser:
+burg,make_dparser,cpc-edit,clang,O0-O0: 0.245977
+burg,make_dparser,cpc-edit,clang,O1-O1: 0.251773
+burg,make_dparser,cpc-edit,clang,O2-O2: 0.338235
+burg,make_dparser,cpc-edit,clang,O3-O3: 0.340984
+burg,make_dparser,cpc-edit,gcc,O0-O0: 0.252283
+burg,make_dparser,cpc-edit,gcc,O1-O1: 0.269494
+burg,make_dparser,cpc-edit,gcc,O2-O2: 0.281792
+burg,make_dparser,cpc-edit,gcc,O3-O3: 0.268182
+diffbin, edit distance, burg-ldecod:
+burg,ldecod,cpc-edit,clang,O0-O0: -0.098446
+burg,ldecod,cpc-edit,clang,O1-O1: -0.079632
+burg,ldecod,cpc-edit,clang,O2-O2: -0.058373
+burg,ldecod,cpc-edit,clang,O3-O3: -0.062023
+burg,ldecod,cpc-edit,gcc,O0-O0: -0.253775
+burg,ldecod,cpc-edit,gcc,O1-O1: -0.034894
+burg,ldecod,cpc-edit,gcc,O2-O2: -0.023607
+burg,ldecod,cpc-edit,gcc,O3-O3: -0.075646
+diffbin, edit distance, burg-lua:
+burg,lua,cpc-edit,clang,O0-O0: -0.378430
+burg,lua,cpc-edit,clang,O1-O1: -0.373589
+burg,lua,cpc-edit,clang,O2-O2: -0.449335
+burg,lua,cpc-edit,clang,O3-O3: -0.478409
+burg,lua,cpc-edit,gcc,O0-O0: -0.367435
+burg,lua,cpc-edit,gcc,O1-O1: -0.391649
+burg,lua,cpc-edit,gcc,O2-O2: -0.398590
+burg,lua,cpc-edit,gcc,O3-O3: -0.513502
+diffbin, edit distance, burg-siod:
+burg,siod,cpc-edit,clang,O0-O0: -0.299839
+burg,siod,cpc-edit,clang,O1-O1: -0.286349
+burg,siod,cpc-edit,clang,O2-O2: -0.400112
+burg,siod,cpc-edit,clang,O3-O3: -0.421968
+burg,siod,cpc-edit,gcc,O0-O0: -0.294212
+burg,siod,cpc-edit,gcc,O1-O1: -0.357261
+burg,siod,cpc-edit,gcc,O2-O2: -0.361316
+burg,siod,cpc-edit,gcc,O3-O3: -0.465734
+diffbin, edit distance, burg-sqlite3:
+burg,sqlite3,cpc-edit,clang,O0-O0: -0.654100
+burg,sqlite3,cpc-edit,clang,O1-O1: -0.648759
+burg,sqlite3,cpc-edit,clang,O2-O2: -0.610469
+burg,sqlite3,cpc-edit,clang,O3-O3: -0.652652
+burg,sqlite3,cpc-edit,gcc,O0-O0: -0.649566
+burg,sqlite3,cpc-edit,gcc,O1-O1: -0.655060
+burg,sqlite3,cpc-edit,gcc,O2-O2: -0.631129
+burg,sqlite3,cpc-edit,gcc,O3-O3: -0.678050
+diffbin, edit distance, burg-kc:
+burg,kc,cpc-edit,clang,O0-O0: -0.867910
+burg,kc,cpc-edit,clang,O1-O1: -0.843217
+burg,kc,cpc-edit,clang,O2-O2: -0.693833
+burg,kc,cpc-edit,clang,O3-O3: -0.692608
+burg,kc,cpc-edit,gcc,O0-O0: -0.863516
+burg,kc,cpc-edit,gcc,O1-O1: -0.783881
+burg,kc,cpc-edit,gcc,O2-O2: -0.730044
+burg,kc,cpc-edit,gcc,O3-O3: -0.737846
+diffbin, edit distance, burg-burg:
+burg,burg,cpc-edit,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,cpc-edit,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,cpc-edit,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,cpc-edit,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,cpc-edit,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,cpc-edit,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,cpc-edit,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+burg,burg,cpc-edit,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+diffbin, edit distance, burg-oggenc:
+burg,oggenc,cpc-edit,clang,O0-O0: 0.080569
+burg,oggenc,cpc-edit,clang,O1-O1: 0.078110
+burg,oggenc,cpc-edit,clang,O2-O2: 0.139756
+burg,oggenc,cpc-edit,clang,O3-O3: 0.196793
+burg,oggenc,cpc-edit,gcc,O0-O0: 0.079320
+burg,oggenc,cpc-edit,gcc,O1-O1: 0.085624
+burg,oggenc,cpc-edit,gcc,O2-O2: 0.132300
+burg,oggenc,cpc-edit,gcc,O3-O3: 0.193056
+diffbin, edit distance, oggenc-treecc:
+oggenc,treecc,cpc-edit,clang,O0-O0: 0.212069
+oggenc,treecc,cpc-edit,clang,O1-O1: 0.254248
+oggenc,treecc,cpc-edit,clang,O2-O2: 0.021245
+oggenc,treecc,cpc-edit,clang,O3-O3: -0.059002
+oggenc,treecc,cpc-edit,gcc,O0-O0: 0.212191
+oggenc,treecc,cpc-edit,gcc,O1-O1: 0.180812
+oggenc,treecc,cpc-edit,gcc,O2-O2: 0.106040
+oggenc,treecc,cpc-edit,gcc,O3-O3: -0.153029
+diffbin, edit distance, oggenc-make_dparser:
+oggenc,make_dparser,cpc-edit,clang,O0-O0: 0.301292
+oggenc,make_dparser,cpc-edit,clang,O1-O1: 0.295530
+oggenc,make_dparser,cpc-edit,clang,O2-O2: 0.264892
+oggenc,make_dparser,cpc-edit,clang,O3-O3: 0.296748
+oggenc,make_dparser,cpc-edit,gcc,O0-O0: 0.284100
+oggenc,make_dparser,cpc-edit,gcc,O1-O1: 0.214953
+oggenc,make_dparser,cpc-edit,gcc,O2-O2: 0.236536
+oggenc,make_dparser,cpc-edit,gcc,O3-O3: 0.298893
+diffbin, edit distance, oggenc-ldecod:
+oggenc,ldecod,cpc-edit,clang,O0-O0: 0.248982
+oggenc,ldecod,cpc-edit,clang,O1-O1: 0.257794
+oggenc,ldecod,cpc-edit,clang,O2-O2: 0.186579
+oggenc,ldecod,cpc-edit,clang,O3-O3: 0.112150
+oggenc,ldecod,cpc-edit,gcc,O0-O0: 0.132374
+oggenc,ldecod,cpc-edit,gcc,O1-O1: 0.266106
+oggenc,ldecod,cpc-edit,gcc,O2-O2: 0.242770
+oggenc,ldecod,cpc-edit,gcc,O3-O3: 0.118027
+diffbin, edit distance, oggenc-lua:
+oggenc,lua,cpc-edit,clang,O0-O0: 0.019223
+oggenc,lua,cpc-edit,clang,O1-O1: 0.027095
+oggenc,lua,cpc-edit,clang,O2-O2: -0.220084
+oggenc,lua,cpc-edit,clang,O3-O3: -0.318410
+oggenc,lua,cpc-edit,gcc,O0-O0: 0.015133
+oggenc,lua,cpc-edit,gcc,O1-O1: 0.017481
+oggenc,lua,cpc-edit,gcc,O2-O2: -0.070476
+oggenc,lua,cpc-edit,gcc,O3-O3: -0.321725
+diffbin, edit distance, oggenc-siod:
+oggenc,siod,cpc-edit,clang,O0-O0: 0.046658
+oggenc,siod,cpc-edit,clang,O1-O1: 0.058715
+oggenc,siod,cpc-edit,clang,O2-O2: -0.220010
+oggenc,siod,cpc-edit,clang,O3-O3: -0.306911
+oggenc,siod,cpc-edit,gcc,O0-O0: 0.045312
+oggenc,siod,cpc-edit,gcc,O1-O1: 0.013023
+oggenc,siod,cpc-edit,gcc,O2-O2: -0.076313
+oggenc,siod,cpc-edit,gcc,O3-O3: -0.321348
+diffbin, edit distance, oggenc-sqlite3:
+oggenc,sqlite3,cpc-edit,clang,O0-O0: -0.346792
+oggenc,sqlite3,cpc-edit,clang,O1-O1: -0.335815
+oggenc,sqlite3,cpc-edit,clang,O2-O2: -0.435697
+oggenc,sqlite3,cpc-edit,clang,O3-O3: -0.534617
+oggenc,sqlite3,cpc-edit,gcc,O0-O0: -0.349664
+oggenc,sqlite3,cpc-edit,gcc,O1-O1: -0.350590
+oggenc,sqlite3,cpc-edit,gcc,O2-O2: -0.380880
+oggenc,sqlite3,cpc-edit,gcc,O3-O3: -0.535624
+diffbin, edit distance, oggenc-kc:
+oggenc,kc,cpc-edit,clang,O0-O0: -0.744754
+oggenc,kc,cpc-edit,clang,O1-O1: -0.699521
+oggenc,kc,cpc-edit,clang,O2-O2: -0.552901
+oggenc,kc,cpc-edit,clang,O3-O3: -0.596283
+oggenc,kc,cpc-edit,gcc,O0-O0: -0.739234
+oggenc,kc,cpc-edit,gcc,O1-O1: -0.593570
+oggenc,kc,cpc-edit,gcc,O2-O2: -0.550747
+oggenc,kc,cpc-edit,gcc,O3-O3: -0.628931
+diffbin, edit distance, oggenc-burg:
+oggenc,burg,cpc-edit,clang,O0-O0: 0.080569
+oggenc,burg,cpc-edit,clang,O1-O1: 0.078110
+oggenc,burg,cpc-edit,clang,O2-O2: 0.139756
+oggenc,burg,cpc-edit,clang,O3-O3: 0.196793
+oggenc,burg,cpc-edit,gcc,O0-O0: 0.079320
+oggenc,burg,cpc-edit,gcc,O1-O1: 0.085624
+oggenc,burg,cpc-edit,gcc,O2-O2: 0.132300
+oggenc,burg,cpc-edit,gcc,O3-O3: 0.193056
+diffbin, edit distance, oggenc-oggenc:
+oggenc,oggenc,cpc-edit,clang,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,cpc-edit,clang,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,cpc-edit,clang,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,cpc-edit,clang,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,cpc-edit,gcc,O0-O0: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,cpc-edit,gcc,O1-O1: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,cpc-edit,gcc,O2-O2: 1.000000
+1.000000
+1.000000
+1.000000
+oggenc,oggenc,cpc-edit,gcc,O3-O3: 1.000000
+1.000000
+1.000000
+1.000000
