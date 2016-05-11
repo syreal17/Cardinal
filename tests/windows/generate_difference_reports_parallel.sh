@@ -2,12 +2,14 @@
 
 #copy passed in sample names                                                    
 samples=""  
-testee=""                                                                    
+testee=""
+testee_found=0                                                                 
 for var in "$@"                                                                 
 do       
-		if [ $testee = ""] 
+		if [ $testee_found -eq 0 ] 
 		then
-			testee=$var
+			testee="$var"
+			testee_found=1
 		else
 			samples="$samples $var"
 		fi
