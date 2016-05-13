@@ -14,16 +14,20 @@ from pybloom import BloomFilter
 
 
 def to_bloom(filename):
+    c = 0
     with open(filename, 'r') as f:
         b = BloomFilter(capacity=1000, error_rate=0.001)
 
         for line in f:
             if line != "":
                 b.add(line)
+                c += 1
 
         new_filename = filename + ".bloom"
         out_f = open(new_filename, 'wb')
         b.tofile(out_f)
+        #print("Count: %d" % c)
+        #print("bits: %d" % b.bitarray.count(True) )
 
 
 if __name__ == '__main__':

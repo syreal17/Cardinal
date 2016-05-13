@@ -1199,7 +1199,10 @@ if __name__ == '__main__':
     for head in Heads(SegStart(ea), SegEnd(ea)):
         #print("%x" % head)
         if head > func_ea_list[f]:
-            addr_chain.append(sep)
+            if NAME_DEBUG:
+                addr_chain.append(func_name_list[f]+sep)
+            else:
+                addr_chain.append(sep)
             context.caller_init_regs()
             #cpc_chain += sep
             # if NAME_DEBUG:
@@ -1406,8 +1409,9 @@ if __name__ == '__main__':
             cpc_dict[ea] = callee_cpcspl
 
     for i in addr_chain:
-        if i == sep:
-            cpc_chain += sep
+        if sep in str(i):
+        #if i == sep:
+            cpc_chain += i
         else:
             cpc_chain += str(cpc_dict[i])
 
