@@ -23,26 +23,26 @@ then
 fi
 
 n=$RANDOM
-find ../../../corpora/ -wholename */$1.*$2*.$3.feature.bloom -exec /cygdrive/c/Python27/python.exe ../../dev/similarity/bloom-jaccard/bloom_jaccard_ind.py {} + > report.$n.txt
+find ../../../corpora/ -wholename */$1.*$2*.$3.feature.bloom -exec python ../../dev/similarity/bloom-jaccard/bloom_jaccard_ind.py {} + > report.$1.$2.$3.txt
 
 printf "isocomp, $1-$2-$3:\n" 
 
 printf "$1,$2,$3-bloom,O0-O1: "
-grep "o0.*o1.*$" report.$n.txt | cut -d " " -f 3
+grep "o0.*o1.*$" report.$1.$2.$3.txt | cut -d " " -f 3
 
 printf "$1,$2,$3-bloom,O0-O2: "
-grep "o0.*o2.*$" report.$n.txt | cut -d " " -f 3
+grep "o0.*o2.*$" report.$1.$2.$3.txt | cut -d " " -f 3
 
 printf "$1,$2,$3-bloom,O0-O3: "
-grep "o0.*o3.*$" report.$n.txt | cut -d " " -f 3
+grep "o0.*o3.*$" report.$1.$2.$3.txt | cut -d " " -f 3
 
 printf "$1,$2,$3-bloom,O1-O2: "
-grep "o1.*o2.*$" report.$n.txt | cut -d " " -f 3
+grep "o1.*o2.*$" report.$1.$2.$3.txt | cut -d " " -f 3
 
 printf "$1,$2,$3-bloom,O1-O3: "
-grep "o1.*o3.*$" report.$n.txt | cut -d " " -f 3
+grep "o1.*o3.*$" report.$1.$2.$3.txt | cut -d " " -f 3
 
 printf "$1,$2,$3-bloom,O2-O3: "
-grep "o2.*o3.*$" report.$n.txt | cut -d " " -f 3
+grep "o2.*o3.*$" report.$1.$2.$3.txt | cut -d " " -f 3
 
-rm report.$n.txt
+rm report.$1.$2.$3.txt

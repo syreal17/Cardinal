@@ -6,7 +6,7 @@ get_result () {
 	opt=$3
 	sample=$4
 	sample2=$5
-	grep "^$sample,$sample2,$meth,$opt" multi_sample_96_just_diff.report | cut -d " " -f 2 |\
+	grep "^$sample,$sample2,$meth,$opt" multi_sample.report | cut -d " " -f 2 |\
  awk '{printf("%s",$0);}' >> $file
 	printf " " >> $file
 }
