@@ -1,0 +1,9 @@
+accuracy, treecc
+treecc,clang,O0: 0.790476 105
+treecc,clang,O1: 0.809524 105
+treecc,clang,O2: 0.817308 104
+treecc,clang,O3: 0.809524 105
+treecc,gcc,O0: 0.790476 105
+treecc,gcc,O1: 0.771429 105
+treecc,gcc,O2: 0.831461 89
+treecc,gcc,O3: 0.829545 88

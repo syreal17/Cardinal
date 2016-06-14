@@ -1,0 +1,9 @@
+accuracy, make_dparser
+make_dparser,clang,O0: 0.958333 96
+make_dparser,clang,O1: 0.927083 96
+make_dparser,clang,O2: 0.937500 96
+make_dparser,clang,O3: 0.937500 96
+make_dparser,gcc,O0: 0.958333 96
+make_dparser,gcc,O1: 0.937500 96
+make_dparser,gcc,O2: 0.911111 90
+make_dparser,gcc,O3: 0.931818 88

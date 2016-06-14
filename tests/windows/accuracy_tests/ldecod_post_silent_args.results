@@ -1,0 +1,9 @@
+accuracy, ldecod
+ldecod,clang,O0: 0.949772 219
+ldecod,clang,O1: 0.771689 219
+ldecod,clang,O2: 0.762557 219
+ldecod,clang,O3: 0.762557 219
+ldecod,gcc,O0: 0.954338 219
+ldecod,gcc,O1: 0.753425 219
+ldecod,gcc,O2: 0.759259 216
+ldecod,gcc,O3: 0.743842 203

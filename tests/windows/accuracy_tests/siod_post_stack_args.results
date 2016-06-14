@@ -1,0 +1,9 @@
+accuracy, siod
+siod,clang,O0: 0.959732 149
+siod,clang,O1: 0.973154 149
+siod,clang,O2: 0.979730 148
+siod,clang,O3: 0.979866 149
+siod,gcc,O0: 0.959732 149
+siod,gcc,O1: 0.973154 149
+siod,gcc,O2: 0.965986 147
+siod,gcc,O3: 0.964029 139

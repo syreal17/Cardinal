@@ -1,0 +1,9 @@
+accuracy, burg
+burg,clang,O0: 1.000000 94
+burg,clang,O1: 0.978723 94
+burg,clang,O2: 0.968085 94
+burg,clang,O3: 0.978723 94
+burg,gcc,O0: 0.914894 94
+burg,gcc,O1: 0.989362 94
+burg,gcc,O2: 0.988764 89
+burg,gcc,O3: 0.988636 88

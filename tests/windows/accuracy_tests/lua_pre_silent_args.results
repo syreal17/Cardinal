@@ -1,0 +1,9 @@
+accuracy, lua
+lua,clang,O0: 0.979079 239
+lua,clang,O1: 0.753138 239
+lua,clang,O2: 0.886076 237
+lua,clang,O3: 0.887029 239
+lua,gcc,O0: 0.979079 239
+lua,gcc,O1: 0.772152 237
+lua,gcc,O2: 0.730769 234
+lua,gcc,O3: 0.860465 215

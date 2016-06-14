@@ -1,0 +1,9 @@
+accuracy, oggenc
+oggenc,clang,O0: 0.870690 116
+oggenc,clang,O1: 0.879310 116
+oggenc,clang,O2: 0.869565 115
+oggenc,clang,O3: 0.887931 116
+oggenc,gcc,O0: 0.870690 116
+oggenc,gcc,O1: 0.868421 114
+oggenc,gcc,O2: 0.910891 101
+oggenc,gcc,O3: 0.918605 86
