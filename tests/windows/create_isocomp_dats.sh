@@ -6,7 +6,7 @@ get_result () {
 	comp=$2
 	meth=$3
 	iso=$4
-	grep "$sample,$comp,$meth,$iso" multi_sample.report | cut -d " " -f 2 | \
+	grep "^$sample,$comp,$meth,$iso" multi_sample.report | cut -d " " -f 2 | \
 awk '{printf("%s",$0);}' >> $file
 	printf " " >> $file
 }
@@ -37,7 +37,9 @@ get_dat () {
 
 get_dat plots/iso.clang.cpc.bloom.dat clang cpc-bloom
 get_dat plots/iso.clang.mcn.dat clang mc-bloom
+get_dat plots/iso.clang.bbcp.bloom.dat clang bbcp-bloom
 get_dat plots/iso.clang.cpc.edit.dat clang cpc-edit
 get_dat plots/iso.gcc.cpc.bloom.dat gcc cpc-bloom
 get_dat plots/iso.gcc.mcn.dat gcc mc-bloom
+get_dat plots/iso.gcc.bbcp.bloom.dat gcc bbcp-bloom
 get_dat plots/iso.gcc.cpc.edit.dat gcc cpc-edit

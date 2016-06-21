@@ -643,6 +643,52 @@ class CalleeContext(object):
             fp_regs = 8
 
         return int_regs + fp_regs + self.extra_args
+
+    def callee_calculate_cpc_split(self):
+        """ Determine callsite parameter cardinality based on argument
+            registers seen in assignment commands and their order
+        """
+        int_regs = 0
+        fp_regs = 0
+
+        #Calculate number of int-ptr arguments used in context
+        if self.rdi_src is False:
+            int_regs = 0
+        elif self.rdi_src is True and self.rsi_src is False:
+            int_regs = 1
+        elif self.rsi_src is True and self.rdx_src is False:
+            int_regs = 2
+        #special handling for syscalls where r10 is used
+        elif self.rdx_src is True and self.rcx_src is False and self.r10_src is False:
+            int_regs = 3
+        elif (self.rcx_src is True or self.r10_src is True) and self.r8_src is False:
+            int_regs = 4
+        elif self.r8_src is True and self.r9_src is False:
+            int_regs = 5
+        elif self.r9_src is True:
+            int_regs = 6
+
+        #Calculate number of fp arguments used in context
+        if self.xmm0_src is False:
+            fp_regs = 0
+        elif self.xmm0_src is True and self.xmm1_src is False:
+            fp_regs = 1
+        elif self.xmm1_src is True and self.xmm2_src is False:
+            fp_regs = 2
+        elif self.xmm2_src is True and self.xmm3_src is False:
+            fp_regs = 3
+        elif self.xmm3_src is True and self.xmm4_src is False:
+            fp_regs = 4
+        elif self.xmm4_src is True and self.xmm5_src is False:
+            fp_regs = 5
+        elif self.xmm5_src is True and self.xmm6_src is False:
+            fp_regs = 6
+        elif self.xmm6_src is True and self.xmm7_src is False:
+            fp_regs = 7
+        elif self.xmm7_src is True:
+            fp_regs = 8
+
+        return str(int_regs) + "i" + str(fp_regs) + "f."
 #END CALLEE_CONTEXT.PY---------------------------------------------------------
 
 #BEGIN CALLER_CONTEXT.PY-------------------------------------------------------
@@ -828,6 +874,52 @@ class CallerContext(object):
             fp_regs = 8
 
         return int_regs + fp_regs + self.extra_args
+
+    def caller_calculate_cpc_split(self):
+        """ Determine callsite parameter cardinality based on argument
+            registers seen in assignment commands and their order
+        """
+        int_regs = 0
+        fp_regs = 0
+
+        #Calculate number of int-ptr arguments used in context
+        if self.rdi_set is False:
+            int_regs = 0
+        elif self.rdi_set is True and self.rsi_set is False:
+            int_regs = 1
+        elif self.rsi_set is True and self.rdx_set is False:
+            int_regs = 2
+        #special handling for syscalls where r10 is used
+        elif self.rdx_set is True and self.rcx_set is False and self.r10_set is False:
+            int_regs = 3
+        elif (self.rcx_set is True or self.r10_set is True) and self.r8_set is False:
+            int_regs = 4
+        elif self.r8_set is True and self.r9_set is False:
+            int_regs = 5
+        elif self.r9_set is True:
+            int_regs = 6
+
+        #Calculate number of fp arguments used in context
+        if self.xmm0_set is False:
+            fp_regs = 0
+        elif self.xmm0_set is True and self.xmm1_set is False:
+            fp_regs = 1
+        elif self.xmm1_set is True and self.xmm2_set is False:
+            fp_regs = 2
+        elif self.xmm2_set is True and self.xmm3_set is False:
+            fp_regs = 3
+        elif self.xmm3_set is True and self.xmm4_set is False:
+            fp_regs = 4
+        elif self.xmm4_set is True and self.xmm5_set is False:
+            fp_regs = 5
+        elif self.xmm5_set is True and self.xmm6_set is False:
+            fp_regs = 6
+        elif self.xmm6_set is True and self.xmm7_set is False:
+            fp_regs = 7
+        elif self.xmm7_set is True:
+            fp_regs = 8
+
+        return str(int_regs) + "i" + str(fp_regs) + "f."
 #END CALLER_CONTEXT.PY---------------------------------------------------------
 
 MAX_DEPTH = 4
@@ -1107,7 +1199,10 @@ if __name__ == '__main__':
     for head in Heads(SegStart(ea), SegEnd(ea)):
         #print("%x" % head)
         if head > func_ea_list[f]:
-            addr_chain.append(sep)
+            if NAME_DEBUG:
+                addr_chain.append(func_name_list[f]+sep)
+            else:
+                addr_chain.append(sep)
             context.caller_init_regs()
             #cpc_chain += sep
             # if NAME_DEBUG:
@@ -1153,7 +1248,9 @@ if __name__ == '__main__':
                                 context_rval = callee_arg_sweep(op_val, False, func_ea_list[i+1], 0)
 
                             callee_context_dict[op_val] = context_rval
-
+                        #ltj: move this to outermost block to make contexts for all calls.
+                        #will have to add functionality during cpc_dict construction that
+                        #looks at not just callee_context_dict for ea's
                         if op_val != func_ea_list[f-1]: # don't use recursive callsites as caller_contexts
                             l = caller_context_dict.get(op_val, None)
                             if l == None:
@@ -1261,42 +1358,60 @@ if __name__ == '__main__':
             # if head == 0x430AEE:
             #     context.caller_print_arg_regs()
 
+    #ltj: do we need to check on caller_cpc's that don't exist as callee_cpcs?
+    #are there any caller_contexts that don't have callee contexts? Yes, indirect
+    #or library calls, but we currently don't operate on those
     for ea in callee_context_dict:
         callee_cpc = callee_context_dict[ea].callee_calculate_cpc()
+        callee_cpcspl = callee_context_dict[ea].callee_calculate_cpc_split()
 
         caller_cpc_list = list()
-        for caller_context in caller_context_dict[ea]:
+        caller_cpcspl_list = list()
+        try:
+            for caller_context in caller_context_dict[ea]:
+                # if ea == 0x40D230:
+                #     print("caller cpc: %d" % caller_context.caller_calculate_cpc())
+                caller_cpc_list.append(caller_context.caller_calculate_cpc())
+                caller_cpcspl_list.append(caller_context.caller_calculate_cpc_split())
+
+            max_num = 0
+            caller_cpc = -1
+            caller_cpcspl = ""
+            #for cpc in caller_cpc_list:
+            for i in range(0,len(caller_cpc_list)):
+                cpc = caller_cpc_list[i]
+                if caller_cpc_list.count(cpc) > max_num:
+                    max_num = caller_cpc_list.count(cpc)
+                    caller_cpc = cpc
+                    caller_cpcspl = caller_cpcspl_list[i]
+            maj = float(max_num) / float(len(caller_cpc_list))
+
+            if callee_cpc >= 14:
+                callee_cpc = -1
+            else:
+                if maj < CALLER_CPC_THRESH:
+                    caller_cpc = -1
+            #Turn off unused argument finding
+            #max_cpc = -1
+
             # if ea == 0x40D230:
-            #     print("caller cpc: %d" % caller_context.caller_calculate_cpc())
-            caller_cpc_list.append(caller_context.caller_calculate_cpc())
+            #     print("max_cpc: %d" % max_cpc)
 
-        max_num = 0
-        caller_cpc = -1
-        for cpc in caller_cpc_list:
-            if caller_cpc_list.count(cpc) > max_num:
-                max_num = caller_cpc_list.count(cpc)
-                caller_cpc = cpc
-        maj = float(max_num) / float(len(caller_cpc_list))
+            #cpc_dict[ea] = max(caller_cpc, callee_cpc)
+            if caller_cpc > callee_cpc:
+                cpc_dict[ea] = caller_cpcspl
+            else:
+                cpc_dict[ea] = callee_cpcspl
 
-        if callee_cpc >= 14:
-            callee_cpc = -1
-        else:
-            if maj < CALLER_CPC_THRESH:
-                caller_cpc = -1
-        #Turn off unused argument finding
-        #max_cpc = -1
-
-        # if ea == 0x40D230:
-        #     print("max_cpc: %d" % max_cpc)
-
-        cpc_dict[ea] = max(caller_cpc, callee_cpc)
-
-        # if ea == 0x40D230:
-        #     print("cpc: %d" % cpc_dict[ea])
+            # if ea == 0x40D230:
+            #     print("cpc: %d" % cpc_dict[ea])
+        except KeyError:
+            cpc_dict[ea] = callee_cpcspl
 
     for i in addr_chain:
-        if i == sep:
-            cpc_chain += sep
+        if sep in str(i):
+        #if i == sep:
+            cpc_chain += i
         else:
             cpc_chain += str(cpc_dict[i])
 

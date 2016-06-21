@@ -1,0 +1,9 @@
+accuracy, kc
+kc,clang,O0: 0.993377 604
+kc,clang,O1: 0.973510 604
+kc,clang,O2: 0.973378 601
+kc,clang,O3: 0.973510 604
+kc,gcc,O0: 0.990033 602
+kc,gcc,O1: 0.988075 587
+kc,gcc,O2: 0.982906 585
+kc,gcc,O3: 0.984429 578

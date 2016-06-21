@@ -16,18 +16,21 @@ then
 	exit 1
 fi
 
-find ../../../corpora/ -name *$1*.$2.feature.bloom -exec python ../../dev/similarity/bloom-jaccard/bloom_jaccard_ind.py {} + > report.txt
+n=$RANDOM
+find ../../../corpora/ -wholename */$1.*.$2.feature.bloom -exec python ../../dev/similarity/bloom-jaccard/bloom_jaccard_ind.py {} + > report.$1.$2.txt
 
 printf "diff comp, $1-$2:\n"
 
 printf "$1,$2-bloom,O0-O0: "
-grep "clang\.o0.*gcc\.o0.*$" report.txt | cut -d " " -f 3
+grep "clang\.o0.*gcc\.o0.*$" report.$1.$2.txt | cut -d " " -f 3
 
 printf "$1,$2-bloom,O1-O1: "
-grep "clang\.o1.*gcc\.o1.*$" report.txt | cut -d " " -f 3
+grep "clang\.o1.*gcc\.o1.*$" report.$1.$2.txt | cut -d " " -f 3
 
 printf "$1,$2-bloom,O2-O2: "
-grep "clang\.o2.*gcc\.o2.*$" report.txt | cut -d " " -f 3
+grep "clang\.o2.*gcc\.o2.*$" report.$1.$2.txt | cut -d " " -f 3
 
 printf "$1,$2-bloom,O3-O3: "
-grep "clang\.o3.*gcc\.o3.*$" report.txt | cut -d " " -f 3
+grep "clang\.o3.*gcc\.o3.*$" report.$1.$2.txt | cut -d " " -f 3
+
+rm report.$1.$2.txt

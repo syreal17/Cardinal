@@ -5,7 +5,7 @@ get_result () {
 	meth=$2
 	opt=$3
 	sample=$4
-	grep "$sample,$meth,$opt" multi_sample.report | cut -d " " -f 2 | \
+	grep "^$sample,$meth,$opt" multi_sample.report | cut -d " " -f 2 | \
 awk '{printf("%s",$0);}' >> $file
 	printf " " >> $file
 }
@@ -35,4 +35,5 @@ get_dat () {
 
 get_dat plots/diff.comp.cpc.bloom.dat cpc-bloom
 get_dat plots/diff.comp.mcn.dat mc-bloom
+get_dat plots/diff.comp.bbcp.bloom.dat bbcp-bloom
 get_dat plots/diff.comp.cpc.edit.dat cpc-edit
