@@ -1,3 +1,54 @@
 [submodule "corpora/source/phc-winner-argon2"]
 	path = corpora/source/phc-winner-argon2
 	url = https://github.com/P-H-C/phc-winner-argon2.git
+[submodule "corpora/source/beanstalkd"]
+	path = corpora/source/beanstalkd
+	url = https://github.com/kr/beanstalkd.git
+[submodule "corpora/source/brubeck"]
+	path = corpora/source/brubeck
+	url = https://github.com/github/brubeck.git
+[submodule "corpora/source/bspwm"]
+	path = corpora/source/bspwm
+	url = https://github.com/baskerville/bspwm.git
+[submodule "corpora/source/cmark"]
+	path = corpora/source/cmark
+	url = https://github.com/jgm/cmark.git
+[submodule "corpora/source/cmus"]
+	path = corpora/source/cmus
+	url = https://github.com/cmus/cmus.git
+[submodule "corpora/source/dnspod-sr"]
+	path = corpora/source/dnspod-sr
+	url = https://github.com/DNSPod/dnspod-sr.git
+[submodule "corpora/source/mpc"]
+	path = corpora/source/mpc
+	url = https://github.com/orangeduck/mpc.git
+[submodule "corpora/source/dynomite"]
+	path = corpora/source/dynomite
+	url = https://github.com/Netflix/dynomite.git
+[submodule "corpora/source/goaccess"]
+	path = corpora/source/goaccess
+	url = https://github.com/allinurl/goaccess.git
+[submodule "corpora/source/hashcat"]
+	path = corpora/source/hashcat
+	url = https://github.com/hashcat/hashcat.git
+[submodule "corpora/source/htop"]
+	path = corpora/source/htop
+	url = https://github.com/hishamhm/htop.git
+[submodule "corpora/source/httpd"]
+	path = corpora/source/httpd
+	url = https://github.com/apache/httpd.git
+[submodule "corpora/source/iodine"]
+	path = corpora/source/iodine
+	url = https://github.com/yarrick/iodine.git
+[submodule "corpora/source/irssi"]
+	path = corpora/source/irssi
+	url = https://github.com/irssi/irssi.git
+[submodule "corpora/source/glfw"]
+	path = corpora/source/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "corpora/source/jq"]
+	path = corpora/source/jq
+	url = https://github.com/stedolan/jq.git
+[submodule "corpora/source/ck"]
+	path = corpora/source/ck
+	url = https://github.com/concurrencykit/ck.git
