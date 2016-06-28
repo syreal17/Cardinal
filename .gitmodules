@@ -52,3 +52,72 @@
 [submodule "corpora/source/ck"]
 	path = corpora/source/ck
 	url = https://github.com/concurrencykit/ck.git
+[submodule "corpora/source/libfreenect"]
+	path = corpora/source/libfreenect
+	url = https://github.com/OpenKinect/libfreenect.git
+[submodule "corpora/source/libimobiledevice"]
+	path = corpora/source/libimobiledevice
+	url = https://github.com/libimobiledevice/libimobiledevice.git
+[submodule "corpora/source/jansson"]
+	path = corpora/source/jansson
+	url = https://github.com/akheron/jansson.git
+[submodule "corpora/source/mozjpeg"]
+	path = corpora/source/mozjpeg
+	url = https://github.com/mozilla/mozjpeg.git
+[submodule "corpora/source/leveldb"]
+	path = corpora/source/leveldb
+	url = https://github.com/google/leveldb.git
+[submodule "corpora/source/lighttpd2"]
+	path = corpora/source/lighttpd2
+	url = https://github.com/lighttpd/lighttpd2.git
+[submodule "corpora/source/lmdb"]
+	path = corpora/source/lmdb
+	url = https://github.com/LMDB/lmdb.git
+[submodule "corpora/source/lxc"]
+	path = corpora/source/lxc
+	url = https://github.com/lxc/lxc.git
+[submodule "corpora/source/libmill"]
+	path = corpora/source/libmill
+	url = https://github.com/sustrik/libmill.git
+[submodule "corpora/source/nanomsg"]
+	path = corpora/source/nanomsg
+	url = https://github.com/nanomsg/nanomsg.git
+[submodule "corpora/source/onion"]
+	path = corpora/source/onion
+	url = https://github.com/davidmoreno/onion.git
+[submodule "corpora/source/libphenom"]
+	path = corpora/source/libphenom
+	url = https://github.com/facebook/libphenom.git
+[submodule "corpora/source/radare2"]
+	path = corpora/source/radare2
+	url = https://github.com/radare/radare2.git
+[submodule "corpora/source/snappy"]
+	path = corpora/source/snappy
+	url = https://github.com/google/snappy.git
+[submodule "corpora/source/libsodium"]
+	path = corpora/source/libsodium
+	url = https://github.com/jedisct1/libsodium.git
+[submodule "corpora/source/sophia"]
+	path = corpora/source/sophia
+	url = https://github.com/pmwkaa/sophia.git
+[submodule "corpora/source/openssl"]
+	path = corpora/source/openssl
+	url = https://github.com/openssl/openssl.git
+[submodule "corpora/source/sundown"]
+	path = corpora/source/sundown
+	url = https://github.com/vmg/sundown.git
+[submodule "corpora/source/toxcore"]
+	path = corpora/source/toxcore
+	url = https://github.com/irungentoo/toxcore.git
+[submodule "corpora/source/unicorn"]
+	path = corpora/source/unicorn
+	url = https://github.com/unicorn-engine/unicorn.git
+[submodule "corpora/source/varnish-cache"]
+	path = corpora/source/varnish-cache
+	url = https://github.com/varnishcache/varnish-cache.git
+[submodule "corpora/source/vlc"]
+	path = corpora/source/vlc
+	url = https://github.com/videolan/vlc.git
+[submodule "corpora/source/vlfeat"]
+	path = corpora/source/vlfeat
+	url = https://github.com/vlfeat/vlfeat.git
