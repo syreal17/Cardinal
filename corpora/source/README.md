@@ -68,7 +68,14 @@ We use the following GitHub projects for our test corpora. Their repos can be fo
 * tmux
 * toxic
 * twemcache
-* uzbl-core vis watchman xfreerdp yara zerotier-one zmap zstd
+* uzbl-core 
+* vis
+* watchman
+* FreeRDP/xfreerdp
+* yara
+* zerotier-one
+* zmap
+* zstd
 
 # LLVM Test-Suite sources
 
