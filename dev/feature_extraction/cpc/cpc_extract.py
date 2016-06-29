@@ -23,7 +23,7 @@ from func import *
 DEV_ONLY_CALLS = True
 MAX_PROLOG_BYTES = 300
 DISASM_DEBUG = False
-ADDR_DEBUG = True
+ADDR_DEBUG = False
 DICT_DEBUG = False
 PRINT_CPC_CHAIN = False
 PRINT_CPC_LIST = False #this is used for bloom and jaccard
@@ -112,6 +112,7 @@ def boundary_sweep(CODE, entry, entry_end):
                 end_bb = False
                 pbb.next_addr = inst.address
 
+            #Not an effective solution to the align problem
             #if nop_block:
             #    nop_block = False
             #    ppbb = bb_list[len(bb_list)-3]
@@ -306,19 +307,24 @@ def caller_cpc_sweep(CODE, entry, entry_end, addr_to_sym):
                 cpc_list_nl = True
                 if ADDR_DEBUG:
                     cpc_chain += str(hex(inst.address))
-            #cpc_chain += ","
+            cpc_chain += ","
             if is_ret(inst.mnemonic):
                 if found_lib_call:
-                    cpc_chain += ":"
+                    pass
+                    #cpc_chain += ":"
                 else:
-                    cpc_chain += "."
+                    pass
+                    #cpc_chain += "."
             elif is_nop(inst.mnemonic):
                 if found_lib_call:
-                    cpc_chain += ";"
+                    pass
+                    #cpc_chain += ";"
                 else:
-                    cpc_chain += ","
+                    pass
+                    #cpc_chain += ","
             else:
-                cpc_chain += "_"
+                pass
+                #cpc_chain += "_"
 
             found_lib_call = False
 
@@ -441,6 +447,6 @@ if __name__ == '__main__':
         einfo = ELFInfo()
         einfo.process_file(filename)
         #simple_linear_sweep_extract(CODE, entry, entry_section_end)
-        boundary_sweep(einfo.code, einfo.entry_point, einfo.entry_end)
+        #boundary_sweep(einfo.code, einfo.entry_point, einfo.entry_end)
         caller_cpc_sweep(einfo.code, einfo.entry_point, einfo.entry_end,
                          einfo.addr_to_sym)
