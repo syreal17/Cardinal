@@ -1,16 +1,16 @@
 # Overview
-CPC Aggregation by Reversing and Dumping in Arrays Lightweight (Cardinal) is a tool that accurately finds the number of arguments at each callsite, or the callsite parameter cardinalities (CPC's) and creates a easily comparable signature by aggregating them per function and dumping the result into a Bloom filter. Bloom filters are compared via the Jaccard index from which a similarity score is calculated. Cardinal is proven to tolerate differences between binaries produced using the same source but different compiler configurations, from using different optimization levels to using completely different compilers. We hope that Cardinal paves the way for future static analyses that similarly tolerate radical code transformations like a dynamic analysis, yet still retain the benefits of static analysis
+CPC Aggregation by Reversing and Dumping in Arrays Lightweight (CARDINAL) is a tool that can find similarities between binaries compiled with different optimization flags, or even completely different compilers. CARDINAL accurately finds the number of arguments at each callsite, also known as the callsite parameter cardinalities (CPC's), and creates a easily comparable signature by aggregating them per function and dumping the result into a Bloom filter. Bloom filters are compared via the Jaccard index from which a similarity score is calculated. CARDINAL is proven to tolerate differences between binaries produced using the same source but different compiler configurations, from using different optimization levels to using completely different compilers. We hope that CARDINAL paves the way for future static analyses that similarly tolerate radical code transformations like a dynamic analysis, yet still retain the benefits of static analysis
 
 # Requirements
 * IDA Pro
 * Python 2.7
   * Python modules: `pip install capstone pyelftools pybloom editdistance`
-* Cygwin (Required if running Cardinal on Windows, which is recommended)
+* Cygwin (Required if running CARDINAL on Windows, which is recommended)
 * LLVM (Optional: for ground truth calculation tool, cpc-tool)
 * CMake (Optional: for ground truth calculation tool, cpc-tool)
 
 # Usage
-## Using Cardinal directly
+## Using CARDINAL directly
 1. `idaw64.exe -A -S"Cardinal/dev/feature_extraction/cpc/ida_cpc_extract_standalone.py -l" name_of_test_binary1.elf` This extracts the CPC features from the binary in the form of newline delimited chains of CPC's. Each line or chain represents all the CPC's in one function.
 2. `python Cardinal/dev/similarity/bloom-jaccard/to_bloom.py name_of_test_binary1.elf.cpc.feature` This enters all of the CPC chains into a Bloom filter for quick comparison.
 3. `python Cardinal/dev/similarity/bloom-jaccard/bloom_jaccard_ind.py name_of_test_binary1.elf.cpc.feature.bloom name_of_test_binary2.elf.cpc.feature.bloom` This yields a number between 0 and 1 inclusive. 0 means none of the CPC chains matched in the bloom filters and 1 means all of the CPC chains matched in the bloom filters.
@@ -30,7 +30,7 @@ For example `./test_bin.sh treecc vis burg` if using our corpora. This creates `
 ./create_diffcomp_dats.sh [name_of_test_binary1] [name_of_test_binary2] ... [name_of_test_binaryN]
 ./create_diffbin_dats.sh [name_of_test_binary1] [name_of_test_binary2] ... [name_of_test_binaryN]
 ```
-The create dats scripts read "multi_sample.report" and put the data into a better format. The "graph" variations of these scripts put the data into two columns, test and similarity score, whereas the original create dat scripts put the data into N columns, one for each binary.
+The create dats scripts read "multi_sample.report" and put the data into a better format. The "graph" variations of these scripts put the data into two columns, test and similarity score, whereas the original create dat scripts put the data into N columns, one for each binary. More details for the testing framework are covered in Cardinal/tests/windows/README.md.
 
 # Contact
 Email: luke dotto jones dotto ctr atta usafa dotto edu
