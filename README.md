@@ -21,16 +21,16 @@ The test harness automates the above steps for a large number of binaries. We ru
 To run the isocompiler modulation, different compiler, and different source tests on a group of binaries simply do:
 ```
 cd Cardinal/tests/windows
-./test_bins.sh name_of_test_binary1 name_of_test_binary2 ... name_of_test_binaryN
+./test_bins.sh [name_of_test_binary1] [name_of_test_binary2] ... [name_of_test_binaryN]
 ```
 
-This creates `multi_sample.report` with all the data. The data can be put into an R consumable form by running the following:
+For example `./test_bin.sh treecc vis burg` if using our corpora. This creates `multi_sample.report` with all the data from running isocompiler modulation, different compiler and different source tests. The data can be put into an R consumable form by running the following:
 ```
-./create_isocomp_dats.sh name_of_test_binary1 name_of_test_binary2 ... name_of_test_binaryN
-./create_diffcomp_dats.sh name_of_test_binary1 name_of_test_binary2 ... name_of_test_binaryN
-./create_diffbin_dats.sh name_of_test_binary1 name_of_test_binary2 ... name_of_test_binaryN
+./create_isocomp_dats.sh [name_of_test_binary1] [name_of_test_binary2] ... [name_of_test_binaryN]
+./create_diffcomp_dats.sh [name_of_test_binary1] [name_of_test_binary2] ... [name_of_test_binaryN]
+./create_diffbin_dats.sh [name_of_test_binary1] [name_of_test_binary2] ... [name_of_test_binaryN]
 ```
-The "graph" variations of these sccripts put the data into two columns, test and similarity score, whereas the original scripts put the data into N columns, one for each binary.
+The create dats scripts read "multi_sample.report" and put the data into a better format. The "graph" variations of these scripts put the data into two columns, test and similarity score, whereas the original create dat scripts put the data into N columns, one for each binary.
 
 # Contact
 Email: luke dotto jones dotto ctr atta usafa dotto edu
