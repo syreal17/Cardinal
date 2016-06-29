@@ -121,3 +121,105 @@
 [submodule "corpora/source/vlfeat"]
 	path = corpora/source/vlfeat
 	url = https://github.com/vlfeat/vlfeat.git
+[submodule "corpora/source/lthread"]
+	path = corpora/source/lthread
+	url = https://github.com/halayli/lthread.git
+[submodule "corpora/source/tarantool"]
+	path = corpora/source/tarantool
+	url = https://github.com/tarantool/tarantool.git
+[submodule "corpora/source/luna"]
+	path = corpora/source/luna
+	url = https://github.com/tj/luna.git
+[submodule "corpora/source/lwan"]
+	path = corpora/source/lwan
+	url = https://github.com/lpereira/lwan.git
+[submodule "corpora/source/lz4"]
+	path = corpora/source/lz4
+	url = https://github.com/Cyan4973/lz4.git
+[submodule "corpora/source/masscan"]
+	path = corpora/source/masscan
+	url = https://github.com/robertdavidgraham/masscan.git
+[submodule "corpora/source/mongrel2"]
+	path = corpora/source/mongrel2
+	url = https://github.com/mongrel2/mongrel2.git
+[submodule "corpora/source/noeuclid"]
+	path = corpora/source/noeuclid
+	url = https://github.com/cnlohr/noeuclid.git
+[submodule "corpora/source/p2pvc"]
+	path = corpora/source/p2pvc
+	url = https://github.com/mofarrell/p2pvc.git
+[submodule "corpora/source/yajl"]
+	path = corpora/source/yajl
+	url = https://github.com/lloyd/yajl.git
+[submodule "corpora/source/pianobar"]
+	path = corpora/source/pianobar
+	url = https://github.com/PromyLOPh/pianobar.git
+[submodule "corpora/source/pngquant"]
+	path = corpora/source/pngquant
+	url = https://github.com/pornel/pngquant.git
+[submodule "corpora/source/polipo"]
+	path = corpora/source/polipo
+	url = https://github.com/jech/polipo.git
+[submodule "corpora/source/redis"]
+	path = corpora/source/redis
+	url = https://github.com/antirez/redis.git
+[submodule "corpora/source/RetroArch"]
+	path = corpora/source/RetroArch
+	url = https://github.com/libretro/RetroArch.git
+[submodule "corpora/source/shairport"]
+	path = corpora/source/shairport
+	url = https://github.com/abrasive/shairport.git
+[submodule "corpora/source/stud"]
+	path = corpora/source/stud
+	url = https://github.com/bumptech/stud.git
+[submodule "corpora/source/swoole-src"]
+	path = corpora/source/swoole-src
+	url = https://github.com/swoole/swoole-src.git
+[submodule "corpora/source/tcpcopy"]
+	path = corpora/source/tcpcopy
+	url = https://github.com/session-replay-tools/tcpcopy.git
+[submodule "corpora/source/tcpkali"]
+	path = corpora/source/tcpkali
+	url = https://github.com/machinezone/tcpkali.git
+[submodule "corpora/source/http-parser"]
+	path = corpora/source/http-parser
+	url = https://github.com/nodejs/http-parser.git
+[submodule "corpora/source/tidy-html5"]
+	path = corpora/source/tidy-html5
+	url = https://github.com/htacg/tidy-html5.git
+[submodule "corpora/source/tg"]
+	path = corpora/source/tg
+	url = https://github.com/vysheng/tg.git
+[submodule "corpora/source/tmux"]
+	path = corpora/source/tmux
+	url = https://github.com/tmux/tmux.git
+[submodule "corpora/source/toxic"]
+	path = corpora/source/toxic
+	url = https://github.com/JFreegman/toxic.git
+[submodule "corpora/source/twemcache"]
+	path = corpora/source/twemcache
+	url = https://github.com/twitter/twemcache.git
+[submodule "corpora/source/uzbl"]
+	path = corpora/source/uzbl
+	url = https://github.com/uzbl/uzbl.git
+[submodule "corpora/source/vis"]
+	path = corpora/source/vis
+	url = https://github.com/martanne/vis.git
+[submodule "corpora/source/watchman"]
+	path = corpora/source/watchman
+	url = https://github.com/facebook/watchman.git
+[submodule "corpora/source/FreeRDP"]
+	path = corpora/source/FreeRDP
+	url = https://github.com/FreeRDP/FreeRDP.git
+[submodule "corpora/source/yara"]
+	path = corpora/source/yara
+	url = https://github.com/VirusTotal/yara.git
+[submodule "corpora/source/ZeroTierOne"]
+	path = corpora/source/ZeroTierOne
+	url = https://github.com/zerotier/ZeroTierOne.git
+[submodule "corpora/source/zmap"]
+	path = corpora/source/zmap
+	url = https://github.com/zmap/zmap.git
+[submodule "corpora/source/zstd"]
+	path = corpora/source/zstd
+	url = https://github.com/Cyan4973/zstd.git
