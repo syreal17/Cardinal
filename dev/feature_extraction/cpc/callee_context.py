@@ -227,3 +227,49 @@ class CalleeContext(object):
             fp_regs = 8
 
         return int_regs + fp_regs + self.extra_args
+
+    def callee_calculate_cpc_split(self):
+        """ Determine callsite parameter cardinality based on argument
+            registers seen in assignment commands and their order
+        """
+        int_regs = 0
+        fp_regs = 0
+
+        #Calculate number of int-ptr arguments used in context
+        if self.rdi_src is False:
+            int_regs = 0
+        elif self.rdi_src is True and self.rsi_src is False:
+            int_regs = 1
+        elif self.rsi_src is True and self.rdx_src is False:
+            int_regs = 2
+        #special handling for syscalls where r10 is used
+        elif self.rdx_src is True and self.rcx_src is False and self.r10_src is False:
+            int_regs = 3
+        elif (self.rcx_src is True or self.r10_src is True) and self.r8_src is False:
+            int_regs = 4
+        elif self.r8_src is True and self.r9_src is False:
+            int_regs = 5
+        elif self.r9_src is True:
+            int_regs = 6
+
+        #Calculate number of fp arguments used in context
+        if self.xmm0_src is False:
+            fp_regs = 0
+        elif self.xmm0_src is True and self.xmm1_src is False:
+            fp_regs = 1
+        elif self.xmm1_src is True and self.xmm2_src is False:
+            fp_regs = 2
+        elif self.xmm2_src is True and self.xmm3_src is False:
+            fp_regs = 3
+        elif self.xmm3_src is True and self.xmm4_src is False:
+            fp_regs = 4
+        elif self.xmm4_src is True and self.xmm5_src is False:
+            fp_regs = 5
+        elif self.xmm5_src is True and self.xmm6_src is False:
+            fp_regs = 6
+        elif self.xmm6_src is True and self.xmm7_src is False:
+            fp_regs = 7
+        elif self.xmm7_src is True:
+            fp_regs = 8
+
+        return str(int_regs) + "i" + str(fp_regs) + "f."

@@ -15,9 +15,9 @@ class CallerContext(object):
     def __init__(self):
         self.extra_args = 0
         self.def_chain = list() #for debugging purpose, functions for ea cpc
-        self.caller_init_regs()
+        self.init_regs()
 
-    def caller_init_regs(self):
+    def init_regs(self):
         self.rdi_set = False
         self.rsi_set = False
         self.rdx_set = False
@@ -34,7 +34,7 @@ class CallerContext(object):
         self.xmm6_set = False
         self.xmm7_set = False
 
-    def caller_print_arg_regs(self):
+    def print_arg_regs(self):
         if self.rdi_src is True:
             print("rdi,")
         if self.rsi_src is True:
@@ -66,7 +66,7 @@ class CallerContext(object):
         if self.xmm7_src is True:
             print("xmm7,")
 
-    def caller_add_set_arg(self,operand):
+    def add_set_arg(self,operand):
         """ Adds a possible argument to args
         """
         if operand in arg_reg_rdi:
@@ -100,7 +100,7 @@ class CallerContext(object):
         elif operand in arg_reg_xmm7:
             self.xmm7_set = True
 
-    def caller_add_src_arg(self,operand):
+    def add_src_arg(self,operand):
         """ Adds a possible argument to args
         """
         if operand in arg_reg_rdi:
@@ -179,3 +179,49 @@ class CallerContext(object):
             fp_regs = 8
 
         return int_regs + fp_regs + self.extra_args
+
+    def caller_calculate_cpc_split(self):
+        """ Determine callsite parameter cardinality based on argument
+            registers seen in assignment commands and their order
+        """
+        int_regs = 0
+        fp_regs = 0
+
+        #Calculate number of int-ptr arguments used in context
+        if self.rdi_set is False:
+            int_regs = 0
+        elif self.rdi_set is True and self.rsi_set is False:
+            int_regs = 1
+        elif self.rsi_set is True and self.rdx_set is False:
+            int_regs = 2
+        #special handling for syscalls where r10 is used
+        elif self.rdx_set is True and self.rcx_set is False and self.r10_set is False:
+            int_regs = 3
+        elif (self.rcx_set is True or self.r10_set is True) and self.r8_set is False:
+            int_regs = 4
+        elif self.r8_set is True and self.r9_set is False:
+            int_regs = 5
+        elif self.r9_set is True:
+            int_regs = 6
+
+        #Calculate number of fp arguments used in context
+        if self.xmm0_set is False:
+            fp_regs = 0
+        elif self.xmm0_set is True and self.xmm1_set is False:
+            fp_regs = 1
+        elif self.xmm1_set is True and self.xmm2_set is False:
+            fp_regs = 2
+        elif self.xmm2_set is True and self.xmm3_set is False:
+            fp_regs = 3
+        elif self.xmm3_set is True and self.xmm4_set is False:
+            fp_regs = 4
+        elif self.xmm4_set is True and self.xmm5_set is False:
+            fp_regs = 5
+        elif self.xmm5_set is True and self.xmm6_set is False:
+            fp_regs = 6
+        elif self.xmm6_set is True and self.xmm7_set is False:
+            fp_regs = 7
+        elif self.xmm7_set is True:
+            fp_regs = 8
+
+        return str(int_regs) + "i" + str(fp_regs) + "f."
