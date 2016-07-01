@@ -23,8 +23,8 @@ then
 fi
 
 n=$RANDOM
-find ../../../corpora/ -wholename */$1.*.$3.feature.bloom > blooms.$1.$2.$3.txt
-find ../../../corpora/ -wholename */$2.*.$3.feature.bloom >> blooms.$1.$2.$3.txt
+find ../../corpora/ -wholename */$1.*.$3.feature.bloom > blooms.$1.$2.$3.txt
+find ../../corpora/ -wholename */$2.*.$3.feature.bloom >> blooms.$1.$2.$3.txt
 python ../../dev/similarity/bloom-jaccard/bloom_jaccard_ind.py `cat blooms.$1.$2.$3.txt` > report.$1.$2.$3.txt
 
 printf "diffbin bloom, $1-$2-$3:\n" 

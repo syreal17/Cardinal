@@ -23,7 +23,7 @@ then
 fi
 
 n=$RANDOM
-find ../../../corpora/ -wholename */$1.*$2*.$3.feature.bloom -exec python ../../dev/similarity/bloom-jaccard/bloom_jaccard_ind.py {} + > report.$1.$2.$3.txt
+find ../../corpora/ -wholename */$1.*$2*.$3.feature.bloom -exec python ../../dev/similarity/bloom-jaccard/bloom_jaccard_ind.py {} + > report.$1.$2.$3.txt
 
 printf "isocomp, $1-$2-$3:\n" 
 

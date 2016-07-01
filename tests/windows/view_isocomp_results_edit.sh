@@ -17,7 +17,7 @@ then
 fi
 
 n=$RANDOM
-find ../../../corpora/ -wholename */$1.*$2*.cpc.chain -exec python ../../dev/similarity/editdistance/edit_distance.py {} + > report.$1.$2.txt
+find ../../corpora/ -wholename */$1.*$2*.cpc.chain -exec python ../../dev/similarity/editdistance/edit_distance.py {} + > report.$1.$2.txt
 
 printf "isocomp, $1-$2:\n" 
 
