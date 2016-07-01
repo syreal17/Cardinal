@@ -1,0 +1,6 @@
+AllocPartition: 1
+Configure: 2
+JMDecHelpExit: 0
+free_global_buffers: 0
+init_conf: 2
+report: 3
