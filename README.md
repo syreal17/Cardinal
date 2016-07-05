@@ -31,6 +31,3 @@ For example `./test_bin.sh treecc vis burg` if using our corpora. This creates `
 ./create_diffbin_dats.sh [name_of_test_binary1] [name_of_test_binary2] ... [name_of_test_binaryN]
 ```
 The create dats scripts read "multi_sample.report" and put the data into a better format. The "graph" variations of these scripts put the data into two columns, test and similarity score, whereas the original create dat scripts put the data into N columns, one for each binary. More details for the testing framework are covered in Cardinal/tests/windows/README.md.
-
-# Contact
-Email: luke dotto jones dotto ctr atta usafa dotto edu
