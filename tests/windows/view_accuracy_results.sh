@@ -6,7 +6,7 @@ find ../../corpora/lin_bitcode_corpus/ -wholename */$1.llvm.o.cpc.gdict > gt_dic
 find ../../corpora/ -wholename */$1.*.elf.cpc.dict -exec python ../get_cpc_accuracy.py \
 	`cat gt_dict.$n.txt` {} \; >> accuracy_report.$n.txt
 
-printf "accuracy, $1\n"
+#printf "accuracy, $1\n"
 
 printf "$1,clang,O0: "
 grep "clang.o0.*$" accuracy_report.$n.txt | cut -d " " -f 2,5

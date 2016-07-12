@@ -52,7 +52,7 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                         child_context = callee_context_dict.get(op_val, None)
                         if child_context is None:
                             i = func_ea_list.index(op_val)
-                            if func_name_list[i] == '//':
+                            if func_name_list[i] == 'w_log':
                                 child_context = callee_arg_sweep(op_val, True, func_ea_list[i+1], n+1)
                             else:
                                 child_context = callee_arg_sweep(op_val, False, func_ea_list[i+1], n+1)
@@ -239,6 +239,7 @@ DICT_OUTPUT = False
 CPC_OUTPUT = False
 ADDR_DEBUG = False
 NAME_DEBUG = False
+SPLIT_CPC = False
 batch = True
 CALLER_CPC_THRESH = 0.75
 CALLER_CONTEXT_REFRESH = 15
@@ -295,7 +296,7 @@ if __name__ == '__main__':
         #print("%x" % head)
         if head > func_ea_list[f]:
             if NAME_DEBUG:
-                addr_chain.append(func_name_list[f]+sep)
+                addr_chain.append(sep+func_name_list[f]+": ")
             else:
                 addr_chain.append(sep)
             context.init_regs()
@@ -337,7 +338,7 @@ if __name__ == '__main__':
                         context_rval = callee_context_dict.get(op_val, None)
                         if context_rval is None:
                             i = func_ea_list.index(op_val)
-                            if func_name_list[i] == '//':
+                            if func_name_list[i] == 'w_log':
                                 context_rval = callee_arg_sweep(op_val, True, func_ea_list[i+1], 0)
                             else:
                                 context_rval = callee_arg_sweep(op_val, False, func_ea_list[i+1], 0)
@@ -463,11 +464,11 @@ if __name__ == '__main__':
         caller_cpc_list = list()
         caller_cpcspl_list = list()
         try:
-            for caller_context in caller_context_dict[ea]:
+            for caller_cxt in caller_context_dict[ea]:
                 # if ea == 0x40D230:
-                #     print("caller cpc: %d" % caller_context.caller_calculate_cpc())
-                caller_cpc_list.append(caller_context.caller_calculate_cpc())
-                caller_cpcspl_list.append(caller_context.caller_calculate_cpc_split())
+                #     print("caller cpc: %d" % caller_cxt.caller_calculate_cpc())
+                caller_cpc_list.append(caller_cxt.caller_calculate_cpc())
+                caller_cpcspl_list.append(caller_cxt.caller_calculate_cpc_split())
 
             max_num = 0
             caller_cpc = -1
@@ -494,14 +495,23 @@ if __name__ == '__main__':
 
             #cpc_dict[ea] = max(caller_cpc, callee_cpc)
             if caller_cpc > callee_cpc:
-                cpc_dict[ea] = caller_cpcspl
+                if SPLIT_CPC:
+                    cpc_dict[ea] = caller_cpcspl
+                else:
+                    cpc_dict[ea] = caller_cpc
             else:
-                cpc_dict[ea] = callee_cpcspl
+                if SPLIT_CPC:
+                    cpc_dict[ea] = callee_cpcspl
+                else:
+                    cpc_dict[ea] = callee_cpc
 
             # if ea == 0x40D230:
             #     print("cpc: %d" % cpc_dict[ea])
         except KeyError:
-            cpc_dict[ea] = callee_cpcspl
+            if SPLIT_CPC:
+                cpc_dict[ea] = callee_cpcspl
+            else:
+                cpc_dict[ea] = callee_cpc
 
     for i in addr_chain:
         if sep in str(i):
