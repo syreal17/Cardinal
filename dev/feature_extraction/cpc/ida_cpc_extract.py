@@ -52,7 +52,7 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                         child_context = callee_context_dict.get(op_val, None)
                         if child_context is None:
                             i = func_ea_list.index(op_val)
-                            if func_name_list[i] == 'w_log':
+                            if func_name_list[i] == '//':
                                 child_context = callee_arg_sweep(op_val, True, func_ea_list[i+1], n+1)
                             else:
                                 child_context = callee_arg_sweep(op_val, False, func_ea_list[i+1], n+1)
@@ -338,7 +338,7 @@ if __name__ == '__main__':
                         context_rval = callee_context_dict.get(op_val, None)
                         if context_rval is None:
                             i = func_ea_list.index(op_val)
-                            if func_name_list[i] == 'w_log':
+                            if func_name_list[i] == '//':
                                 context_rval = callee_arg_sweep(op_val, True, func_ea_list[i+1], 0)
                             else:
                                 context_rval = callee_arg_sweep(op_val, False, func_ea_list[i+1], 0)
