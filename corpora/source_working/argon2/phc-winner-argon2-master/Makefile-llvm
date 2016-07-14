@@ -1,0 +1,29 @@
+all: install gdict
+
+src/argon2.llvm.o: src/argon2.c
+	clang -c -emit-llvm -Iinclude $^ -o $@
+
+src/core.llvm.o: src/core.c
+	clang -c -emit-llvm -Iinclude $^ -o $@
+
+src/blake2/blake2b.llvm.o: src/blake2/blake2b.c
+	clang -c -emit-llvm -Iinclude $^ -o $@
+
+src/thread.llvm.o: src/thread.c
+	clang -c -emit-llvm -Iinclude $^ -o $@
+
+src/encoding.llvm.o: src/encoding.c
+	clang -c -emit-llvm -Iinclude $^ -o $@
+
+src/run.llvm.o: src/run.c
+	clang -c -emit-llvm -Iinclude $^ -o $@
+
+src/argon2.llvm: src/argon2.llvm.o src/core.llvm.o src/blake2/blake2b.llvm.o src/thread.llvm.o src/encoding.llvm.o src/run.llvm.o
+	llvm-link $^ -o $@
+
+install: src/argon2.llvm
+	cp src/argon2.llvm ../../../lin_bitcode_corpus/github/argon2.llvm
+
+gdict: src/argon2.llvm
+	../../../../dev/ground_truth/debug/cpc-tool src/argon2.llvm > ../../../lin_bitcode_corpus/github/argon2.llvm.gdict
+

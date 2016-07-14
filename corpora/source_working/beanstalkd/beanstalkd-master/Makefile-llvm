@@ -1,0 +1,61 @@
+all: install gdict
+
+linux.llvm.o: linux.c
+	clang -c -emit-llvm $^ -o $@
+
+conn.llvm.o: conn.c
+	clang -c -emit-llvm $^ -o $@
+
+file.llvm.o: file.c
+	clang -c -emit-llvm $^ -o $@
+
+heap.llvm.o: heap.c
+	clang -c -emit-llvm $^ -o $@
+
+main.llvm.o: main.c
+	clang -c -emit-llvm $^ -o $@
+
+job.llvm.o: job.c
+	clang -c -emit-llvm $^ -o $@
+
+ms.llvm.o: ms.c
+	clang -c -emit-llvm $^ -o $@
+
+net.llvm.o: net.c
+	clang -c -emit-llvm $^ -o $@
+
+primes.llvm.o: primes.c
+	clang -c -emit-llvm $^ -o $@
+
+prot.llvm.o: prot.c
+	clang -c -emit-llvm $^ -o $@
+
+sd-daemon.llvm.o: sd-daemon.c
+	clang -c -emit-llvm $^ -o $@
+
+serv.llvm.o: serv.c
+	clang -c -emit-llvm $^ -o $@
+
+time.llvm.o: time.c
+	clang -c -emit-llvm $^ -o $@
+
+tube.llvm.o: tube.c
+	clang -c -emit-llvm $^ -o $@
+
+util.llvm.o: util.c
+	clang -c -emit-llvm $^ -o $@
+	
+vers.llvm.o: vers.c
+	clang -c -emit-llvm $^ -o $@
+
+walg.llvm.o: walg.c
+	clang -c -emit-llvm $^ -o $@
+
+beanstalkd.llvm: linux.llvm.o conn.llvm.o file.llvm.o heap.llvm.o job.llvm.o ms.llvm.o net.llvm.o primes.llvm.o prot.llvm.o sd-daemon.llvm.o serv.llvm.o time.llvm.o tube.llvm.o util.llvm.o vers.llvm.o walg.llvm.o main.llvm.o
+	llvm-link $^ -o $@
+
+install: beanstalkd.llvm
+	cp beanstalkd.llvm ../../../lin_bitcode_corpus/github/beanstalkd.llvm
+
+gdict: beanstalkd.llvm
+	../../../../dev/ground_truth/debug/cpc-tool beanstalkd.llvm > ../../../lin_bitcode_corpus/github/beanstalkd.llvm.gdict
