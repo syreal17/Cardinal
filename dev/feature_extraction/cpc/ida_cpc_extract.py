@@ -26,6 +26,10 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
     context = callee_context.CalleeContext()
     stack_args = list()
 
+    #add any aliased arg regs
+    f = idaapi.get_func(ea)
+    add_regvars(f, ea, context)
+
     for head in Heads(ea, ea+MAX_CALLEE_SWEEP):
         mnem = GetMnem(head)
         num_opnds = 0
@@ -52,7 +56,7 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                         child_context = callee_context_dict.get(op_val, None)
                         if child_context is None:
                             i = func_ea_list.index(op_val)
-                            if func_name_list[i] == '//':
+                            if func_name_list[i] == 'w_ht_size':
                                 child_context = callee_arg_sweep(op_val, True, func_ea_list[i+1], n+1)
                             else:
                                 child_context = callee_arg_sweep(op_val, False, func_ea_list[i+1], n+1)
@@ -93,14 +97,18 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
             if opnd_1_type == o_reg:
                 if asm_helper.is_arg_reg(opnd_1):
                     if mnem in asm_helper.r_group or mnem in asm_helper.rw_group:
-                        context.add_src_arg(opnd_1)
+                        added = context.add_src_arg(opnd_1)
+                        if debug and added:
+                            print("%s added" % opnd_1)
                     elif mnem in asm_helper.w_group:
                         context.add_set_arg(opnd_1)
                     else:
                         print("Unrecognized mnemonic: %x: %s %s" % (head,mnem,opnd_1))
             if opnd_1_type == o_phrase or opnd_1_type == o_displ:
                 for arg in arg_extract(opnd_1):
-                    context.add_src_arg(arg)
+                    added = context.add_src_arg(arg)
+                    if debug and added:
+                        print("%s arg added" % arg)
 
         if num_opnds == 2:
             opnd_1_type = GetOpType(head, 0)
@@ -117,22 +125,30 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
             # ltj:moved this before opnd_1 to fix case of movsxd rdi edi making rdi set
             if opnd_2_type == o_reg:
                 if asm_helper.is_arg_reg(opnd_2):
-                    context.add_src_arg(opnd_2)
+                    added = context.add_src_arg(opnd_2)
+                    if debug and added:
+                        print("%s added" % opnd_2)
             elif opnd_2_type == o_phrase or opnd_2_type == o_displ:
                 for arg in arg_extract(opnd_2):
-                    context.add_src_arg(arg)
+                    added = context.add_src_arg(arg)
+                    if debug and added:
+                        print("%s arg added" % arg)
 
             if opnd_1_type == o_reg:
                 if asm_helper.is_arg_reg(opnd_1):
                     if mnem in asm_helper.w_r_group:
                         context.add_set_arg(opnd_1)
                     elif mnem in asm_helper.r_r_group or mnem in asm_helper.rw_r_group:
-                        context.add_src_arg(opnd_1)
+                        added = context.add_src_arg(opnd_1)
+                        if debug and added:
+                            print("%s added" % opnd_1)
                     else:
                         print("Unrecognized mnemonic: %x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
             elif opnd_1_type == o_phrase or opnd_1_type == o_displ:
                 for arg in arg_extract(opnd_1):
-                    context.add_src_arg(arg)
+                    added = context.add_src_arg(arg)
+                    if debug and added:
+                        print("%s arg added" % arg)
 
         if num_opnds == 3:
             opnd_1_type = GetOpType(head, 0)
@@ -147,21 +163,31 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                     context.add_set_arg(opnd_1)
             elif opnd_1_type == o_phrase or opnd_1_type == o_displ:
                 for arg in arg_extract(opnd_1):
-                    context.add_src_arg(arg)
+                    added = context.add_src_arg(arg)
+                    if debug and added:
+                        print("%s arg added" % arg)
 
             if opnd_2_type == o_reg:
                 if asm_helper.is_arg_reg(opnd_2):
-                    context.add_src_arg(opnd_2)
+                    added = context.add_src_arg(opnd_2)
+                    if debug and added:
+                        print("%s added" % opnd_2)
             elif opnd_2_type == o_phrase or opnd_2_type == o_displ:
                 for arg in arg_extract(opnd_2):
-                    context.add_src_arg(arg)
+                    added = context.add_src_arg(arg)
+                    if debug and added:
+                        print("%s arg added" % arg)
 
             if opnd_3_type == o_reg:
                 if asm_helper.is_arg_reg(opnd_3):
-                    context.add_src_arg(opnd_3)
+                    added = context.add_src_arg(opnd_3)
+                    if debug and added:
+                        print("%s added" % opnd_3)
             elif opnd_3_type == o_phrase or opnd_3_type == o_displ:
                 for arg in arg_extract(opnd_3):
-                    context.add_src_arg(arg)
+                    added = context.add_src_arg(arg)
+                    if debug and added:
+                        print("%s arg added" % arg)
 
     if debug:
         print("stack_args len: %d" % len(stack_args))
@@ -226,9 +252,19 @@ def arg_extract(opnd):
 
 def check_arg(arg_regs, opnd):
     for reg in arg_regs:
-        if reg in opnd:
+        #TODO: replace with regex
+        #if reg in opnd:
+        m = re.search('[+*\[]'+reg+'[+*\]]', opnd)
+        if m is not None:
             return reg
     return ""
+
+def add_regvars(f, ea, context):
+    for reg in asm_helper.arg_regs_all:
+        rv = idaapi.find_regvar(f, ea, reg)
+        if rv is not None:
+            #ltj: simplistic way is assuming that this regvar is used as src
+            context.add_src_arg(reg)
 
 callee_context_dict = dict()    # function ea -> resulting context from callee
                                 # analysis
@@ -294,7 +330,7 @@ if __name__ == '__main__':
     h = 0
     for head in Heads(SegStart(ea), SegEnd(ea)):
         #print("%x" % head)
-        if head > func_ea_list[f]:
+        if head >= func_ea_list[f]:
             if NAME_DEBUG:
                 addr_chain.append(sep+func_name_list[f]+": ")
             else:
@@ -335,10 +371,16 @@ if __name__ == '__main__':
                 if op_type == o_near or op_type == o_far:
                     op_val = GetOperandValue(head, 0)
                     if op_val in func_ea_list:
+                        #debug members of cpc chain
+                        if func_name_list[f-1] == '//':
+                            print("%x: %s" % (head, func_dict[op_val]))
+
                         context_rval = callee_context_dict.get(op_val, None)
                         if context_rval is None:
                             i = func_ea_list.index(op_val)
-                            if func_name_list[i] == '//':
+
+                            #debug callee analysis
+                            if func_name_list[i] == 'w_ht_size':
                                 context_rval = callee_arg_sweep(op_val, True, func_ea_list[i+1], 0)
                             else:
                                 context_rval = callee_arg_sweep(op_val, False, func_ea_list[i+1], 0)

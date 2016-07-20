@@ -87,68 +87,102 @@ class CalleeContext(object):
         """
         if operand in arg_reg_rdi and not self.rdi_src:
             self.rdi_set = True
+            return True
         elif operand in arg_reg_rsi and not self.rsi_src:
             self.rsi_set = True
+            return True
         elif operand in arg_reg_rdx and not self.rdx_src:
             self.rdx_set = True
+            return True
         elif operand in arg_reg_rcx and not self.rcx_src:
             self.rcx_set = True
+            return True
         elif operand in arg_reg_r10 and not self.r10_src:
             self.r10_set = True
+            return True
         elif operand in arg_reg_r8 and not self.r8_src:
             self.r8_set = True
+            return True
         elif operand in arg_reg_r9 and not self.r9_src:
             self.r9_set = True
+            return True
         elif operand in arg_reg_xmm0 and not self.xmm0_src:
             self.xmm0_set = True
+            return True
         elif operand in arg_reg_xmm1 and not self.xmm1_src:
             self.xmm1_set = True
+            return True
         elif operand in arg_reg_xmm2 and not self.xmm2_src:
             self.xmm2_set = True
+            return True
         elif operand in arg_reg_xmm3 and not self.xmm3_src:
             self.xmm3_set = True
+            return True
         elif operand in arg_reg_xmm4 and not self.xmm4_src:
             self.xmm4_set = True
+            return True
         elif operand in arg_reg_xmm5 and not self.xmm5_src:
             self.xmm5_set = True
+            return True
         elif operand in arg_reg_xmm6 and not self.xmm6_src:
             self.xmm6_set = True
+            return True
         elif operand in arg_reg_xmm7 and not self.xmm7_src:
             self.xmm7_set = True
+            return True
+
+        return False
 
     def add_src_arg(self,operand):
         """ Adds a possible argument to args
         """
         if operand in arg_reg_rdi and not self.rdi_set:
             self.rdi_src = True
+            return True
         elif operand in arg_reg_rsi and not self.rsi_set:
             self.rsi_src = True
+            return True
         elif operand in arg_reg_rdx and not self.rdx_set:
             self.rdx_src = True
+            return True
         elif operand in arg_reg_rcx and not self.rcx_set:
             self.rcx_src = True
+            return True
         elif operand in arg_reg_r10 and not self.r10_set:
             self.r10_src = True
+            return True
         elif operand in arg_reg_r8 and not self.r8_set:
             self.r8_src = True
+            return True
         elif operand in arg_reg_r9 and not self.r9_set:
             self.r9_src = True
+            return True
         elif operand in arg_reg_xmm0 and not self.xmm0_set:
             self.xmm0_src = True
+            return True
         elif operand in arg_reg_xmm1 and not self.xmm1_set:
             self.xmm1_src = True
+            return True
         elif operand in arg_reg_xmm2 and not self.xmm2_set:
             self.xmm2_src = True
+            return True
         elif operand in arg_reg_xmm3 and not self.xmm3_set:
             self.xmm3_src = True
+            return True
         elif operand in arg_reg_xmm4 and not self.xmm4_set:
             self.xmm4_src = True
+            return True
         elif operand in arg_reg_xmm5 and not self.xmm5_set:
             self.xmm5_src = True
+            return True
         elif operand in arg_reg_xmm6 and not self.xmm6_set:
             self.xmm6_src = True
+            return True
         elif operand in arg_reg_xmm7 and not self.xmm7_set:
             self.xmm7_src = True
+            return True
+
+        return False
 
     def add_child_context(self, child):
         if child.rdi_src and not self.rdi_set:
