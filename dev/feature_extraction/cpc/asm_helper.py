@@ -302,7 +302,7 @@ arg_regs_fp = ['xmm0','xmm1','xmm2','xmm3','xmm4','xmm5','xmm6','xmm7']
 #    'r9b','xmm0','xmm1','xmm2','xmm3','xmm4','xmm5','xmm6','xmm7'
 #]
 arg_reg_rdi = ['rdi','edi','di']
-arg_reg_rsi = ['rsi','esi','si','fmt_0']
+arg_reg_rsi = ['rsi','esi','si']
 #arg_reg_rsi = ['derp']
 arg_reg_rdx = ['rdx','edx','dx','dl']
 arg_reg_rcx = ['rcx','ecx','cx','cl']

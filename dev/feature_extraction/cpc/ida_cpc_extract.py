@@ -69,7 +69,7 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                             context.add_child_context(child_context)
                     break
 
-        if "arg_" in opnd_2:
+        if "+arg_" in opnd_2:
             if debug:
                 print("here2")
             if opnd_2 not in stack_args:
@@ -77,7 +77,7 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                 if debug:
                     print("stack arg: %s" % opnd_2)
 
-        if "arg_" in opnd_3:
+        if "+arg_" in opnd_3:
             if debug:
                 print("here3")
             if opnd_3 not in stack_args:
