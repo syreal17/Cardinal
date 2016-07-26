@@ -7,6 +7,12 @@
 # Luke Jones (luke.t.jones.814@gmail.com)
 #
 # -----------------------------------------------------------------------------
+# Notes
+# * "arg regs" are often referenced. These are the "argument registers" used by
+#   the System V calling convention. They can be found in asm_helper.py
+# * "caller" variables are abbreviated with "er" and "callee" with "ee"
+# * "ea" stands for "effective address"
+# -----------------------------------------------------------------------------
 from idaapi import *
 from idautils import *
 from idc import *
@@ -20,13 +26,34 @@ idaapi.require("caller_context")
 #TODO: outline, clarify, simplify, comment (hopefully just when python ida api
 #unclear
 
-#TODO: bring all constants together and here to simplify
-#TODO: comment on what variable does
-MAX_DEPTH = 4
-MAX_CALLEE_SWEEP = 1000
+# TODO: rename MAX_DEPTH to MAX_CALLEE_RECURSION
+MAX_DEPTH = 4                   # how far to pursue child contexts in callee
+                                # analysis
+MAX_CALLEE_SWEEP = 1000         # how many bytes past function start to analyze
+                                #  for callee analysis
+# TODO: change callee_context_dict to func_ea_to_ee_ctx
+callee_context_dict = dict()    # function ea -> resulting context from callee
+                                # analysis
+# TODO: change caller_context_dict to func_ea_to_er_ctx_list
+caller_context_dict = dict()    # function ea -> list of resulting contexts
+                                # from caller analysis at each callsite
+# TODO: change cpc_dict to func_ea_to_cpc
+cpc_dict = dict()               # function ea -> cpc
+DICT_OUTPUT = False             # output function name to cpc dictionary
+CPC_OUTPUT = False              # output cpc chains
+NAME_DEBUG = False              # include function name with cpc chain
+SPLIT_CPC = False               # split CPC value into integer and float parts
+                                # (more correct but harder to debug as split)
+batch = True                    # switch to false if testing manually in IDA
+                                # set to true if using testing framework
+CALLER_CPC_THRESH = 0.75        # What percentage of caller determined cpcs
+                                # must agree for value to be considered as cpc
+CALLER_CONTEXT_REFRESH = 15     # how many instructions w/o arg reg before context reset
+sep = ","                       # what to print between cpc chains
 
-#TODO: rename next_func_ea to next_func_addr
-#TODO: rename ea to cur_func_addr
+
+# TODO: rename callee_arg_sweep to Callee_Arg_Analysis
+#TODO: rename ea to cur_func_ea
 def callee_arg_sweep(ea, debug, next_func_ea, n):
     if debug:
         print("next_func_ea:%x" % next_func_ea)
@@ -72,16 +99,16 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
             if op_type == o_near or op_type == o_far:
                 op_val = GetOperandValue(head, 0)
                 #TODO: outline to Is_Local_Function_Addr
-                if op_val in func_ea_list:
+                if op_val in func_eas:
                     if n < MAX_DEPTH:
                         child_context = callee_context_dict.get(op_val, None)
                         if child_context is None:
                             #TODO: just use func_dict
-                            i = func_ea_list.index(op_val)
-                            if func_name_list[i] == '/debug_func_name/':
-                                child_context = callee_arg_sweep(op_val, True, func_ea_list[i+1], n+1)
+                            i = func_eas.index(op_val)
+                            if func_names[i] == '/debug_func_name/':
+                                child_context = callee_arg_sweep(op_val, True, func_eas[i + 1], n + 1)
                             else:
-                                child_context = callee_arg_sweep(op_val, False, func_ea_list[i+1], n+1)
+                                child_context = callee_arg_sweep(op_val, False, func_eas[i + 1], n + 1)
                             callee_context_dict[op_val] = child_context
 
                         cpc = child_context.callee_calculate_cpc()
@@ -306,6 +333,7 @@ def check_arg(arg_regs, opnd):
             return reg
     return ""
 
+# TODO: change to Add_Aliased_Regs
 def add_regvars(f, ea, context, c):
     for reg in asm_helper.arg_regs_all:
         rv = idaapi.find_regvar(f, ea, reg)
@@ -315,25 +343,6 @@ def add_regvars(f, ea, context, c):
             #names of arg reg for this function.
             context.add_src_arg(reg)
 
-#TODO: move to beginning of file
-callee_context_dict = dict()    # function ea -> resulting context from callee
-                                # analysis
-caller_context_dict = dict()    # function ea -> list of resulting contexts
-                                # from caller analysis at each callsite
-cpc_dict = dict()               # function ea -> cpc
-DICT_OUTPUT = False             # output function name to cpc dictionary
-CPC_OUTPUT = False              # output cpc chains
-NAME_DEBUG = False              # include function name with cpc chain
-SPLIT_CPC = False               # split CPC value into integer and float parts
-                                # (more correct but harder to debug as split)
-batch = True                    # switch to false if testing manually in IDA
-                                # set to true if using testing framework
-CALLER_CPC_THRESH = 0.75        # What percentage of caller determined cpcs
-                                # must agree for value to be considered as cpc
-CALLER_CONTEXT_REFRESH = 15     # how many instructions w/o arg reg before context reset
-sep = ","                       # what to print between cpc chains
-
-#TODO: move to beginning of file
 if __name__ == '__main__':
     if batch:
         if ARGV[1] == '-c':
@@ -363,22 +372,22 @@ if __name__ == '__main__':
     ea = SegByBase(sel)
     pltSel = SegByName(".plt")
     pltEa = SegByBase(pltSel)
-    func_ea_list = list()
-    func_name_list = list()
-    func_dict = dict()
+    func_eas = list()
+    func_names = list()
+    func_ea_to_name = dict()
 
     for function_ea in Functions(SegStart(ea), SegEnd(ea)):
         #print hex(function_ea), GetFunctionName(function_ea)
-        func_ea_list.append(function_ea)
-        func_name_list.append(GetFunctionName(function_ea))
-        func_dict[function_ea] = GetFunctionName(function_ea)
+        func_eas.append(function_ea)
+        func_names.append(GetFunctionName(function_ea))
+        func_ea_to_name[function_ea] = GetFunctionName(function_ea)
     #func_ea_list.append(sys.maxint)
 
     for function_ea in Functions(SegStart(pltEa), SegEnd(pltEa)):
-        func_ea_list.append(function_ea)
-        func_name_list.append(GetFunctionName(function_ea))
-        func_dict[function_ea] = GetFunctionName(function_ea)
-    func_ea_list.append(sys.maxint)
+        func_eas.append(function_ea)
+        func_names.append(GetFunctionName(function_ea))
+        func_ea_to_name[function_ea] = GetFunctionName(function_ea)
+    func_eas.append(sys.maxint)
 
     # TODO: outline to Caller_Arg_Analysis
     cpc_chain = ""
@@ -393,9 +402,9 @@ if __name__ == '__main__':
     # TODO: rename head to h
     for head in Heads(SegStart(ea), SegEnd(ea)):
         # TODO: outline to Is_New_Func
-        if head >= func_ea_list[f]:
+        if head >= func_eas[f]:
             if NAME_DEBUG:
-                addr_chain.append(sep+func_name_list[f]+": ")
+                addr_chain.append(sep + func_names[f] + ": ")
             else:
                 addr_chain.append(sep)
             # TODO: add reset_regs that references init_regs
@@ -430,38 +439,44 @@ if __name__ == '__main__':
                num_opnds = 3
 
             if asm_helper.is_jmp(mnem) or asm_helper.is_call(mnem):
-                # TODO: outline to Caller_Get_Contexts
+                # TODO: outline to Caller_Add_Contexts
                 # TODO: do op stuff all at once
                 op_type = GetOpType(head, 0)
                 # TODO: outline
                 if op_type == o_near or op_type == o_far:
                     op_val = GetOperandValue(head, 0)
                     # TODO: outline
-                    if op_val in func_ea_list:
+                    if op_val in func_eas:
                         #debug members of cpc chain
-                        if func_name_list[f-1] == '//':
-                            print("%x: %s" % (head, func_dict[op_val]))
+                        # TODO: outline Get_Cur_Func_Name
+                        if func_names[f-1] == '//':
+                            print("%x: %s" % (head, func_ea_to_name[op_val]))
 
+                        # TODO: rename context_rval to ee_ctx
                         context_rval = callee_context_dict.get(op_val, None)
                         if context_rval is None:
-                            i = func_ea_list.index(op_val)
+                            # TODO: outline Get_Func_Index
+                            # TODO: rename i to j_f
+                            i = func_eas.index(op_val)
 
                             #debug callee analysis
-                            if func_name_list[i] == '//':
-                                context_rval = callee_arg_sweep(op_val, True, func_ea_list[i+1], 0)
+                            #TODO: outline Get_Func_Name
+                            if func_names[i] == '//':
+                                context_rval = callee_arg_sweep(op_val, True, func_eas[i + 1], 0)
                             else:
-                                context_rval = callee_arg_sweep(op_val, False, func_ea_list[i+1], 0)
+                                context_rval = callee_arg_sweep(op_val, False, func_eas[i + 1], 0)
 
                             callee_context_dict[op_val] = context_rval
                         #ltj: move this out one level to make contexts for all calls.
                         #------------------------------------------------------
                         # TODO: outline to Is_Recursive_Call
-                        if op_val != func_ea_list[f-1]:
+                        if op_val != func_eas[f-1]:
                             l = caller_context_dict.get(op_val, None)
                             if l == None:
                                 caller_context_dict[op_val] = list()
                             cur_context = copy.copy(context)
                             caller_context_dict[op_val].append(cur_context)
+                            # TODO: change name
                             context.init_regs()
                         else:
                             #print skipped functions:
@@ -477,6 +492,7 @@ if __name__ == '__main__':
                     #    func_dict[op_val]
                     #except KeyError:
                     #    func_dict[op_val] = GetFunctionName(op_val)
+                    # TODO: rename to .reset
                     context.init_regs()
 
             if num_opnds == 0:
@@ -484,6 +500,7 @@ if __name__ == '__main__':
                     print("%x: %s" % (head,mnem))
 
             if num_opnds == 1:
+            # TODO: outline to Caller_Update_Context_1
                 if debug:
                     print("%x: %s %s" % (head,mnem,opnd_1))
 
@@ -502,6 +519,7 @@ if __name__ == '__main__':
                         context.add_src_arg(arg)
 
             if num_opnds == 2:
+            # TODO: outline to Caller_Update_Context_2
                 opnd_1_type = GetOpType(head, 0)
                 opnd_2_type = GetOpType(head, 1)
 
@@ -536,6 +554,7 @@ if __name__ == '__main__':
                         context.add_src_arg(arg)
 
             if num_opnds == 3:
+            # TODO: outline to Caller_Update_Context_3
                 opnd_1_type = GetOpType(head, 0)
                 opnd_2_type = GetOpType(head, 1)
                 opnd_3_type = GetOpType(head, 2)
@@ -566,16 +585,14 @@ if __name__ == '__main__':
                         context.add_src_arg(arg)
 
             h += 1
-            # if head == 0x430AEE:
-            #     context.caller_print_arg_regs()
 
-    #ltj: do we need to check on caller_cpc's that don't exist as callee_cpcs?
-    #are there any caller_contexts that don't have callee contexts? Yes, indirect
-    #or library calls, but we currently don't operate on those
+    # TODO: outline to Construct_CPC_Aggregate and Construct_CPC_Aggregate_Split
     for ea in callee_context_dict:
+        # TODO: rename callee_cpc to ee_cpc
         callee_cpc = callee_context_dict[ea].callee_calculate_cpc()
         callee_cpcspl = callee_context_dict[ea].callee_calculate_cpc_split()
 
+        # TODO: rename caller_cpc_list to er_cpcs
         caller_cpc_list = list()
         caller_cpcspl_list = list()
         try:
@@ -584,12 +601,12 @@ if __name__ == '__main__':
                 #     print("caller cpc: %d" % caller_cxt.caller_calculate_cpc())
                 caller_cpc_list.append(caller_cxt.caller_calculate_cpc())
                 caller_cpcspl_list.append(caller_cxt.caller_calculate_cpc_split())
-            del caller_context_dict[ea]
+            del caller_context_dict[ea] # so remainder can be handled later
 
+            # TODO: outline Find_Most_Frequent_CPC
             max_num = 0
             caller_cpc = -1
             caller_cpcspl = ""
-            #for cpc in caller_cpc_list:
             for i in range(0,len(caller_cpc_list)):
                 cpc = caller_cpc_list[i]
                 if caller_cpc_list.count(cpc) > max_num:
@@ -598,18 +615,13 @@ if __name__ == '__main__':
                     caller_cpcspl = caller_cpcspl_list[i]
             maj = float(max_num) / float(len(caller_cpc_list))
 
+            # TODO: replace 14 with MAX_ARG_REGS
             if callee_cpc >= 14:
                 callee_cpc = -1
             else:
                 if maj < CALLER_CPC_THRESH:
                     caller_cpc = -1
-            #Turn off unused argument finding
-            #max_cpc = -1
 
-            # if ea == 0x40D230:
-            #     print("max_cpc: %d" % max_cpc)
-
-            #cpc_dict[ea] = max(caller_cpc, callee_cpc)
             if caller_cpc > callee_cpc:
                 if SPLIT_CPC:
                     cpc_dict[ea] = caller_cpcspl
@@ -621,8 +633,6 @@ if __name__ == '__main__':
                 else:
                     cpc_dict[ea] = callee_cpc
 
-            # if ea == 0x40D230:
-            #     print("cpc: %d" % cpc_dict[ea])
         except KeyError:
             if SPLIT_CPC:
                 cpc_dict[ea] = callee_cpcspl
@@ -636,6 +646,7 @@ if __name__ == '__main__':
             caller_cpc_list.append(caller_cxt.caller_calculate_cpc())
             caller_cpcspl_list.append(caller_cxt.caller_calculate_cpc_split())
 
+        # TODO: outline
         max_num = 0
         caller_cpc = -1
         caller_cpcspl = ""
@@ -654,14 +665,12 @@ if __name__ == '__main__':
 
     for i in addr_chain:
         if sep in str(i):
-        #if i == sep:
             cpc_chain += i
         else:
             cpc_chain += str(cpc_dict[i])
 
+    # TODO: outline to output
     if CPC_OUTPUT:
-        # ltj: this hangs on very long strings
-        # print cpc_chain
         filename = GetInputFilePath() + ".cpc." + ext
         f = open(filename, 'w')
         f.write(cpc_chain)
@@ -670,9 +679,10 @@ if __name__ == '__main__':
         dict_out = ""
         for ea in cpc_dict:
             try:
-                dict_out += func_dict[ea] + ": " + str(cpc_dict[ea]) + "\n"
+                dict_out += func_ea_to_name[ea] + ": " + str(cpc_dict[ea]) + "\n"
             except KeyError:
                 pass
+                # debug:
                 #dict_out += str(ea) + " not found as start of function"
         print dict_out
         filename = GetInputFilePath() + ".cpc." + ext
