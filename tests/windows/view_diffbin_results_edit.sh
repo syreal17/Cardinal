@@ -17,8 +17,8 @@ then
 fi
 
 n=$RANDOM
-find ../../corpora/ -wholename */$1.*.cpc.chain > edits.$1.$2.txt
-find ../../corpora/ -wholename */$2.*.cpc.chain >> edits.$1.$2.txt
+find ../../corpora/ -wholename "*/$1.*.cpc.chain" > edits.$1.$2.txt
+find ../../corpora/ -wholename "*/$2.*.cpc.chain" >> edits.$1.$2.txt
 python ../../dev/similarity/editdistance/edit_distance.py `cat edits.$1.$2.txt` > report.$1.$2.txt
 
 printf "diffbin, edit distance, $1-$2:\n" 

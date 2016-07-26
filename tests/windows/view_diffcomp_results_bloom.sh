@@ -17,7 +17,7 @@ then
 fi
 
 n=$RANDOM
-find ../../corpora/ -wholename */$1.*.$2.feature.bloom -exec python ../../dev/similarity/bloom-jaccard/bloom_jaccard_ind.py {} + > report.$1.$2.txt
+find ../../corpora/ -wholename "*/$1.*.$2.feature.bloom" -exec python ../../dev/similarity/bloom-jaccard/bloom_jaccard_ind.py {} + > report.$1.$2.txt
 
 printf "diff comp, $1-$2:\n"
 

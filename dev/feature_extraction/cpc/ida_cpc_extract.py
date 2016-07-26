@@ -17,26 +17,42 @@ idaapi.require("asm_helper")
 idaapi.require("callee_context")
 idaapi.require("caller_context")
 
+#TODO: outline, clarify, simplify, comment (hopefully just when python ida api
+#unclear
+
+#TODO: bring all constants together and here to simplify
+#TODO: comment on what variable does
 MAX_DEPTH = 4
 MAX_CALLEE_SWEEP = 1000
+
+#TODO: rename next_func_ea to next_func_addr
+#TODO: rename ea to cur_func_addr
 def callee_arg_sweep(ea, debug, next_func_ea, n):
     if debug:
         print("next_func_ea:%x" % next_func_ea)
 
+    #TODO: rename to clarify context
     context = callee_context.CalleeContext()
     stack_args = list()
 
-    #add any aliased arg regs
     f = idaapi.get_func(ea)
-    add_regvars(f, ea, context)
+    if f.regvarqty > 0:
+        #TODO: rename to add_aliased_regs
+        add_regvars(f, ea, context, f.regvarqty)
 
+    #TODO: rename head to addr
     for head in Heads(ea, ea+MAX_CALLEE_SWEEP):
+        #TODO: rename mnem to m, clarify
         mnem = GetMnem(head)
         num_opnds = 0
+
+        #if there is not that operand, it's an empty string
+        #TODO: outline to Get_Operands, return tuple
         opnd_1 = GetOpnd(head, 0)
         opnd_2 = GetOpnd(head, 1)
         opnd_3 = GetOpnd(head, 2)
 
+        #TODO: outline to Get_Operand_Count, return count
         if opnd_1 != "":
             num_opnds = 1
         if opnd_2 != "":
@@ -44,19 +60,25 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
         if opnd_3 != "":
            num_opnds = 3
 
+        #TODO: move to right after for statement, clarify
         if head >= next_func_ea:
             break
 
         if asm_helper.is_jmp(mnem) or asm_helper.is_call(mnem):
+        #TODO: outline to Callee_Follow_Call
+            #TODO: deal with this at other operand stuff
             op_type = GetOpType(head, 0)
+            #TODO: outline to Is_Addr
             if op_type == o_near or op_type == o_far:
                 op_val = GetOperandValue(head, 0)
+                #TODO: outline to Is_Local_Function_Addr
                 if op_val in func_ea_list:
                     if n < MAX_DEPTH:
                         child_context = callee_context_dict.get(op_val, None)
                         if child_context is None:
+                            #TODO: just use func_dict
                             i = func_ea_list.index(op_val)
-                            if func_name_list[i] == 'w_ht_size':
+                            if func_name_list[i] == '/debug_func_name/':
                                 child_context = callee_arg_sweep(op_val, True, func_ea_list[i+1], n+1)
                             else:
                                 child_context = callee_arg_sweep(op_val, False, func_ea_list[i+1], n+1)
@@ -70,6 +92,7 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                     break
 
         if "+arg_" in opnd_2:
+        #TODO: outline to add_stack_arg
             if debug:
                 print("here2")
             if opnd_2 not in stack_args:
@@ -78,6 +101,7 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                     print("stack arg: %s" % opnd_2)
 
         if "+arg_" in opnd_3:
+        #TODO: reference add_stack_arg
             if debug:
                 print("here3")
             if opnd_3 not in stack_args:
@@ -85,14 +109,20 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                 if debug:
                     print("stack arg: %s" % opnd_3)
 
+        #======================================================================
         if num_opnds == 0:
             if debug:
                 print("%x: %s" % (head,mnem))
+        #======================================================================
 
+        #======================================================================
+        #Add source and set register arguments for instruction with 1 operand
         if num_opnds == 1:
+        #TODO: outline Callee_Update_Context_1
             if debug:
                 print("%x: %s %s" % (head,mnem,opnd_1))
 
+            #TODO: simplify, put this stuff at beginning with operand stuff
             opnd_1_type = GetOpType(head, 0)
             if opnd_1_type == o_reg:
                 if asm_helper.is_arg_reg(opnd_1):
@@ -104,13 +134,19 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                         context.add_set_arg(opnd_1)
                     else:
                         print("Unrecognized mnemonic: %x: %s %s" % (head,mnem,opnd_1))
+            #TODO: outline: Is_Mem_Ref
             if opnd_1_type == o_phrase or opnd_1_type == o_displ:
+            #TODO: outline: Add_Mem_Regs
                 for arg in arg_extract(opnd_1):
                     added = context.add_src_arg(arg)
                     if debug and added:
                         print("%s arg added" % arg)
+        #======================================================================
 
+        #======================================================================
+        #Add source and set register arguments for instruction with 2 operands
         if num_opnds == 2:
+        #TODO: outline to Callee_Update_Context_2
             opnd_1_type = GetOpType(head, 0)
             opnd_2_type = GetOpType(head, 1)
 
@@ -122,7 +158,6 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                 if mnem in asm_helper.xor_insts or mnem in asm_helper.xorx_insts:
                     context.add_set_arg(opnd_1)
 
-            # ltj:moved this before opnd_1 to fix case of movsxd rdi edi making rdi set
             if opnd_2_type == o_reg:
                 if asm_helper.is_arg_reg(opnd_2):
                     added = context.add_src_arg(opnd_2)
@@ -144,13 +179,19 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                             print("%s added" % opnd_1)
                     else:
                         print("Unrecognized mnemonic: %x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
+            #TODO: outline
             elif opnd_1_type == o_phrase or opnd_1_type == o_displ:
+            #TODO:  outline
                 for arg in arg_extract(opnd_1):
                     added = context.add_src_arg(arg)
                     if debug and added:
                         print("%s arg added" % arg)
+        #======================================================================
 
+        #======================================================================
+        #Add source and set register arguments for instruction with 3 operands
         if num_opnds == 3:
+        #TODO: outline to Callee_Update_Context_3
             opnd_1_type = GetOpType(head, 0)
             opnd_2_type = GetOpType(head, 1)
             opnd_3_type = GetOpType(head, 2)
@@ -161,6 +202,7 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
             if opnd_1_type == o_reg:
                 if asm_helper.is_arg_reg(opnd_1):
                     context.add_set_arg(opnd_1)
+            #TODO: outline
             elif opnd_1_type == o_phrase or opnd_1_type == o_displ:
                 for arg in arg_extract(opnd_1):
                     added = context.add_src_arg(arg)
@@ -172,6 +214,7 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                     added = context.add_src_arg(opnd_2)
                     if debug and added:
                         print("%s added" % opnd_2)
+            #TODO: outline
             elif opnd_2_type == o_phrase or opnd_2_type == o_displ:
                 for arg in arg_extract(opnd_2):
                     added = context.add_src_arg(arg)
@@ -183,14 +226,18 @@ def callee_arg_sweep(ea, debug, next_func_ea, n):
                     added = context.add_src_arg(opnd_3)
                     if debug and added:
                         print("%s added" % opnd_3)
+            #TODO: outline
             elif opnd_3_type == o_phrase or opnd_3_type == o_displ:
                 for arg in arg_extract(opnd_3):
                     added = context.add_src_arg(arg)
                     if debug and added:
                         print("%s arg added" % arg)
+        #======================================================================
 
     if debug:
         print("stack_args len: %d" % len(stack_args))
+
+    #TODO:change context.extra_args to stack_arg_count
     context.extra_args = len(stack_args)
 
     if debug:
@@ -259,28 +306,34 @@ def check_arg(arg_regs, opnd):
             return reg
     return ""
 
-def add_regvars(f, ea, context):
+def add_regvars(f, ea, context, c):
     for reg in asm_helper.arg_regs_all:
         rv = idaapi.find_regvar(f, ea, reg)
         if rv is not None:
             #ltj: simplistic way is assuming that this regvar is used as src
+            #ltj: make this more robust by just adding it to list of possible
+            #names of arg reg for this function.
             context.add_src_arg(reg)
 
+#TODO: move to beginning of file
 callee_context_dict = dict()    # function ea -> resulting context from callee
                                 # analysis
-caller_context_dict = dict()    # function ea -> list of resulting contexts from
-                                # caller analysis at each callsite
+caller_context_dict = dict()    # function ea -> list of resulting contexts
+                                # from caller analysis at each callsite
 cpc_dict = dict()               # function ea -> cpc
-DICT_OUTPUT = False
-CPC_OUTPUT = False
-ADDR_DEBUG = False
-NAME_DEBUG = False
-SPLIT_CPC = False
-batch = True
-CALLER_CPC_THRESH = 0.75
-CALLER_CONTEXT_REFRESH = 15
-sep = ","
+DICT_OUTPUT = False             # output function name to cpc dictionary
+CPC_OUTPUT = False              # output cpc chains
+NAME_DEBUG = False              # include function name with cpc chain
+SPLIT_CPC = False               # split CPC value into integer and float parts
+                                # (more correct but harder to debug as split)
+batch = True                    # switch to false if testing manually in IDA
+                                # set to true if using testing framework
+CALLER_CPC_THRESH = 0.75        # What percentage of caller determined cpcs
+                                # must agree for value to be considered as cpc
+CALLER_CONTEXT_REFRESH = 15     # how many instructions w/o arg reg before context reset
+sep = ","                       # what to print between cpc chains
 
+#TODO: move to beginning of file
 if __name__ == '__main__':
     if batch:
         if ARGV[1] == '-c':
@@ -306,11 +359,10 @@ if __name__ == '__main__':
     debug = False
     autoWait()
     print("Starting")
-    #ea = ScreenEA()    #ltj:screen ea not set in -A mode
-    #ea = GetEntryPoint(GetEntryOrdinal(0)) #ltj: not always 0...
     sel = SegByName(".text")
     ea = SegByBase(sel)
-    #print("%x" % ea)
+    pltSel = SegByName(".plt")
+    pltEa = SegByBase(pltSel)
     func_ea_list = list()
     func_name_list = list()
     func_dict = dict()
@@ -320,21 +372,33 @@ if __name__ == '__main__':
         func_ea_list.append(function_ea)
         func_name_list.append(GetFunctionName(function_ea))
         func_dict[function_ea] = GetFunctionName(function_ea)
+    #func_ea_list.append(sys.maxint)
+
+    for function_ea in Functions(SegStart(pltEa), SegEnd(pltEa)):
+        func_ea_list.append(function_ea)
+        func_name_list.append(GetFunctionName(function_ea))
+        func_dict[function_ea] = GetFunctionName(function_ea)
     func_ea_list.append(sys.maxint)
 
+    # TODO: outline to Caller_Arg_Analysis
     cpc_chain = ""
     addr_chain = list()
 
+    # TODO: rename context to ctx
     context = caller_context.CallerContext()
+    # TODO: rename f to i_f
     f = 0
+    # TODO: rename h to i_h
     h = 0
+    # TODO: rename head to h
     for head in Heads(SegStart(ea), SegEnd(ea)):
-        #print("%x" % head)
+        # TODO: outline to Is_New_Func
         if head >= func_ea_list[f]:
             if NAME_DEBUG:
                 addr_chain.append(sep+func_name_list[f]+": ")
             else:
                 addr_chain.append(sep)
+            # TODO: add reset_regs that references init_regs
             context.init_regs()
             #cpc_chain += sep
             # if NAME_DEBUG:
@@ -342,22 +406,21 @@ if __name__ == '__main__':
             # if ADDR_DEBUG:
             #     cpc_chain += hex(head)
             f += 1
-        # TODO: have addr_chain and complementary, parallel structure for names/addrs
 
         if h >= CALLER_CONTEXT_REFRESH:
             h = 0
+            # TODO: reference reset_regs
             context.init_regs()
 
         if isCode(GetFlags(head)):
+            # TODO: rename to m
             mnem = GetMnem(head)
+
+            # TODO: outline these similarly to callee
             num_opnds = 0
             opnd_1 = GetOpnd(head, 0)
             opnd_2 = GetOpnd(head, 1)
             opnd_3 = GetOpnd(head, 2)
-
-            #disassemble a particular function:
-            # if func_name_list[f-1] == "CreateParams":
-            #     print("%x: %s %s %s %s" % (head,mnem,opnd_1,opnd_2,opnd_3))
 
             if opnd_1 != "":
                 num_opnds = 1
@@ -367,9 +430,13 @@ if __name__ == '__main__':
                num_opnds = 3
 
             if asm_helper.is_jmp(mnem) or asm_helper.is_call(mnem):
+                # TODO: outline to Caller_Get_Contexts
+                # TODO: do op stuff all at once
                 op_type = GetOpType(head, 0)
+                # TODO: outline
                 if op_type == o_near or op_type == o_far:
                     op_val = GetOperandValue(head, 0)
+                    # TODO: outline
                     if op_val in func_ea_list:
                         #debug members of cpc chain
                         if func_name_list[f-1] == '//':
@@ -380,16 +447,16 @@ if __name__ == '__main__':
                             i = func_ea_list.index(op_val)
 
                             #debug callee analysis
-                            if func_name_list[i] == 'w_ht_size':
+                            if func_name_list[i] == '//':
                                 context_rval = callee_arg_sweep(op_val, True, func_ea_list[i+1], 0)
                             else:
                                 context_rval = callee_arg_sweep(op_val, False, func_ea_list[i+1], 0)
 
                             callee_context_dict[op_val] = context_rval
-                        #ltj: move this to outermost block to make contexts for all calls.
-                        #will have to add functionality during cpc_dict construction that
-                        #looks at not just callee_context_dict for ea's
-                        if op_val != func_ea_list[f-1]: # don't use recursive callsites as caller_contexts
+                        #ltj: move this out one level to make contexts for all calls.
+                        #------------------------------------------------------
+                        # TODO: outline to Is_Recursive_Call
+                        if op_val != func_ea_list[f-1]:
                             l = caller_context_dict.get(op_val, None)
                             if l == None:
                                 caller_context_dict[op_val] = list()
@@ -402,8 +469,14 @@ if __name__ == '__main__':
                             pass
 
                         addr_chain.append(op_val)
-                        #cpc_chain += str(context_rval.callee_calculate_cpc())
+                        #------------------------------------------------------
                 if asm_helper.is_call(mnem):
+                    #ltj:keeping this in case parsing plt doesn't always work
+                    #add target function name to dictionary
+                    #try:
+                    #    func_dict[op_val]
+                    #except KeyError:
+                    #    func_dict[op_val] = GetFunctionName(op_val)
                     context.init_regs()
 
             if num_opnds == 0:
@@ -511,6 +584,7 @@ if __name__ == '__main__':
                 #     print("caller cpc: %d" % caller_cxt.caller_calculate_cpc())
                 caller_cpc_list.append(caller_cxt.caller_calculate_cpc())
                 caller_cpcspl_list.append(caller_cxt.caller_calculate_cpc_split())
+            del caller_context_dict[ea]
 
             max_num = 0
             caller_cpc = -1
@@ -554,6 +628,29 @@ if __name__ == '__main__':
                 cpc_dict[ea] = callee_cpcspl
             else:
                 cpc_dict[ea] = callee_cpc
+    #now check remaining contexts in caller_context_dict
+    for ea in caller_context_dict:
+        for caller_cxt in caller_context_dict[ea]:
+            # if ea == 0x40D230:
+            #     print("caller cpc: %d" % caller_cxt.caller_calculate_cpc())
+            caller_cpc_list.append(caller_cxt.caller_calculate_cpc())
+            caller_cpcspl_list.append(caller_cxt.caller_calculate_cpc_split())
+
+        max_num = 0
+        caller_cpc = -1
+        caller_cpcspl = ""
+        #for cpc in caller_cpc_list:
+        for i in range(0,len(caller_cpc_list)):
+            cpc = caller_cpc_list[i]
+            if caller_cpc_list.count(cpc) > max_num:
+                max_num = caller_cpc_list.count(cpc)
+                caller_cpc = cpc
+                caller_cpcspl = caller_cpcspl_list[i]
+
+        if SPLIT_CPC:
+            cpc_dict[ea] = caller_cpcspl
+        else:
+            cpc_dict[ea] = caller_cpc
 
     for i in addr_chain:
         if sep in str(i):
