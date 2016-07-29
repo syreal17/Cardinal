@@ -11,10 +11,11 @@
 
 from asm_helper import *
 
+
 class CalleeContext(object):
     def __init__(self):
-        self.extra_args = 0
-        self.def_chain = list() #for debugging purpose, functions for ea cpc
+        self.stack_arg_count = 0
+        self.def_chain = list()  # for debugging purpose, functions for ea cpc
         self.init_regs()
 
     def init_regs(self):
@@ -49,6 +50,9 @@ class CalleeContext(object):
         self.xmm5_src = False
         self.xmm6_src = False
         self.xmm7_src = False
+
+    def reset(self):
+        self.init_regs()
 
     def print_arg_regs(self):
         if self.rdi_src is True:
@@ -216,7 +220,7 @@ class CalleeContext(object):
         if child.xmm7_src and not self.xmm7_set:
             self.xmm7_src = True
 
-    def callee_calculate_cpc(self):
+    def calculate_cpc(self):
         """ Determine callsite parameter cardinality based on argument
             registers seen in assignment commands and their order
         """
@@ -260,9 +264,9 @@ class CalleeContext(object):
         elif self.xmm7_src is True:
             fp_regs = 8
 
-        return int_regs + fp_regs + self.extra_args
+        return int_regs + fp_regs + self.stack_arg_count
 
-    def callee_calculate_cpc_split(self):
+    def calculate_cpc_split(self):
         """ Determine callsite parameter cardinality based on argument
             registers seen in assignment commands and their order
         """

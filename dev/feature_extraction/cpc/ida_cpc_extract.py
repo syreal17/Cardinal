@@ -12,6 +12,8 @@
 #   the System V calling convention. They can be found in asm_helper.py
 # * "caller" variables are abbreviated with "er" and "callee" with "ee"
 # * "ea" stands for "effective address"
+# * Dictionaries are in the form "key_type"_to_"value_type"
+# * Lists are in a pluralized form, "ea" becomes "eas" etc.
 # -----------------------------------------------------------------------------
 from idaapi import *
 from idautils import *
@@ -19,258 +21,221 @@ from idc import *
 import re
 import sys
 import copy
+import asm_helper
+import callee_context
+import caller_context
+import operands
 idaapi.require("asm_helper")
 idaapi.require("callee_context")
 idaapi.require("caller_context")
+idaapi.require("operands")
 
-#TODO: outline, clarify, simplify, comment (hopefully just when python ida api
-#unclear
-
-# TODO: rename MAX_DEPTH to MAX_CALLEE_RECURSION
-MAX_DEPTH = 4                   # how far to pursue child contexts in callee
+BATCH_MODE = True              # switch to false if testing manually in IDA
+MAX_CALLEE_RECURSION = 4        # how far to pursue child contexts in callee
                                 # analysis
 MAX_CALLEE_SWEEP = 1000         # how many bytes past function start to analyze
                                 #  for callee analysis
-# TODO: change callee_context_dict to func_ea_to_ee_ctx
-callee_context_dict = dict()    # function ea -> resulting context from callee
-                                # analysis
-# TODO: change caller_context_dict to func_ea_to_er_ctx_list
-caller_context_dict = dict()    # function ea -> list of resulting contexts
-                                # from caller analysis at each callsite
-# TODO: change cpc_dict to func_ea_to_cpc
-cpc_dict = dict()               # function ea -> cpc
+MAX_ARG_REGS = 14
+INVALID_CPC = -1
 DICT_OUTPUT = False             # output function name to cpc dictionary
 CPC_OUTPUT = False              # output cpc chains
 NAME_DEBUG = False              # include function name with cpc chain
 SPLIT_CPC = False               # split CPC value into integer and float parts
                                 # (more correct but harder to debug as split)
-batch = True                    # switch to false if testing manually in IDA
                                 # set to true if using testing framework
 CALLER_CPC_THRESH = 0.75        # What percentage of caller determined cpcs
                                 # must agree for value to be considered as cpc
 CALLER_CONTEXT_REFRESH = 15     # how many instructions w/o arg reg before context reset
-sep = ","                       # what to print between cpc chains
+SEP = ","                       # what to print between cpc chains
+
+f_ea_to_ee_ctx = dict()         # function ea -> resulting context from callee
+                                # analysis
+f_ea_to_er_ctxs = dict()        # function ea -> list of resulting contexts
+                                # from caller analysis at each callsite
+f_eas, f_names, f_ea_to_name = list(), list(), dict()
 
 
-# TODO: rename callee_arg_sweep to Callee_Arg_Analysis
-#TODO: rename ea to cur_func_ea
-def callee_arg_sweep(ea, debug, next_func_ea, n):
+def callee_arg_analysis(cur_f_ea, debug, next_f_ea, n):
     if debug:
-        print("next_func_ea:%x" % next_func_ea)
+        print("next_func_ea:%x" % next_f_ea)
 
-    #TODO: rename to clarify context
-    context = callee_context.CalleeContext()
+    ee_ctx = callee_context.CalleeContext()
     stack_args = list()
 
-    f = idaapi.get_func(ea)
+    f = idaapi.get_func(cur_f_ea)
     if f.regvarqty > 0:
-        #TODO: rename to add_aliased_regs
-        add_regvars(f, ea, context, f.regvarqty)
+        add_aliased_regs(f, cur_f_ea, ee_ctx, f.regvarqty)
 
-    #TODO: rename head to addr
-    for head in Heads(ea, ea+MAX_CALLEE_SWEEP):
-        #TODO: rename mnem to m, clarify
-        mnem = GetMnem(head)
-        num_opnds = 0
-
-        #if there is not that operand, it's an empty string
-        #TODO: outline to Get_Operands, return tuple
-        opnd_1 = GetOpnd(head, 0)
-        opnd_2 = GetOpnd(head, 1)
-        opnd_3 = GetOpnd(head, 2)
-
-        #TODO: outline to Get_Operand_Count, return count
-        if opnd_1 != "":
-            num_opnds = 1
-        if opnd_2 != "":
-            num_opnds = 2
-        if opnd_3 != "":
-           num_opnds = 3
-
-        #TODO: move to right after for statement, clarify
-        if head >= next_func_ea:
+    for h_ea in Heads(cur_f_ea, cur_f_ea+MAX_CALLEE_SWEEP):
+        # if we've reached the next function
+        if h_ea >= next_f_ea:
             break
 
-        if asm_helper.is_jmp(mnem) or asm_helper.is_call(mnem):
-        #TODO: outline to Callee_Follow_Call
-            #TODO: deal with this at other operand stuff
-            op_type = GetOpType(head, 0)
-            #TODO: outline to Is_Addr
-            if op_type == o_near or op_type == o_far:
-                op_val = GetOperandValue(head, 0)
-                #TODO: outline to Is_Local_Function_Addr
-                if op_val in func_eas:
-                    if n < MAX_DEPTH:
-                        child_context = callee_context_dict.get(op_val, None)
-                        if child_context is None:
-                            #TODO: just use func_dict
-                            i = func_eas.index(op_val)
-                            if func_names[i] == '/debug_func_name/':
-                                child_context = callee_arg_sweep(op_val, True, func_eas[i + 1], n + 1)
-                            else:
-                                child_context = callee_arg_sweep(op_val, False, func_eas[i + 1], n + 1)
-                            callee_context_dict[op_val] = child_context
+        m = GetMnem(h_ea)
 
-                        cpc = child_context.callee_calculate_cpc()
-                        if debug:
-                            print("child cpc: %d" % cpc)
-                        if cpc < 14: #ltj: clumsy checking for varargs function
-                            context.add_child_context(child_context)
-                    break
+        ops = operands.Operands(h_ea)
+        if "+arg_" in ops.o2.text:
+            stack_args = add_stack_arg(stack_args, ops, debug)
+        if "+arg_" in ops.o3.text:
+            stack_args = add_stack_arg(stack_args, ops, debug)
 
-        if "+arg_" in opnd_2:
-        #TODO: outline to add_stack_arg
-            if debug:
-                print("here2")
-            if opnd_2 not in stack_args:
-                stack_args.append(opnd_2)
-                if debug:
-                    print("stack arg: %s" % opnd_2)
+        if asm_helper.is_jmp(m) or asm_helper.is_call(m):
+            b, ee_ctx = callee_add_child_context(ops, ee_ctx, n)
+            if b:
+                break
 
-        if "+arg_" in opnd_3:
-        #TODO: reference add_stack_arg
-            if debug:
-                print("here3")
-            if opnd_3 not in stack_args:
-                stack_args.append(opnd_3)
-                if debug:
-                    print("stack arg: %s" % opnd_3)
-
-        #======================================================================
-        if num_opnds == 0:
-            if debug:
-                print("%x: %s" % (head,mnem))
-        #======================================================================
-
-        #======================================================================
-        #Add source and set register arguments for instruction with 1 operand
-        if num_opnds == 1:
-        #TODO: outline Callee_Update_Context_1
-            if debug:
-                print("%x: %s %s" % (head,mnem,opnd_1))
-
-            #TODO: simplify, put this stuff at beginning with operand stuff
-            opnd_1_type = GetOpType(head, 0)
-            if opnd_1_type == o_reg:
-                if asm_helper.is_arg_reg(opnd_1):
-                    if mnem in asm_helper.r_group or mnem in asm_helper.rw_group:
-                        added = context.add_src_arg(opnd_1)
-                        if debug and added:
-                            print("%s added" % opnd_1)
-                    elif mnem in asm_helper.w_group:
-                        context.add_set_arg(opnd_1)
-                    else:
-                        print("Unrecognized mnemonic: %x: %s %s" % (head,mnem,opnd_1))
-            #TODO: outline: Is_Mem_Ref
-            if opnd_1_type == o_phrase or opnd_1_type == o_displ:
-            #TODO: outline: Add_Mem_Regs
-                for arg in arg_extract(opnd_1):
-                    added = context.add_src_arg(arg)
-                    if debug and added:
-                        print("%s arg added" % arg)
-        #======================================================================
-
-        #======================================================================
-        #Add source and set register arguments for instruction with 2 operands
-        if num_opnds == 2:
-        #TODO: outline to Callee_Update_Context_2
-            opnd_1_type = GetOpType(head, 0)
-            opnd_2_type = GetOpType(head, 1)
-
-            if debug:
-                print("%x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
-
-            #XOR REG1 REG1 case:
-            if opnd_1 == opnd_2:
-                if mnem in asm_helper.xor_insts or mnem in asm_helper.xorx_insts:
-                    context.add_set_arg(opnd_1)
-
-            if opnd_2_type == o_reg:
-                if asm_helper.is_arg_reg(opnd_2):
-                    added = context.add_src_arg(opnd_2)
-                    if debug and added:
-                        print("%s added" % opnd_2)
-            elif opnd_2_type == o_phrase or opnd_2_type == o_displ:
-                for arg in arg_extract(opnd_2):
-                    added = context.add_src_arg(arg)
-                    if debug and added:
-                        print("%s arg added" % arg)
-
-            if opnd_1_type == o_reg:
-                if asm_helper.is_arg_reg(opnd_1):
-                    if mnem in asm_helper.w_r_group:
-                        context.add_set_arg(opnd_1)
-                    elif mnem in asm_helper.r_r_group or mnem in asm_helper.rw_r_group:
-                        added = context.add_src_arg(opnd_1)
-                        if debug and added:
-                            print("%s added" % opnd_1)
-                    else:
-                        print("Unrecognized mnemonic: %x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
-            #TODO: outline
-            elif opnd_1_type == o_phrase or opnd_1_type == o_displ:
-            #TODO:  outline
-                for arg in arg_extract(opnd_1):
-                    added = context.add_src_arg(arg)
-                    if debug and added:
-                        print("%s arg added" % arg)
-        #======================================================================
-
-        #======================================================================
-        #Add source and set register arguments for instruction with 3 operands
-        if num_opnds == 3:
-        #TODO: outline to Callee_Update_Context_3
-            opnd_1_type = GetOpType(head, 0)
-            opnd_2_type = GetOpType(head, 1)
-            opnd_3_type = GetOpType(head, 2)
-
-            if debug:
-                print("%x: %s %s %s %s" % (head,mnem,opnd_1,opnd_2,opnd_3))
-
-            if opnd_1_type == o_reg:
-                if asm_helper.is_arg_reg(opnd_1):
-                    context.add_set_arg(opnd_1)
-            #TODO: outline
-            elif opnd_1_type == o_phrase or opnd_1_type == o_displ:
-                for arg in arg_extract(opnd_1):
-                    added = context.add_src_arg(arg)
-                    if debug and added:
-                        print("%s arg added" % arg)
-
-            if opnd_2_type == o_reg:
-                if asm_helper.is_arg_reg(opnd_2):
-                    added = context.add_src_arg(opnd_2)
-                    if debug and added:
-                        print("%s added" % opnd_2)
-            #TODO: outline
-            elif opnd_2_type == o_phrase or opnd_2_type == o_displ:
-                for arg in arg_extract(opnd_2):
-                    added = context.add_src_arg(arg)
-                    if debug and added:
-                        print("%s arg added" % arg)
-
-            if opnd_3_type == o_reg:
-                if asm_helper.is_arg_reg(opnd_3):
-                    added = context.add_src_arg(opnd_3)
-                    if debug and added:
-                        print("%s added" % opnd_3)
-            #TODO: outline
-            elif opnd_3_type == o_phrase or opnd_3_type == o_displ:
-                for arg in arg_extract(opnd_3):
-                    added = context.add_src_arg(arg)
-                    if debug and added:
-                        print("%s arg added" % arg)
-        #======================================================================
+        ee_ctx = callee_update_context(h_ea, m, ops, ee_ctx, debug)
 
     if debug:
         print("stack_args len: %d" % len(stack_args))
 
-    #TODO:change context.extra_args to stack_arg_count
-    context.extra_args = len(stack_args)
+    ee_ctx.stack_arg_count = len(stack_args)
 
     if debug:
-        context.print_arg_regs()
+        ee_ctx.print_arg_regs()
 
-    return context
+    return ee_ctx
+
+
+def callee_add_child_context(ops, ee_ctx, n):
+    b = False
+
+    if is_addr(ops.o1.type):
+        called_ea = ops.o1.val
+        if called_ea in f_eas:
+            if n < MAX_CALLEE_RECURSION:
+                child_ee_ctx = f_ea_to_ee_ctx.get(called_ea, None)
+                if child_ee_ctx is None:
+                    j_f = f_eas.index(called_ea)
+                    j_nextf = j_f + 1
+                    if f_ea_to_name[called_ea] == '/debug_func_name/':
+                        child_ee_ctx = callee_arg_analysis(called_ea, True, f_eas[j_nextf], n + 1)
+                    else:
+                        child_ee_ctx = callee_arg_analysis(called_ea, False, f_eas[j_nextf], n + 1)
+                    f_ea_to_ee_ctx[called_ea] = child_ee_ctx
+
+                cpc = child_ee_ctx.calculate_cpc()
+                if debug:
+                    print("child cpc: %d" % cpc)
+                if cpc < 14:  # ltj: imprecise checking for varargs
+                    ee_ctx.add_child_context(child_ee_ctx)
+            b = True  # whether to break callee_arg_analysis loop
+
+    return b, ee_ctx
+
+
+def callee_update_context(h_ea, m, ops, ee_ctx, debug):
+    if ops.count == 0:
+        if debug:
+            print("%x: %s" % (h_ea, m))
+
+    # Add source and set register arguments for instruction with 1 operand
+    if ops.count == 1:
+        if debug:
+            print("%x: %s %s" % (h_ea, m, ops.o1.text))
+
+        if ops.o1.type == o_reg:
+            if asm_helper.is_arg_reg(ops.o1.text):
+                if m in asm_helper.r_group or m in asm_helper.rw_group:
+                    added = ee_ctx.add_src_arg(ops.o1.text)
+                    if debug and added:
+                        print("%s added" % ops.o1.text)
+                elif m in asm_helper.w_group:
+                    ee_ctx.add_set_arg(ops.o1.text)
+                else:
+                    print("Unrecognized mnemonic: %x: %s %s" % (h_ea, m, ops.o1.text))
+        if ops.o1.type == o_phrase or ops.o1.type == o_displ:
+            for arg in arg_extract(ops.o1.text):
+                added = ee_ctx.add_src_arg(arg)
+                if debug and added:
+                    print("%s arg added" % arg)
+
+    # Add source and set register arguments for instruction with 2 operands
+    if ops.count == 2:
+        if debug:
+            print("%x: %s %s %s" % (h_ea, m, ops.o1.text, ops.o2.text))
+
+        # XOR REG1 REG1 case:
+        if ops.o1.text == ops.o2.text:
+            if m in asm_helper.xor_insts or m in asm_helper.xorx_insts:
+                ee_ctx.add_set_arg(ops.o1.text)
+
+        if ops.o2.type == o_reg:
+            if asm_helper.is_arg_reg(ops.o2.text):
+                added = ee_ctx.add_src_arg(ops.o2.text)
+                if debug and added:
+                    print("%s added" % ops.o2.text)
+        elif ops.o2.type == o_phrase or ops.o2.type == o_displ:
+            for arg in arg_extract(ops.o2.text):
+                added = ee_ctx.add_src_arg(arg)
+                if debug and added:
+                    print("%s arg added" % arg)
+
+        if ops.o1.type == o_reg:
+            if asm_helper.is_arg_reg(ops.o1.text):
+                if m in asm_helper.w_r_group:
+                    ee_ctx.add_set_arg(ops.o1.text)
+                elif m in asm_helper.r_r_group or m in asm_helper.rw_r_group:
+                    added = ee_ctx.add_src_arg(ops.o1.text)
+                    if debug and added:
+                        print("%s added" % ops.o1.text)
+                else:
+                    print("Unrecognized mnemonic: %x: %s %s %s" % (h_ea, m, ops.o1.text, ops.o2.text))
+        elif ops.o1.type == o_phrase or ops.o1.type == o_displ:
+            for arg in arg_extract(ops.o1.text):
+                added = ee_ctx.add_src_arg(arg)
+                if debug and added:
+                    print("%s arg added" % arg)
+
+    # Add source and set register arguments for instruction with 3 operands
+    if ops.count == 3:
+        if debug:
+            print("%x: %s %s %s %s" % (h_ea, m, ops.o1.text, ops.o2.text, ops.o3.text))
+
+        if ops.o1.type == o_reg:
+            if asm_helper.is_arg_reg(ops.o1.text):
+                ee_ctx.add_set_arg(ops.o1.text)
+        elif ops.o1.type == o_phrase or ops.o1.type == o_displ:
+            for arg in arg_extract(ops.o1.text):
+                added = ee_ctx.add_src_arg(arg)
+                if debug and added:
+                    print("%s arg added" % arg)
+
+        if ops.o2.type == o_reg:
+            if asm_helper.is_arg_reg(ops.o2.text):
+                added = ee_ctx.add_src_arg(ops.o2.text)
+                if debug and added:
+                    print("%s added" % ops.o2.text)
+        elif ops.o2.type == o_phrase or ops.o2.type == o_displ:
+            for arg in arg_extract(ops.o2.text):
+                added = ee_ctx.add_src_arg(arg)
+                if debug and added:
+                    print("%s arg added" % arg)
+
+        if ops.o3.type == o_reg:
+            if asm_helper.is_arg_reg(ops.o3.text):
+                added = ee_ctx.add_src_arg(ops.o3.text)
+                if debug and added:
+                    print("%s added" % ops.o3.text)
+        elif ops.o3.type == o_phrase or ops.o3.type == o_displ:
+            for arg in arg_extract(ops.o3.text):
+                added = ee_ctx.add_src_arg(arg)
+                if debug and added:
+                    print("%s arg added" % arg)
+
+    return ee_ctx
+
+
+def add_stack_arg(stack_args, ops, debug):
+    if debug:
+        print("here2")
+    if ops.o2.text not in stack_args:
+        stack_args.append(ops.o2.text)
+        if debug:
+            print("stack arg: %s" % ops.o2.text)
+
+    return stack_args
+
 
 def arg_extract(opnd):
     arg_list = list()
@@ -324,38 +289,314 @@ def arg_extract(opnd):
 
     return arg_list
 
+
 def check_arg(arg_regs, opnd):
     for reg in arg_regs:
-        #TODO: replace with regex
-        #if reg in opnd:
+        # if reg in opnd:
         m = re.search('[+*\[]'+reg+'[+*\]]', opnd)
         if m is not None:
             return reg
     return ""
 
-# TODO: change to Add_Aliased_Regs
-def add_regvars(f, ea, context, c):
+
+def add_aliased_regs(f, ea, context, c):
     for reg in asm_helper.arg_regs_all:
         rv = idaapi.find_regvar(f, ea, reg)
         if rv is not None:
-            #ltj: simplistic way is assuming that this regvar is used as src
-            #ltj: make this more robust by just adding it to list of possible
-            #names of arg reg for this function.
+            # ltj: simplistic way is assuming that this regvar is used as src
+            # ltj: make this more robust by just adding it to list of possible
+            # names of arg reg for this function.
             context.add_src_arg(reg)
 
+
+def caller_arg_analysis(debug, ea):
+    dst_eas = list()
+    er_ctx = caller_context.CallerContext()
+    i_nextf = 0
+    i_h = 0
+    for h_ea in Heads(SegStart(ea), SegEnd(ea)):
+        # have we reached the next function?
+        if h_ea >= f_eas[i_nextf]:
+            if NAME_DEBUG:
+                dst_eas.append(SEP + f_names[i_nextf] + ": ")
+            else:
+                dst_eas.append(SEP)
+            er_ctx.reset()
+            i_nextf += 1
+
+        # have we passed so many instructions without a set arg reg?
+        if i_h >= CALLER_CONTEXT_REFRESH:
+            i_h = 0
+            er_ctx.reset()
+
+        if isCode(GetFlags(h_ea)):
+            m = GetMnem(h_ea)
+            ops = operands.Operands(h_ea)
+            i_curf = i_nextf-1
+
+            if asm_helper.is_jmp(m) or asm_helper.is_call(m):
+                er_ctx, dst_eas = caller_add_contexts(h_ea, m, ops, i_curf, er_ctx, dst_eas)
+
+            er_ctx, i_h = caller_update_context(h_ea, m, ops, er_ctx, i_h)
+
+            i_h += 1
+
+    return dst_eas
+
+
+def caller_add_contexts(h_ea, m, ops, i_curf, er_ctx, dst_eas):
+    if is_addr(ops.o1.type):
+        called_ea = ops.o1.val
+        if called_ea in f_eas:
+            #debug target func names of cpc chain
+            if f_names[i_curf] == '/debug_function/':
+                print("%x: %s" % (h_ea, f_ea_to_name[called_ea]))
+
+            ee_ctx = f_ea_to_ee_ctx.get(called_ea, None)
+            if ee_ctx is None:
+                j_f = f_eas.index(called_ea)
+                j_nextf = j_f + 1
+
+                #debug callee analysis
+                if f_ea_to_name[called_ea] == '/debug_function/':
+                    ee_ctx = callee_arg_analysis(called_ea, True, f_eas[j_nextf], 0)
+                else:
+                    ee_ctx = callee_arg_analysis(called_ea, False, f_eas[j_nextf], 0)
+
+                f_ea_to_ee_ctx[called_ea] = ee_ctx
+            #ltj: move this out one level to make er contexts for all calls.
+            #------------------------------------------------------
+            if called_ea != f_eas[i_curf]: #called_ea not recursive
+                l = f_ea_to_er_ctxs.get(called_ea, None)
+                if l == None:
+                    f_ea_to_er_ctxs[called_ea] = list()
+                cur_context = copy.copy(er_ctx)
+                f_ea_to_er_ctxs[called_ea].append(cur_context)
+                er_ctx.reset()
+            else:
+                #print skipped functions:
+                #print("called_ea: %x. func: %s" % (called_ea,func_name_list[i_nextf-1]))
+                pass
+
+            dst_eas.append(called_ea)
+            #------------------------------------------------------
+    if asm_helper.is_call(m):
+        #ltj:keeping this in case parsing plt at beginning doesn't always work
+        #add target function name to dictionary
+        #try:
+        #    func_dict[called_ea]
+        #except KeyError:
+        #    func_dict[called_ea] = GetFunctionName(called_ea)
+        er_ctx.reset()
+
+    return er_ctx, dst_eas
+
+
+def caller_update_context(h_ea, m, ops, er_ctx, i_h):
+    if ops.count == 0:
+        if debug:
+            print("%x: %s" % (h_ea, m))
+
+    if ops.count == 1:
+        if debug:
+            print("%x: %s %s" % (h_ea, m, ops.o1.text))
+
+        if ops.o1.type == o_reg:
+            if asm_helper.is_arg_reg(ops.o1.text):
+                if m in asm_helper.r_group:
+                    er_ctx.add_src_arg(ops.o1.text)
+                elif m in asm_helper.w_group or m in asm_helper.rw_group:
+                    er_ctx.add_set_arg(ops.o1.text)
+                    i_h = 0
+                else:
+                    print("Unrecognized mnemonic: %x: %s %s" % (h_ea, m, ops.o1.text))
+        if ops.o1.type == o_phrase or ops.o1.type == o_displ:
+            for arg in arg_extract(ops.o1.text):
+                er_ctx.add_src_arg(arg)
+
+    if ops.count == 2:
+        if debug:
+            print("%x: %s %s %s" % (h_ea, m, ops.o1.text, ops.o2.text))
+
+        # XOR REG1 REG1 case:
+        if ops.o1.text == ops.o2.text:
+            if m in asm_helper.xor_insts or m in asm_helper.xorx_insts:
+                er_ctx.add_set_arg(ops.o1.text)
+                i_h = 0
+
+        if ops.o2.type == o_reg:
+            if asm_helper.is_arg_reg(ops.o2.text):
+                er_ctx.add_src_arg(ops.o2.text)
+        elif ops.o2.type == o_phrase or ops.o2.type == o_displ:
+            for arg in arg_extract(ops.o2.text):
+                er_ctx.add_src_arg(arg)
+
+        if ops.o1.type == o_reg:
+            if asm_helper.is_arg_reg(ops.o1.text):
+                if m in asm_helper.w_r_group or m in asm_helper.rw_r_group:
+                    er_ctx.add_set_arg(ops.o1.text)
+                    i_h = 0
+                elif m in asm_helper.r_r_group:
+                    er_ctx.add_src_arg(ops.o1.text)
+                else:
+                    print("Unrecognized mnemonic: %x: %s %s %s" % (h_ea, m, ops.o1.text, ops.o2.text))
+        elif ops.o1.type == o_phrase or ops.o1.type == o_displ:
+            for arg in arg_extract(ops.o1.text):
+                er_ctx.add_src_arg(arg)
+
+    if ops.count == 3:
+        if debug:
+            print("%x: %s %s %s %s" % (h_ea, m, ops.o1.text, ops.o2.text, ops.o3.text))
+
+        if ops.o1.type == o_reg:
+            if asm_helper.is_arg_reg(ops.o1.text):
+                er_ctx.add_set_arg(ops.o1.text)
+                i_h = 0
+        elif ops.o1.type == o_phrase or ops.o1.type == o_displ:
+            for arg in arg_extract(ops.o1.text):
+                er_ctx.add_src_arg(arg)
+
+        if ops.o2.type == o_reg:
+            if asm_helper.is_arg_reg(ops.o2.text):
+                er_ctx.add_src_arg(ops.o2.text)
+        elif ops.o2.type == o_phrase or ops.o2.type == o_displ:
+            for arg in arg_extract(ops.o2.text):
+                er_ctx.add_src_arg(arg)
+
+        if ops.o3.type == o_reg:
+            if asm_helper.is_arg_reg(ops.o3.text):
+                er_ctx.add_src_arg(ops.o3.text)
+        elif ops.o3.type == o_phrase or ops.o3.type == o_displ:
+            for arg in arg_extract(ops.o3.text):
+                er_ctx.add_src_arg(arg)
+
+    return er_ctx, i_h
+
+
+def is_addr(op_type):
+    if op_type == o_near or op_type == o_far:
+        return True
+    else:
+        return False
+
+
+def construct_cpc_aggregate(dst_eas):
+    dst_cpcs, f_ea_to_cpc = "", dict()
+    for ea in f_ea_to_ee_ctx:
+        ee_cpc = f_ea_to_ee_ctx[ea].calculate_cpc()
+        ee_cpcspl = f_ea_to_ee_ctx[ea].calculate_cpc_split()
+
+        try:
+            er_cpcs, er_cpcspls = list(), list()
+            for er_cxt in f_ea_to_er_ctxs[ea]:
+                er_cpcs.append(er_cxt.calculate_cpc())
+                er_cpcspls.append(er_cxt.calculate_cpc_split())
+            del f_ea_to_er_ctxs[ea] # so remainder can be handled later
+
+            maj, er_cpc, er_cpcspl = find_most_frequent_cpc(er_cpcs, er_cpcspls)
+
+            if ee_cpc >= MAX_ARG_REGS:
+                ee_cpc = INVALID_CPC
+            else:
+                if maj < CALLER_CPC_THRESH:
+                    er_cpc = INVALID_CPC
+
+            if er_cpc > ee_cpc:
+                if SPLIT_CPC:
+                    f_ea_to_cpc[ea] = er_cpcspl
+                else:
+                    f_ea_to_cpc[ea] = er_cpc
+            else:
+                if SPLIT_CPC:
+                    f_ea_to_cpc[ea] = ee_cpcspl
+                else:
+                    f_ea_to_cpc[ea] = ee_cpc
+
+        except KeyError:
+            if SPLIT_CPC:
+                f_ea_to_cpc[ea] = ee_cpcspl
+            else:
+                f_ea_to_cpc[ea] = ee_cpc
+    # now check remaining contexts in caller_context_dict
+    for ea in f_ea_to_er_ctxs:
+        er_cpcs, er_cpcspls = list(), list()
+        for er_cxt in f_ea_to_er_ctxs[ea]:
+            er_cpcs.append(er_cxt.calculate_cpc())
+            er_cpcspls.append(er_cxt.calculate_cpc_split())
+
+        maj, er_cpc, er_cpcspl = find_most_frequent_cpc(er_cpcs, er_cpcspls)
+
+        if SPLIT_CPC:
+            f_ea_to_cpc[ea] = er_cpcspl
+        else:
+            f_ea_to_cpc[ea] = er_cpc
+
+    for ea in dst_eas:
+        if SEP in str(ea):
+            dst_cpcs += ea
+        else:
+            dst_cpcs += str(f_ea_to_cpc[ea])
+
+    return dst_cpcs, f_ea_to_cpc
+
+
+def find_most_frequent_cpc(er_cpcs, er_cpcspls):
+    max_num = 0
+    er_cpc = -1
+    er_cpcspl = ""
+    for i in range(0,len(er_cpcs)):
+        cpc = er_cpcs[i]
+        if er_cpcs.count(cpc) > max_num:
+            max_num = er_cpcs.count(cpc)
+            er_cpc = cpc
+            er_cpcspl = er_cpcspls[i]
+    maj = float(max_num) / float(len(er_cpcs))
+    return maj, er_cpc, er_cpcspl
+
+
+def output_cpc(dst_cpcs, f_ea_to_cpc):
+    if CPC_OUTPUT:
+        filename = GetInputFilePath() + ".cpc." + ext
+        f = open(filename, 'w')
+        f.write(dst_cpcs)
+        f.close()
+    elif DICT_OUTPUT:
+        dict_out = ""
+        for ea in f_ea_to_cpc:
+            try:
+                dict_out += f_ea_to_name[ea] + ": " + str(f_ea_to_cpc[ea]) + "\n"
+            except KeyError:
+                pass
+                # debug:
+                # dict_out += str(ea) + " not found as start of function"
+        print dict_out
+        filename = GetInputFilePath() + ".cpc." + ext
+        f = open(filename, 'w')
+        f.write(dict_out)
+        f.close()
+
+
+def get_functions_in_section(ea):
+    for f_ea in Functions(SegStart(ea), SegEnd(ea)):
+        f_eas.append(f_ea)
+        f_names.append(GetFunctionName(f_ea))
+        f_ea_to_name[f_ea] = GetFunctionName(f_ea)
+    return f_eas, f_names, f_ea_to_name
+
+
 if __name__ == '__main__':
-    if batch:
+    if BATCH_MODE:
         if ARGV[1] == '-c':
-            sep = ","
+            SEP = ","
             CPC_OUTPUT = True
             ext = "chain"
         elif ARGV[1] == '-f':
-            sep = "\n"
+            SEP = "\n"
             NAME_DEBUG = True
             CPC_OUTPUT = True
             ext = "func"
         elif ARGV[1] == '-l':
-            sep = "\n"
+            SEP = "\n"
             CPC_OUTPUT = True
             ext = "feature"
         elif ARGV[1] == '-d':
@@ -368,327 +609,27 @@ if __name__ == '__main__':
     debug = False
     autoWait()
     print("Starting")
-    sel = SegByName(".text")
-    ea = SegByBase(sel)
+
+    textSel = SegByName(".text")
+    textEa = SegByBase(textSel)
     pltSel = SegByName(".plt")
     pltEa = SegByBase(pltSel)
-    func_eas = list()
-    func_names = list()
-    func_ea_to_name = dict()
 
-    for function_ea in Functions(SegStart(ea), SegEnd(ea)):
-        #print hex(function_ea), GetFunctionName(function_ea)
-        func_eas.append(function_ea)
-        func_names.append(GetFunctionName(function_ea))
-        func_ea_to_name[function_ea] = GetFunctionName(function_ea)
-    #func_ea_list.append(sys.maxint)
+    # find functions so we can easily tell function boundaries, debug specific
+    # functions and find jumps to functions
+    f_eas, f_names, f_ea_to_name = get_functions_in_section(textEa)
+    f_eas, f_names, f_ea_to_name = get_functions_in_section(pltEa)
+    f_eas.append(sys.maxint)
 
-    for function_ea in Functions(SegStart(pltEa), SegEnd(pltEa)):
-        func_eas.append(function_ea)
-        func_names.append(GetFunctionName(function_ea))
-        func_ea_to_name[function_ea] = GetFunctionName(function_ea)
-    func_eas.append(sys.maxint)
+    # visit every callsite, start callee analyses at callsites,
+    # build context dicts, return called addresses chained per function
+    dst_eas = caller_arg_analysis(debug, textEa)
 
-    # TODO: outline to Caller_Arg_Analysis
-    cpc_chain = ""
-    addr_chain = list()
+    dst_cpcs, f_ea_to_cpc = "", dict()
+    dst_cpcs, f_ea_to_cpc = construct_cpc_aggregate(dst_eas)
 
-    # TODO: rename context to ctx
-    context = caller_context.CallerContext()
-    # TODO: rename f to i_f
-    f = 0
-    # TODO: rename h to i_h
-    h = 0
-    # TODO: rename head to h
-    for head in Heads(SegStart(ea), SegEnd(ea)):
-        # TODO: outline to Is_New_Func
-        if head >= func_eas[f]:
-            if NAME_DEBUG:
-                addr_chain.append(sep + func_names[f] + ": ")
-            else:
-                addr_chain.append(sep)
-            # TODO: add reset_regs that references init_regs
-            context.init_regs()
-            #cpc_chain += sep
-            # if NAME_DEBUG:
-            #     cpc_chain = cpc_chain + func_name_list[f] + " "
-            # if ADDR_DEBUG:
-            #     cpc_chain += hex(head)
-            f += 1
+    output_cpc(dst_cpcs, f_ea_to_cpc)
 
-        if h >= CALLER_CONTEXT_REFRESH:
-            h = 0
-            # TODO: reference reset_regs
-            context.init_regs()
-
-        if isCode(GetFlags(head)):
-            # TODO: rename to m
-            mnem = GetMnem(head)
-
-            # TODO: outline these similarly to callee
-            num_opnds = 0
-            opnd_1 = GetOpnd(head, 0)
-            opnd_2 = GetOpnd(head, 1)
-            opnd_3 = GetOpnd(head, 2)
-
-            if opnd_1 != "":
-                num_opnds = 1
-            if opnd_2 != "":
-                num_opnds = 2
-            if opnd_3 != "":
-               num_opnds = 3
-
-            if asm_helper.is_jmp(mnem) or asm_helper.is_call(mnem):
-                # TODO: outline to Caller_Add_Contexts
-                # TODO: do op stuff all at once
-                op_type = GetOpType(head, 0)
-                # TODO: outline
-                if op_type == o_near or op_type == o_far:
-                    op_val = GetOperandValue(head, 0)
-                    # TODO: outline
-                    if op_val in func_eas:
-                        #debug members of cpc chain
-                        # TODO: outline Get_Cur_Func_Name
-                        if func_names[f-1] == '//':
-                            print("%x: %s" % (head, func_ea_to_name[op_val]))
-
-                        # TODO: rename context_rval to ee_ctx
-                        context_rval = callee_context_dict.get(op_val, None)
-                        if context_rval is None:
-                            # TODO: outline Get_Func_Index
-                            # TODO: rename i to j_f
-                            i = func_eas.index(op_val)
-
-                            #debug callee analysis
-                            #TODO: outline Get_Func_Name
-                            if func_names[i] == '//':
-                                context_rval = callee_arg_sweep(op_val, True, func_eas[i + 1], 0)
-                            else:
-                                context_rval = callee_arg_sweep(op_val, False, func_eas[i + 1], 0)
-
-                            callee_context_dict[op_val] = context_rval
-                        #ltj: move this out one level to make contexts for all calls.
-                        #------------------------------------------------------
-                        # TODO: outline to Is_Recursive_Call
-                        if op_val != func_eas[f-1]:
-                            l = caller_context_dict.get(op_val, None)
-                            if l == None:
-                                caller_context_dict[op_val] = list()
-                            cur_context = copy.copy(context)
-                            caller_context_dict[op_val].append(cur_context)
-                            # TODO: change name
-                            context.init_regs()
-                        else:
-                            #print skipped functions:
-                            #print("op_val: %x. func: %s" % (op_val,func_name_list[f-1]))
-                            pass
-
-                        addr_chain.append(op_val)
-                        #------------------------------------------------------
-                if asm_helper.is_call(mnem):
-                    #ltj:keeping this in case parsing plt doesn't always work
-                    #add target function name to dictionary
-                    #try:
-                    #    func_dict[op_val]
-                    #except KeyError:
-                    #    func_dict[op_val] = GetFunctionName(op_val)
-                    # TODO: rename to .reset
-                    context.init_regs()
-
-            if num_opnds == 0:
-                if debug:
-                    print("%x: %s" % (head,mnem))
-
-            if num_opnds == 1:
-            # TODO: outline to Caller_Update_Context_1
-                if debug:
-                    print("%x: %s %s" % (head,mnem,opnd_1))
-
-                opnd_1_type = GetOpType(head, 0)
-                if opnd_1_type == o_reg:
-                    if asm_helper.is_arg_reg(opnd_1):
-                        if mnem in asm_helper.r_group:
-                            context.add_src_arg(opnd_1)
-                        elif mnem in asm_helper.w_group or mnem in asm_helper.rw_group:
-                            context.add_set_arg(opnd_1)
-                            h = 0
-                        else:
-                            print("Unrecognized mnemonic: %x: %s %s" % (head,mnem,opnd_1))
-                if opnd_1_type == o_phrase or opnd_1_type == o_displ:
-                    for arg in arg_extract(opnd_1):
-                        context.add_src_arg(arg)
-
-            if num_opnds == 2:
-            # TODO: outline to Caller_Update_Context_2
-                opnd_1_type = GetOpType(head, 0)
-                opnd_2_type = GetOpType(head, 1)
-
-                if debug:
-                    print("%x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
-
-                #XOR REG1 REG1 case:
-                if opnd_1 == opnd_2:
-                    if mnem in asm_helper.xor_insts or mnem in asm_helper.xorx_insts:
-                        context.add_set_arg(opnd_1)
-                        h = 0
-
-                # ltj:moved this before opnd_1 to fix case of movsxd rdi edi making rdi set
-                if opnd_2_type == o_reg:
-                    if asm_helper.is_arg_reg(opnd_2):
-                        context.add_src_arg(opnd_2)
-                elif opnd_2_type == o_phrase or opnd_2_type == o_displ:
-                    for arg in arg_extract(opnd_2):
-                        context.add_src_arg(arg)
-
-                if opnd_1_type == o_reg:
-                    if asm_helper.is_arg_reg(opnd_1):
-                        if mnem in asm_helper.w_r_group or mnem in asm_helper.rw_r_group:
-                            context.add_set_arg(opnd_1)
-                            h = 0
-                        elif mnem in asm_helper.r_r_group:
-                            context.add_src_arg(opnd_1)
-                        else:
-                            print("Unrecognized mnemonic: %x: %s %s %s" % (head,mnem,opnd_1,opnd_2))
-                elif opnd_1_type == o_phrase or opnd_1_type == o_displ:
-                    for arg in arg_extract(opnd_1):
-                        context.add_src_arg(arg)
-
-            if num_opnds == 3:
-            # TODO: outline to Caller_Update_Context_3
-                opnd_1_type = GetOpType(head, 0)
-                opnd_2_type = GetOpType(head, 1)
-                opnd_3_type = GetOpType(head, 2)
-
-                if debug:
-                    print("%x: %s %s %s %s" % (head,mnem,opnd_1,opnd_2,opnd_3))
-
-                if opnd_1_type == o_reg:
-                    if asm_helper.is_arg_reg(opnd_1):
-                        context.add_set_arg(opnd_1)
-                        h = 0
-                elif opnd_1_type == o_phrase or opnd_1_type == o_displ:
-                    for arg in arg_extract(opnd_1):
-                        context.add_src_arg(arg)
-
-                if opnd_2_type == o_reg:
-                    if asm_helper.is_arg_reg(opnd_2):
-                        context.add_src_arg(opnd_2)
-                elif opnd_2_type == o_phrase or opnd_2_type == o_displ:
-                    for arg in arg_extract(opnd_2):
-                        context.add_src_arg(arg)
-
-                if opnd_3_type == o_reg:
-                    if asm_helper.is_arg_reg(opnd_3):
-                        context.add_src_arg(opnd_3)
-                elif opnd_3_type == o_phrase or opnd_3_type == o_displ:
-                    for arg in arg_extract(opnd_3):
-                        context.add_src_arg(arg)
-
-            h += 1
-
-    # TODO: outline to Construct_CPC_Aggregate and Construct_CPC_Aggregate_Split
-    for ea in callee_context_dict:
-        # TODO: rename callee_cpc to ee_cpc
-        callee_cpc = callee_context_dict[ea].callee_calculate_cpc()
-        callee_cpcspl = callee_context_dict[ea].callee_calculate_cpc_split()
-
-        # TODO: rename caller_cpc_list to er_cpcs
-        caller_cpc_list = list()
-        caller_cpcspl_list = list()
-        try:
-            for caller_cxt in caller_context_dict[ea]:
-                # if ea == 0x40D230:
-                #     print("caller cpc: %d" % caller_cxt.caller_calculate_cpc())
-                caller_cpc_list.append(caller_cxt.caller_calculate_cpc())
-                caller_cpcspl_list.append(caller_cxt.caller_calculate_cpc_split())
-            del caller_context_dict[ea] # so remainder can be handled later
-
-            # TODO: outline Find_Most_Frequent_CPC
-            max_num = 0
-            caller_cpc = -1
-            caller_cpcspl = ""
-            for i in range(0,len(caller_cpc_list)):
-                cpc = caller_cpc_list[i]
-                if caller_cpc_list.count(cpc) > max_num:
-                    max_num = caller_cpc_list.count(cpc)
-                    caller_cpc = cpc
-                    caller_cpcspl = caller_cpcspl_list[i]
-            maj = float(max_num) / float(len(caller_cpc_list))
-
-            # TODO: replace 14 with MAX_ARG_REGS
-            if callee_cpc >= 14:
-                callee_cpc = -1
-            else:
-                if maj < CALLER_CPC_THRESH:
-                    caller_cpc = -1
-
-            if caller_cpc > callee_cpc:
-                if SPLIT_CPC:
-                    cpc_dict[ea] = caller_cpcspl
-                else:
-                    cpc_dict[ea] = caller_cpc
-            else:
-                if SPLIT_CPC:
-                    cpc_dict[ea] = callee_cpcspl
-                else:
-                    cpc_dict[ea] = callee_cpc
-
-        except KeyError:
-            if SPLIT_CPC:
-                cpc_dict[ea] = callee_cpcspl
-            else:
-                cpc_dict[ea] = callee_cpc
-    #now check remaining contexts in caller_context_dict
-    for ea in caller_context_dict:
-        for caller_cxt in caller_context_dict[ea]:
-            # if ea == 0x40D230:
-            #     print("caller cpc: %d" % caller_cxt.caller_calculate_cpc())
-            caller_cpc_list.append(caller_cxt.caller_calculate_cpc())
-            caller_cpcspl_list.append(caller_cxt.caller_calculate_cpc_split())
-
-        # TODO: outline
-        max_num = 0
-        caller_cpc = -1
-        caller_cpcspl = ""
-        #for cpc in caller_cpc_list:
-        for i in range(0,len(caller_cpc_list)):
-            cpc = caller_cpc_list[i]
-            if caller_cpc_list.count(cpc) > max_num:
-                max_num = caller_cpc_list.count(cpc)
-                caller_cpc = cpc
-                caller_cpcspl = caller_cpcspl_list[i]
-
-        if SPLIT_CPC:
-            cpc_dict[ea] = caller_cpcspl
-        else:
-            cpc_dict[ea] = caller_cpc
-
-    for i in addr_chain:
-        if sep in str(i):
-            cpc_chain += i
-        else:
-            cpc_chain += str(cpc_dict[i])
-
-    # TODO: outline to output
-    if CPC_OUTPUT:
-        filename = GetInputFilePath() + ".cpc." + ext
-        f = open(filename, 'w')
-        f.write(cpc_chain)
-        f.close()
-    elif DICT_OUTPUT:
-        dict_out = ""
-        for ea in cpc_dict:
-            try:
-                dict_out += func_ea_to_name[ea] + ": " + str(cpc_dict[ea]) + "\n"
-            except KeyError:
-                pass
-                # debug:
-                #dict_out += str(ea) + " not found as start of function"
-        print dict_out
-        filename = GetInputFilePath() + ".cpc." + ext
-        f = open(filename, 'w')
-        f.write(dict_out)
-        f.close()
-
-    if batch:
+    print("Finished")
+    if BATCH_MODE:
         Exit(0)

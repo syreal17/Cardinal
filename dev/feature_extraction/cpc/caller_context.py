@@ -1,4 +1,4 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # A Three-Pronged Approach to Exploring the Limits of Static Malware Analyses:
 # Callsite Parameter Cardinality (CPC) Counting: caller_context.py
 #
@@ -7,14 +7,15 @@
 #
 # Luke Jones (luke.t.jones.814@gmail.com)
 #
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 from asm_helper import *
 
+
 class CallerContext(object):
     def __init__(self):
-        self.extra_args = 0
-        self.def_chain = list() #for debugging purpose, functions for ea cpc
+        self.stack_arg_count = 0
+        self.def_chain = list() # for debugging purpose, functions for ea cpc
         self.init_regs()
 
     def init_regs(self):
@@ -33,6 +34,9 @@ class CallerContext(object):
         self.xmm5_set = False
         self.xmm6_set = False
         self.xmm7_set = False
+
+    def reset(self):
+        self.init_regs()
 
     def print_arg_regs(self):
         if self.rdi_src is True:
@@ -134,7 +138,7 @@ class CallerContext(object):
         elif operand in arg_reg_xmm7:
             self.xmm7_set = False
 
-    def caller_calculate_cpc(self):
+    def calculate_cpc(self):
         """ Determine callsite parameter cardinality based on argument
             registers seen in assignment commands and their order
         """
@@ -178,9 +182,9 @@ class CallerContext(object):
         elif self.xmm7_set is True:
             fp_regs = 8
 
-        return int_regs + fp_regs + self.extra_args
+        return int_regs + fp_regs + self.stack_arg_count
 
-    def caller_calculate_cpc_split(self):
+    def calculate_cpc_split(self):
         """ Determine callsite parameter cardinality based on argument
             registers seen in assignment commands and their order
         """
