@@ -38,38 +38,6 @@ class CallerContext(object):
     def reset(self):
         self.init_regs()
 
-    def print_arg_regs(self):
-        if self.rdi_src is True:
-            print("rdi,")
-        if self.rsi_src is True:
-            print("rsi,")
-        if self.rdx_src is True:
-            print("rdx,")
-        if self.rcx_src is True:
-            print("rcx,")
-        if self.r10_src is True:
-            print("r10,")
-        if self.r8_src is True:
-            print("r8,")
-        if self.r9_src is True:
-            print("r9,")
-        if self.xmm0_src is True:
-            print("xmm0,")
-        if self.xmm1_src is True:
-            print("xmm1,")
-        if self.xmm2_src is True:
-            print("xmm2,")
-        if self.xmm3_src is True:
-            print("xmm3,")
-        if self.xmm4_src is True:
-            print("xmm4,")
-        if self.xmm5_src is True:
-            print("xmm5,")
-        if self.xmm6_src is True:
-            print("xmm6,")
-        if self.xmm7_src is True:
-            print("xmm7,")
-
     def add_set_arg(self,operand):
         """ Adds a possible argument to args
         """
@@ -145,14 +113,14 @@ class CallerContext(object):
         int_regs = 0
         fp_regs = 0
 
-        #Calculate number of int-ptr arguments used in context 
+        # Calculate number of int-ptr arguments used in context
         if self.rdi_set is False:
             int_regs = 0
         elif self.rdi_set is True and self.rsi_set is False:
             int_regs = 1
         elif self.rsi_set is True and self.rdx_set is False:
             int_regs = 2
-        #special handling for syscalls where r10 is used
+        # special handling for syscalls where r10 is used
         elif self.rdx_set is True and self.rcx_set is False and self.r10_set is False:
             int_regs = 3
         elif (self.rcx_set is True or self.r10_set is True) and self.r8_set is False:
@@ -162,7 +130,7 @@ class CallerContext(object):
         elif self.r9_set is True:
             int_regs = 6
 
-        #Calculate number of fp arguments used in context
+        # Calculate number of fp arguments used in context
         if self.xmm0_set is False:
             fp_regs = 0
         elif self.xmm0_set is True and self.xmm1_set is False:
@@ -191,14 +159,14 @@ class CallerContext(object):
         int_regs = 0
         fp_regs = 0
 
-        #Calculate number of int-ptr arguments used in context
+        # Calculate number of int-ptr arguments used in context
         if self.rdi_set is False:
             int_regs = 0
         elif self.rdi_set is True and self.rsi_set is False:
             int_regs = 1
         elif self.rsi_set is True and self.rdx_set is False:
             int_regs = 2
-        #special handling for syscalls where r10 is used
+        # special handling for syscalls where r10 is used
         elif self.rdx_set is True and self.rcx_set is False and self.r10_set is False:
             int_regs = 3
         elif (self.rcx_set is True or self.r10_set is True) and self.r8_set is False:
@@ -208,7 +176,7 @@ class CallerContext(object):
         elif self.r9_set is True:
             int_regs = 6
 
-        #Calculate number of fp arguments used in context
+        # Calculate number of fp arguments used in context
         if self.xmm0_set is False:
             fp_regs = 0
         elif self.xmm0_set is True and self.xmm1_set is False:

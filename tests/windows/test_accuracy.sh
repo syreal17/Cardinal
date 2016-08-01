@@ -58,4 +58,4 @@ done
 printf "$same_sum tests the same\n"
 printf "$better_sum tests better\n"
 printf "$worse_sum tests worse\n"
-printf "$acc_sum percent change overall"
+printf "$acc_sum percent change overall\n"

@@ -1,4 +1,4 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # A Three-Pronged Approach to Exploring the Limits of Static Malware Analyses:
 # Callsite Parameter Cardinality (CPC) Counting: callee_context.py
 #
@@ -7,7 +7,7 @@
 #
 # Luke Jones (luke.t.jones.814@gmail.com)
 #
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 from asm_helper import *
 

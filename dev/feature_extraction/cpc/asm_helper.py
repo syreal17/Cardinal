@@ -318,9 +318,9 @@ arg_reg_xmm5 = ['xmm5']
 arg_reg_xmm6 = ['xmm6']
 arg_reg_xmm7 = ['xmm7']
 arg_regs_all = arg_reg_rdi + arg_reg_rsi + arg_reg_rdx + arg_reg_rcx +\
-               arg_reg_r10 + arg_reg_r8 + arg_reg_r9 + arg_reg_xmm0 +\
-               arg_reg_xmm1 + arg_reg_xmm2 + arg_reg_xmm3 + arg_reg_xmm4 +\
-               arg_reg_xmm5 + arg_reg_xmm6 + arg_reg_xmm7
+                arg_reg_r10 + arg_reg_r8 + arg_reg_r9 + arg_reg_xmm0 +\
+                arg_reg_xmm1 + arg_reg_xmm2 + arg_reg_xmm3 + arg_reg_xmm4 +\
+                arg_reg_xmm5 + arg_reg_xmm6 + arg_reg_xmm7
 
 #-------------------------------------
 #Basic arg finding
