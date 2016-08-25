@@ -10,8 +10,127 @@ then
 	exit 1
 fi
 
-n=$RANDOM
-find ../../corpora/ -wholename "*/$1.*.cpc.chain" -exec python ../../dev/similarity/editdistance/edit_distance.py {} + > report.$1.txt
+#one liner with no error checking
+#find ../../corpora/ -wholename "*/$1.*.cpc.chain" -exec python ../../dev/similarity/editdistance/edit_distance.py {} + > report.$1.txt
+e=0
+o=""
+s=`find ../../corpora/ -wholename "*/$1.*.clang.o0.*.cpc.chain"`
+count=`printf "%s" $s | wc -w`
+if [ $count -ne 1 ]; then
+	if [ $count -eq 0 ]; then
+		printf "o0 not found for clang $1,$2\n"
+		e=1
+	else
+		printf "Multiple o0's found for clang $1,$2\n"
+		e=1
+	fi
+fi
+o+=$s
+o+=" "
+
+s=`find ../../corpora/ -wholename "*/$1.*.clang.o1.*.cpc.chain"`
+count=`printf "%s" $s | wc -w`
+if [ $count -ne 1 ]; then
+	if [ $count -eq 0 ]; then
+		printf "o1 not found for clang $1,$2\n"
+		e=1
+	else
+		printf "Multiple o1's found for clang $1,$2\n"
+		e=1
+	fi
+fi
+o+=$s
+o+=" "
+
+s=`find ../../corpora/ -wholename "*/$1.*.clang.o2.*.cpc.chain"`
+count=`printf "%s" $s | wc -w`
+if [ $count -ne 1 ]; then
+	if [ $count -eq 0 ]; then
+		printf "o2 not found for clang $1,$2\n"
+		e=1
+	else
+		printf "Multiple o2's found for clang $1,$2\n"
+		e=1
+	fi
+fi
+o+=$s
+o+=" "
+
+s=`find ../../corpora/ -wholename "*/$1.*.clang.o3.*.cpc.chain"`
+count=`printf "%s" $s | wc -w`
+if [ $count -ne 1 ]; then
+	if [ $count -eq 0 ]; then
+		printf "o3 not found for clang $1,$2\n"
+		e=1
+	else
+		printf "Multiple o3's found for clang $1,$2\n"
+		e=1
+	fi
+fi
+o+=$s
+o+=" "
+
+s=`find ../../corpora/ -wholename "*/$1.*.gcc.o0.*.cpc.chain"`
+count=`printf "%s" $s | wc -w`
+if [ $count -ne 1 ]; then
+	if [ $count -eq 0 ]; then
+		printf "o0 not found for gcc $1,$2\n"
+		e=1
+	else
+		printf "Multiple o0's found for gcc $1,$2\n"
+		e=1
+	fi
+fi
+o+=$s
+o+=" "
+
+s=`find ../../corpora/ -wholename "*/$1.*.gcc.o1.*.cpc.chain"`
+count=`printf "%s" $s | wc -w`
+if [ $count -ne 1 ]; then
+	if [ $count -eq 0 ]; then
+		printf "o1 not found for gcc $1,$2\n"
+		e=1
+	else
+		printf "Multiple o1's found for gcc $1,$2\n"
+		e=1
+	fi
+fi
+o+=$s
+o+=" "
+
+s=`find ../../corpora/ -wholename "*/$1.*.gcc.o2.*.cpc.chain"`
+count=`printf "%s" $s | wc -w`
+if [ $count -ne 1 ]; then
+	if [ $count -eq 0 ]; then
+		printf "o2 not found for gcc $1,$2\n"
+		e=1
+	else
+		printf "Multiple o2's found for gcc $1,$2\n"
+		e=1
+	fi
+fi
+o+=$s
+o+=" "
+
+s=`find ../../corpora/ -wholename "*/$1.*.gcc.o3.*.cpc.chain"`
+count=`printf "%s" $s | wc -w`
+if [ $count -ne 1 ]; then
+	if [ $count -eq 0 ]; then
+		printf "o3 not found for gcc $1,$2\n"
+		e=1
+	else
+		printf "Multiple o3's found for gcc $1,$2\n"
+		e=1
+	fi
+fi
+o+=$s
+o+=" "
+
+if [ $e -eq 1 ]; then
+	exit $e
+fi
+
+python ../../dev/similarity/editdistance/edit_distance.py $o > report.$1.txt
 
 printf "diff comp, $1:\n"
 
