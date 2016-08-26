@@ -10,6 +10,9 @@ compilers="clang gcc"
 features="cpc mc bbcp"
 file="multi_sample.report"
 
+#samples that won't work
+broken=""
+
 #Different binaries, Bloom/Jaccard
 for sample1 in $samples
 do
