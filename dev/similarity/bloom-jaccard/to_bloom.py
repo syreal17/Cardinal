@@ -16,7 +16,7 @@ from pybloom import BloomFilter
 def to_bloom(filename):
     c = 0
     with open(filename, 'r') as f:
-        b = BloomFilter(capacity=1000, error_rate=0.001)
+        b = BloomFilter(capacity=100000, error_rate=0.001)
 
         for line in f:
             if line != "":
