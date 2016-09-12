@@ -13,6 +13,12 @@ CPC Aggregation by Reversing and Dumping in Arrays Lightweight (CARDINAL) is a t
 2. Install Python modules: `pip install capstone pyelftools pybloom editdistance`
 3. Download repo `git clone https://github.com/syreal17/Cardinal.git`
 
+# Notes
+* Add your "IDA 6.9" folder to your path
+* make sure you can connect to the IDA license server
+* Add "Cardinal/dev/feature_extraction" to PythonPath environment variable
+* make sure that "C:\Python27\python.exe" exists and is the Python install that you add the above packages to
+
 # Usage
 ## Using CARDINAL directly
 1. `idaw64.exe -A -S"Cardinal\dev\feature_extraction\cpc\ida_cpc_extract.py -l" name_of_test_binary1.elf` This extracts the CPC features from the binary in the form of newline delimited chains of CPC's. Each line or chain represents all the CPC's in one function.
