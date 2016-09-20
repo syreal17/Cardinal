@@ -39,7 +39,7 @@ MAX_ARG_REGS = 14
 INVALID_CPC = -1
 DICT_OUTPUT = False             # output function name to cpc dictionary
 CPC_OUTPUT = False              # output cpc chains
-NAME_DEBUG = True              # include function name with cpc chain
+NAME_DEBUG = False              # include function name with cpc chain
 SPLIT_CPC = False               # split CPC value into integer and float parts
                                 # (more correct but harder to debug as split)
                                 # set to true if using testing framework
