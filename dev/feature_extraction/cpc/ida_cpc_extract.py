@@ -6,6 +6,27 @@
 #
 # Luke Jones (luke.t.jones.814@gmail.com)
 #
+# The MIT License (MIT)
+# Copyright (c) 2016 Chthonian Cyber Services
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+#  in the Software without restriction, including without limitation the rights
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+#
 # -----------------------------------------------------------------------------
 # Notes
 # * "arg regs" are often referenced. These are the "argument registers" used by
@@ -56,6 +77,12 @@ f_eas, f_names, f_ea_to_name = list(), list(), dict()
 
 
 def caller_arg_analysis(debug, ea):
+    """
+
+    :param debug:
+    :param ea:
+    :return:
+    """
     dst_eas = list()
     er_ctx = caller_context.CallerContext()
     i_nextf = 0
@@ -139,6 +166,15 @@ def caller_add_contexts(h_ea, m, ops, i_curf, er_ctx, dst_eas):
 
 
 def caller_update_context(h_ea, m, ops, er_ctx, i_h):
+    """
+
+    :param h_ea:
+    :param m:
+    :param ops:
+    :param er_ctx:
+    :param i_h: what is this?
+    :return:
+    """
     if ops.count == 0:
         if debug:
             print("%x: %s" % (h_ea, m))
@@ -156,7 +192,7 @@ def caller_update_context(h_ea, m, ops, er_ctx, i_h):
                     i_h = 0
                 else:
                     print("Unrecognized mnemonic: %x: %s %s" % (h_ea, m, ops.o1.text))
-        if ops.o1.type == o_phrase or ops.o1.type == o_displ:
+        if ops.o1.type == o_phrase or ops.o1.type == o_displ:  #o_displ is part of idaapi - more details
             for arg in arg_extract(ops.o1.text):
                 er_ctx.add_src_arg(arg)
 
@@ -402,6 +438,11 @@ def add_stack_arg(stack_args, ops, debug):
 
 
 def arg_extract(opnd):
+    """
+    TODO: explain this function
+    :param opnd:
+    :return:
+    """
     arg_list = list()
 
     arg_rdi = check_arg(asm_helper.arg_reg_rdi, opnd)
@@ -512,7 +553,7 @@ def construct_cpc_aggregate(dst_eas):
                 else:
                     f_ea_to_cpc[ea] = ee_cpc
 
-        except KeyError:
+        except KeyError: #TODO: what could throw this exception?
             if SPLIT_CPC:
                 f_ea_to_cpc[ea] = ee_cpcspl
             else:
