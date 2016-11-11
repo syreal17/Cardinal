@@ -76,20 +76,19 @@ f_ea_to_er_ctxs = dict()        # function ea -> list of resulting contexts
 f_eas, f_names, f_ea_to_name = list(), list(), dict()
 
 
-def caller_arg_analysis(debug, ea):
+def caller_arg_analysis(ea):
     """
-
-    :param debug:
-    :param ea:
-    :return:
+    Linearly proceeds through whole binary, spinning off callee analyses at
+    callsites and recording possible CPCs at each callsite
+    :param ea: Effective address where analysis is started
+    :return: Linear list of all called effective addresses
     """
     dst_eas = list()
     er_ctx = caller_context.CallerContext()
     i_nextf = 0
-    i_h = 0
+    i_ins = 0
     for h_ea in Heads(SegStart(ea), SegEnd(ea)):
-        # have we reached the next function?
-        if h_ea >= f_eas[i_nextf]:
+        if h_ea >= f_eas[i_nextf]:  # have we reached the next function?
             if NAME_DEBUG:
                 dst_eas.append(SEP + f_names[i_nextf] + ": ")
             else:
@@ -97,27 +96,38 @@ def caller_arg_analysis(debug, ea):
             er_ctx.reset()
             i_nextf += 1
 
-        # have we passed so many instructions without a set arg reg?
-        if i_h >= CALLER_CONTEXT_REFRESH:
-            i_h = 0
+        if i_ins >= CALLER_CONTEXT_REFRESH:  # have we passed so many instructions without a set arg reg?
+            i_ins = 0
             er_ctx.reset()
 
         if isCode(GetFlags(h_ea)):
-            m = GetMnem(h_ea)
+            mnem = GetMnem(h_ea)
             ops = operands.Operands(h_ea)
             i_curf = i_nextf-1
 
-            if asm_helper.is_jmp(m) or asm_helper.is_call(m):
-                er_ctx, dst_eas = caller_add_contexts(h_ea, m, ops, i_curf, er_ctx, dst_eas)
+            if asm_helper.is_jmp(mnem) or asm_helper.is_call(mnem):
+                er_ctx, dst_eas = caller_add_contexts(h_ea, mnem, ops, i_curf, er_ctx, dst_eas)
 
-            er_ctx, i_h = caller_update_context(h_ea, m, ops, er_ctx, i_h)
+            er_ctx, i_ins = caller_update_context(h_ea, mnem, ops, er_ctx, i_ins)
 
-            i_h += 1
+            i_ins += 1
 
     return dst_eas
 
 
-def caller_add_contexts(h_ea, m, ops, i_curf, er_ctx, dst_eas):
+def caller_add_contexts(h_ea, mnem, ops, i_curf, er_ctx, dst_eas):
+    """
+    At a function call, adds a caller context and callee context for the
+    callsite. Multiple caller contexts are created but only one callee context
+    is created
+    :param h_ea: effective address of the call instruction
+    :param mnem: mnemonic of call instruction
+    :param ops: operands object of the call instruction
+    :param i_curf: index of the current function
+    :param er_ctx: caller context
+    :param dst_eas: destination or called effective addresses
+    :return: er_ctx, dst_eas
+    """
     if is_addr(ops.o1.type):
         called_ea = ops.o1.val
         if called_ea in f_eas:
@@ -137,11 +147,12 @@ def caller_add_contexts(h_ea, m, ops, i_curf, er_ctx, dst_eas):
                     ee_ctx = callee_arg_analysis(called_ea, False, f_eas[j_nextf], 0)
 
                 f_ea_to_ee_ctx[called_ea] = ee_ctx
-            #ltj: move this out one level to make er contexts for all calls.
-            #------------------------------------------------------
+            # ltj: move this out one indent to make er contexts for all calls,
+            # not just internal calls.
+            # ------------------------------------------------------
             if called_ea != f_eas[i_curf]: #called_ea not recursive
                 l = f_ea_to_er_ctxs.get(called_ea, None)
-                if l == None:
+                if l is None:
                     f_ea_to_er_ctxs[called_ea] = list()
                 cur_context = copy.copy(er_ctx)
                 f_ea_to_er_ctxs[called_ea].append(cur_context)
@@ -152,59 +163,59 @@ def caller_add_contexts(h_ea, m, ops, i_curf, er_ctx, dst_eas):
                 pass
 
             dst_eas.append(called_ea)
-            #------------------------------------------------------
-    if asm_helper.is_call(m):
-        #ltj:keeping this in case parsing plt at beginning doesn't always work
-        #add target function name to dictionary
-        #try:
+            # ------------------------------------------------------
+    if asm_helper.is_call(mnem):
+        # ltj:keeping this in case parsing plt at beginning doesn't always work
+        # add target function name to dictionary
+        # try:
         #    func_dict[called_ea]
-        #except KeyError:
+        # except KeyError:
         #    func_dict[called_ea] = GetFunctionName(called_ea)
         er_ctx.reset()
 
     return er_ctx, dst_eas
 
 
-def caller_update_context(h_ea, m, ops, er_ctx, i_h):
+def caller_update_context(h_ea, mnem, ops, er_ctx, i_ins):
     """
-
-    :param h_ea:
-    :param m:
-    :param ops:
-    :param er_ctx:
-    :param i_h: what is this?
-    :return:
+    Updates the caller context with appropriate registers set and used
+    :param h_ea: effective address of the instruction we're updating with
+    :param mnem: mnemonic of the instruction we're updating with
+    :param ops: operands of the instruction we're updating with
+    :param er_ctx: caller context to update
+    :param i_ins: count of instructions since an arg reg setter has been seen
+    :return: er_ctx, i_ins
     """
     if ops.count == 0:
         if debug:
-            print("%x: %s" % (h_ea, m))
+            print("%x: %s" % (h_ea, mnem))
 
     if ops.count == 1:
         if debug:
-            print("%x: %s %s" % (h_ea, m, ops.o1.text))
+            print("%x: %s %s" % (h_ea, mnem, ops.o1.text))
 
         if ops.o1.type == o_reg:
             if asm_helper.is_arg_reg(ops.o1.text):
-                if m in asm_helper.r_group:
+                if mnem in asm_helper.r_group:
                     er_ctx.add_src_arg(ops.o1.text)
-                elif m in asm_helper.w_group or m in asm_helper.rw_group:
+                elif mnem in asm_helper.w_group or mnem in asm_helper.rw_group:
                     er_ctx.add_set_arg(ops.o1.text)
-                    i_h = 0
+                    i_ins = 0
                 else:
-                    print("Unrecognized mnemonic: %x: %s %s" % (h_ea, m, ops.o1.text))
+                    print("Unrecognized mnemonic: %x: %s %s" % (h_ea, mnem, ops.o1.text))
         if ops.o1.type == o_phrase or ops.o1.type == o_displ:  #o_displ is part of idaapi - more details
             for arg in arg_extract(ops.o1.text):
                 er_ctx.add_src_arg(arg)
 
     if ops.count == 2:
         if debug:
-            print("%x: %s %s %s" % (h_ea, m, ops.o1.text, ops.o2.text))
+            print("%x: %s %s %s" % (h_ea, mnem, ops.o1.text, ops.o2.text))
 
         # XOR REG1 REG1 case:
         if ops.o1.text == ops.o2.text:
-            if m in asm_helper.xor_insts or m in asm_helper.xorx_insts:
+            if mnem in asm_helper.xor_insts or mnem in asm_helper.xorx_insts:
                 er_ctx.add_set_arg(ops.o1.text)
-                i_h = 0
+                i_ins = 0
 
         if ops.o2.type == o_reg:
             if asm_helper.is_arg_reg(ops.o2.text):
@@ -215,25 +226,25 @@ def caller_update_context(h_ea, m, ops, er_ctx, i_h):
 
         if ops.o1.type == o_reg:
             if asm_helper.is_arg_reg(ops.o1.text):
-                if m in asm_helper.w_r_group or m in asm_helper.rw_r_group:
+                if mnem in asm_helper.w_r_group or mnem in asm_helper.rw_r_group:
                     er_ctx.add_set_arg(ops.o1.text)
-                    i_h = 0
-                elif m in asm_helper.r_r_group:
+                    i_ins = 0
+                elif mnem in asm_helper.r_r_group:
                     er_ctx.add_src_arg(ops.o1.text)
                 else:
-                    print("Unrecognized mnemonic: %x: %s %s %s" % (h_ea, m, ops.o1.text, ops.o2.text))
+                    print("Unrecognized mnemonic: %x: %s %s %s" % (h_ea, mnem, ops.o1.text, ops.o2.text))
         elif ops.o1.type == o_phrase or ops.o1.type == o_displ:
             for arg in arg_extract(ops.o1.text):
                 er_ctx.add_src_arg(arg)
 
     if ops.count == 3:
         if debug:
-            print("%x: %s %s %s %s" % (h_ea, m, ops.o1.text, ops.o2.text, ops.o3.text))
+            print("%x: %s %s %s %s" % (h_ea, mnem, ops.o1.text, ops.o2.text, ops.o3.text))
 
         if ops.o1.type == o_reg:
             if asm_helper.is_arg_reg(ops.o1.text):
                 er_ctx.add_set_arg(ops.o1.text)
-                i_h = 0
+                i_ins = 0
         elif ops.o1.type == o_phrase or ops.o1.type == o_displ:
             for arg in arg_extract(ops.o1.text):
                 er_ctx.add_src_arg(arg)
@@ -252,10 +263,18 @@ def caller_update_context(h_ea, m, ops, er_ctx, i_h):
             for arg in arg_extract(ops.o3.text):
                 er_ctx.add_src_arg(arg)
 
-    return er_ctx, i_h
+    return er_ctx, i_ins
 
 
-def callee_arg_analysis(cur_f_ea, debug, next_f_ea, n):
+def callee_arg_analysis(cur_f_ea, debug, next_f_ea, depth):
+    """
+    Analyzing a callee for number of arguments
+    :param cur_f_ea: effective address that callee starts at
+    :param debug:  enable debugging or not
+    :param next_f_ea: effective address of next function
+    :param depth: how deep in recursion this call is
+    :return: ee_ctx, a callee context
+    """
     if debug:
         print("next_func_ea:%x" % next_f_ea)
 
@@ -271,7 +290,7 @@ def callee_arg_analysis(cur_f_ea, debug, next_f_ea, n):
         if h_ea >= next_f_ea:
             break
 
-        m = GetMnem(h_ea)
+        mnem = GetMnem(h_ea)
 
         ops = operands.Operands(h_ea)
         if "+arg_" in ops.o2.text:
@@ -279,12 +298,12 @@ def callee_arg_analysis(cur_f_ea, debug, next_f_ea, n):
         if "+arg_" in ops.o3.text:
             stack_args = add_stack_arg(stack_args, ops, debug)
 
-        if asm_helper.is_jmp(m) or asm_helper.is_call(m):
-            b, ee_ctx = callee_add_child_context(ops, ee_ctx, n)
+        if asm_helper.is_jmp(mnem) or asm_helper.is_call(mnem):
+            b, ee_ctx = callee_add_child_context(ops, ee_ctx, depth)
             if b:
                 break
 
-        ee_ctx = callee_update_context(h_ea, m, ops, ee_ctx, debug)
+        ee_ctx = callee_update_context(h_ea, mnem, ops, ee_ctx, debug)
 
     if debug:
         print("stack_args len: %d" % len(stack_args))
@@ -297,21 +316,28 @@ def callee_arg_analysis(cur_f_ea, debug, next_f_ea, n):
     return ee_ctx
 
 
-def callee_add_child_context(ops, ee_ctx, n):
+def callee_add_child_context(ops, ee_ctx, depth):
+    """
+    Add child callee context at new function call to parent callee context
+    :param ops: operands of call instruction
+    :param ee_ctx: parent callee context
+    :param depth: depth of recursion
+    :return: b, ee_ctx (b is boolean on whether to break callee arg analysis loop)
+    """
     b = False
 
     if is_addr(ops.o1.type):
         called_ea = ops.o1.val
         if called_ea in f_eas:
-            if n < MAX_CALLEE_RECURSION:
+            if depth < MAX_CALLEE_RECURSION:
                 child_ee_ctx = f_ea_to_ee_ctx.get(called_ea, None)
                 if child_ee_ctx is None:
                     j_f = f_eas.index(called_ea)
                     j_nextf = j_f + 1
                     if f_ea_to_name[called_ea] == '/debug_func_name/':
-                        child_ee_ctx = callee_arg_analysis(called_ea, True, f_eas[j_nextf], n + 1)
+                        child_ee_ctx = callee_arg_analysis(called_ea, True, f_eas[j_nextf], depth + 1)
                     else:
-                        child_ee_ctx = callee_arg_analysis(called_ea, False, f_eas[j_nextf], n + 1)
+                        child_ee_ctx = callee_arg_analysis(called_ea, False, f_eas[j_nextf], depth + 1)
                     f_ea_to_ee_ctx[called_ea] = child_ee_ctx
 
                 cpc = child_ee_ctx.calculate_cpc()
@@ -324,26 +350,35 @@ def callee_add_child_context(ops, ee_ctx, n):
     return b, ee_ctx
 
 
-def callee_update_context(h_ea, m, ops, ee_ctx, debug):
+def callee_update_context(h_ea, mnem, ops, ee_ctx, debug):
+    """
+    Updates callee context with arg regs used but not set
+    :param h_ea: effective address of instruction updating context
+    :param mnem: mnemonic of instruction updating context
+    :param ops: operands of instruction updating context
+    :param ee_ctx: callee context
+    :param debug: debug or not
+    :return: ee_ctx
+    """
     if ops.count == 0:
         if debug:
-            print("%x: %s" % (h_ea, m))
+            print("%x: %s" % (h_ea, mnem))
 
     # Add source and set register arguments for instruction with 1 operand
     if ops.count == 1:
         if debug:
-            print("%x: %s %s" % (h_ea, m, ops.o1.text))
+            print("%x: %s %s" % (h_ea, mnem, ops.o1.text))
 
         if ops.o1.type == o_reg:
             if asm_helper.is_arg_reg(ops.o1.text):
-                if m in asm_helper.r_group or m in asm_helper.rw_group:
+                if mnem in asm_helper.r_group or mnem in asm_helper.rw_group:
                     added = ee_ctx.add_src_arg(ops.o1.text)
                     if debug and added:
                         print("%s added" % ops.o1.text)
-                elif m in asm_helper.w_group:
+                elif mnem in asm_helper.w_group:
                     ee_ctx.add_set_arg(ops.o1.text)
                 else:
-                    print("Unrecognized mnemonic: %x: %s %s" % (h_ea, m, ops.o1.text))
+                    print("Unrecognized mnemonic: %x: %s %s" % (h_ea, mnem, ops.o1.text))
         if ops.o1.type == o_phrase or ops.o1.type == o_displ:
             for arg in arg_extract(ops.o1.text):
                 added = ee_ctx.add_src_arg(arg)
@@ -353,11 +388,11 @@ def callee_update_context(h_ea, m, ops, ee_ctx, debug):
     # Add source and set register arguments for instruction with 2 operands
     if ops.count == 2:
         if debug:
-            print("%x: %s %s %s" % (h_ea, m, ops.o1.text, ops.o2.text))
+            print("%x: %s %s %s" % (h_ea, mnem, ops.o1.text, ops.o2.text))
 
         # XOR REG1 REG1 case:
         if ops.o1.text == ops.o2.text:
-            if m in asm_helper.xor_insts or m in asm_helper.xorx_insts:
+            if mnem in asm_helper.xor_insts or mnem in asm_helper.xorx_insts:
                 ee_ctx.add_set_arg(ops.o1.text)
 
         if ops.o2.type == o_reg:
@@ -373,14 +408,14 @@ def callee_update_context(h_ea, m, ops, ee_ctx, debug):
 
         if ops.o1.type == o_reg:
             if asm_helper.is_arg_reg(ops.o1.text):
-                if m in asm_helper.w_r_group:
+                if mnem in asm_helper.w_r_group:
                     ee_ctx.add_set_arg(ops.o1.text)
-                elif m in asm_helper.r_r_group or m in asm_helper.rw_r_group:
+                elif mnem in asm_helper.r_r_group or mnem in asm_helper.rw_r_group:
                     added = ee_ctx.add_src_arg(ops.o1.text)
                     if debug and added:
                         print("%s added" % ops.o1.text)
                 else:
-                    print("Unrecognized mnemonic: %x: %s %s %s" % (h_ea, m, ops.o1.text, ops.o2.text))
+                    print("Unrecognized mnemonic: %x: %s %s %s" % (h_ea, mnem, ops.o1.text, ops.o2.text))
         elif ops.o1.type == o_phrase or ops.o1.type == o_displ:
             for arg in arg_extract(ops.o1.text):
                 added = ee_ctx.add_src_arg(arg)
@@ -390,7 +425,7 @@ def callee_update_context(h_ea, m, ops, ee_ctx, debug):
     # Add source and set register arguments for instruction with 3 operands
     if ops.count == 3:
         if debug:
-            print("%x: %s %s %s %s" % (h_ea, m, ops.o1.text, ops.o2.text, ops.o3.text))
+            print("%x: %s %s %s %s" % (h_ea, mnem, ops.o1.text, ops.o2.text, ops.o3.text))
 
         if ops.o1.type == o_reg:
             if asm_helper.is_arg_reg(ops.o1.text):
@@ -427,8 +462,13 @@ def callee_update_context(h_ea, m, ops, ee_ctx, debug):
 
 
 def add_stack_arg(stack_args, ops, debug):
-    if debug:
-        print("here2")
+    """
+    Add second operand to stack_args
+    :param stack_args: current arguments from stack
+    :param ops: operands with second operand to add to stack
+    :param debug: debug prints or not
+    :return: stack_args
+    """
     if ops.o2.text not in stack_args:
         stack_args.append(ops.o2.text)
         if debug:
@@ -439,9 +479,9 @@ def add_stack_arg(stack_args, ops, debug):
 
 def arg_extract(opnd):
     """
-    TODO: explain this function
-    :param opnd:
-    :return:
+    Extracts all argument registers found in an operand
+    :param opnd: the operand to search for argument registers
+    :return: list of arguments found in operand.
     """
     arg_list = list()
 
@@ -496,6 +536,12 @@ def arg_extract(opnd):
 
 
 def check_arg(arg_regs, opnd):
+    """
+    Check for argument register text in various possible formats
+    :param arg_regs: list of argument registers
+    :param opnd: operand to search for matches
+    :return: register text if found in opnd
+    """
     for reg in arg_regs:
         # if reg in opnd:
         m = re.search('[+*\[]'+reg+'[+*\]]', opnd)
@@ -504,7 +550,15 @@ def check_arg(arg_regs, opnd):
     return ""
 
 
-def add_aliased_regs(f, ea, context, c):
+def add_aliased_regs(f, ea, context):
+    """
+    Goes through every possible argument register and determines if function
+    is calling it something else. Adds them as src args
+    :param f: idaapi function
+    :param ea: effective address of function
+    :param context: context to add arg regs to
+    :return: none
+    """
     for reg in asm_helper.arg_regs_all:
         rv = idaapi.find_regvar(f, ea, reg)
         if rv is not None:
@@ -515,6 +569,11 @@ def add_aliased_regs(f, ea, context, c):
 
 
 def is_addr(op_type):
+    """
+    Is op_type an address type?
+    :param op_type: op_type to check
+    :return: Bool
+    """
     if op_type == o_near or op_type == o_far:
         return True
     else:
@@ -522,6 +581,11 @@ def is_addr(op_type):
 
 
 def construct_cpc_aggregate(dst_eas):
+    """
+    Chooses between caller(s) or callee CPC to use as final output
+    :param dst_eas: All the called functions
+    :return: dst_eas and a dictionary of function ea to cpc
+    """
     dst_cpcs, f_ea_to_cpc = "", dict()
     for ea in f_ea_to_ee_ctx:
         ee_cpc = f_ea_to_ee_ctx[ea].calculate_cpc()
@@ -582,6 +646,12 @@ def construct_cpc_aggregate(dst_eas):
 
 
 def find_most_frequent_cpc(er_cpcs, er_cpcspls):
+    """
+    Out of all the caller cpcs, find the most common ont
+    :param er_cpcs: caller cpcs
+    :param er_cpcspls: caller cpcs, split between integer and float arguments
+    :return: the percentage that the most common cpc takes up, and the chosen cpc
+    """
     max_num = 0
     er_cpc = -1
     er_cpcspl = ""
@@ -596,6 +666,12 @@ def find_most_frequent_cpc(er_cpcs, er_cpcspls):
 
 
 def output_cpc(dst_cpcs, f_ea_to_cpc):
+    """
+    Output results as either list of cpcs or dictionary
+    :param dst_cpcs: all the called function's cpcs
+    :param f_ea_to_cpc: dictionary of function ea to cpc
+    :return: none
+    """
     if CPC_OUTPUT:
         filename = GetInputFilePath() + ".cpc." + ext
         f = open(filename, 'w')
@@ -618,6 +694,12 @@ def output_cpc(dst_cpcs, f_ea_to_cpc):
 
 
 def get_functions_in_section(ea):
+    """
+    Fill in function eas list, function names list and function ea to name
+    dictionary
+    :param ea: effective address of section to start finding functions
+    :return: f_eas, f_names, f_ea_to_name
+    """
     for f_ea in Functions(SegStart(ea), SegEnd(ea)):
         f_eas.append(f_ea)
         f_names.append(GetFunctionName(f_ea))
