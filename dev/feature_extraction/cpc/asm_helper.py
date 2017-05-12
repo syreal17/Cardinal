@@ -342,6 +342,8 @@ arg_regs_all = arg_reg_rdi + arg_reg_rsi + arg_reg_rdx + arg_reg_rcx +\
                 arg_reg_xmm1 + arg_reg_xmm2 + arg_reg_xmm3 + arg_reg_xmm4 +\
                 arg_reg_xmm5 + arg_reg_xmm6 + arg_reg_xmm7
 
+reg_a = ['rax', 'eax', 'ax', 'ah', 'al']
+
 #-------------------------------------
 #Basic arg finding
 #-------------------------------------
@@ -355,6 +357,11 @@ def remove_prefixes(mnemonic):
     new = re.sub('rep[a-z]?[a-z]?', '', mnemonic)
     new = re.sub('lock', '', new)
     return new.strip()
+
+def is_reg_a(opnd):
+    if opnd in reg_a:
+        return True
+    return False
 
 def is_mov(mnemonic):
     if mov_prefix in mnemonic:
@@ -389,6 +396,9 @@ def is_jmp(mnemonic):
     if mnemonic in jmp_insts:
         return True
     return False
+
+def is_jump(mnemonic):
+    return is_jcc(mnemonic) or is_jmp(mnemonic)
 
 def is_ret(mnemonic):
     mnemonic = remove_prefixes(mnemonic)
